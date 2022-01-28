@@ -20,6 +20,7 @@ Drivetrain::Drivetrain() {
     leftFollower = std::make_shared<WPI_TalonFX>(Constants::MotorIDs::leftFollower);
     rightFollower = std::make_shared<WPI_TalonFX>(Constants::MotorIDs::rightFollower);
 
+    leftPrimary->SetInverted(true);
     SetFollowers();
     ConfigureAllControllers();
 
