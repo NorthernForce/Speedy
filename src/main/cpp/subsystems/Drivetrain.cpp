@@ -20,7 +20,7 @@ Drivetrain::Drivetrain() {
     leftFollower = std::make_shared<WPI_TalonFX>(Constants::MotorIDs::leftFollower);
     rightFollower = std::make_shared<WPI_TalonFX>(Constants::MotorIDs::rightFollower);
 
-    leftPrimary->SetInverted(true);
+    SetInvert();
     SetFollowers();
     ConfigureAllControllers();
 
@@ -32,6 +32,15 @@ Drivetrain::Drivetrain() {
 void Drivetrain::SetFollowers() {
     leftFollower->Follow(*leftPrimary);
     rightFollower->Follow(*rightPrimary);
+}
+
+void Drivetrain::SetInvert(){
+
+    rightPrimary->SetInverted(false);
+    rightFollower->SetInverted(InvertType::FollowMaster);
+    leftPrimary->SetInverted(true);
+    leftFollower->SetInverted(InvertType::FollowMaster);
+
 }
 
 void Drivetrain::ConfigureAllControllers() {
@@ -50,7 +59,7 @@ void Drivetrain::ConfigureController(WPI_TalonFX& controller, bool isFollower) {
         controller.ConfigClosedloopRamp(rampRate);
         controller.ConfigOpenloopRamp(rampRate);
     }
-    controller.SetInverted(true);
+    controller.SetInverted(false);
     controller.SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
 }
 
