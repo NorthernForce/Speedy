@@ -13,6 +13,7 @@ class Drivetrain : public frc2::SubsystemBase {
  public:
   Drivetrain();
   void SetFollowers();
+  void SetInvert();
   void ConfigureAllControllers();
   void ConfigureController(WPI_TalonFX& controller, bool isFollower=false);
   void Drive(double speed, double rotation);
