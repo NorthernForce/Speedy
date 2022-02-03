@@ -35,12 +35,10 @@ void Drivetrain::SetFollowers() {
 }
 
 void Drivetrain::SetInvert(){
-
-    rightPrimary->SetInverted(false);
+    rightPrimary->SetInverted(true);
     rightFollower->SetInverted(InvertType::FollowMaster);
-    leftPrimary->SetInverted(true);
+    leftPrimary->SetInverted(false);
     leftFollower->SetInverted(InvertType::FollowMaster);
-
 }
 
 void Drivetrain::ConfigureAllControllers() {
@@ -59,7 +57,6 @@ void Drivetrain::ConfigureController(WPI_TalonFX& controller, bool isFollower) {
         controller.ConfigClosedloopRamp(rampRate);
         controller.ConfigOpenloopRamp(rampRate);
     }
-    controller.SetInverted(false);
     controller.SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
 }
 
@@ -74,7 +71,7 @@ void Drivetrain::DriveUsingSpeeds(double leftSpeed, double rightSpeed) {
 
 std::pair<double, double> Drivetrain::GetEncoderRotations() {
     double leftSideRotations = leftPrimary->GetSensorCollection().GetIntegratedSensorPosition() / 2048;
-    double rightSideRotations = (rightPrimary->GetSensorCollection().GetIntegratedSensorPosition() * -1) / 2048; ////TODO: Figure out which one of these (if any) needs to be inverted
+    double rightSideRotations = (rightPrimary->GetSensorCollection().GetIntegratedSensorPosition() * -1) / 2048;
     return std::make_pair(leftSideRotations, rightSideRotations);
 }
 
