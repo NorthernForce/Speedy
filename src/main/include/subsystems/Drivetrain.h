@@ -7,7 +7,6 @@
 #include <frc2/command/SubsystemBase.h>
 #include <ctre/Phoenix.h>
 #include <frc/drive/DifferentialDrive.h>
-#include <AHRS.h>
 
 class Drivetrain : public frc2::SubsystemBase {
  public:
@@ -27,7 +26,6 @@ class Drivetrain : public frc2::SubsystemBase {
   static std::shared_ptr<WPI_TalonFX> leftPrimary;
   static std::shared_ptr<WPI_TalonFX> rightPrimary;
   static std::shared_ptr<frc::DifferentialDrive> robotDrive;
-  static std::shared_ptr<AHRS> ahrs;
   
  private:
   std::shared_ptr<WPI_TalonFX> leftFollower;

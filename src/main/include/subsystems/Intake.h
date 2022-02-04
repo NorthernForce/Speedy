@@ -5,17 +5,19 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <rev/CANSparkMax.h>
+#include <memory>
 
 class Intake : public frc2::SubsystemBase {
  public:
   Intake();
-
-  /**
-   * Will be called periodically whenever the CommandScheduler runs.
-   */
+  void ConfigureSpark(rev::CANSparkMax& controller);
+  void Run(bool reverse=false);
+  void Stop();
+  void SetSpeed(double speed);
   void Periodic() override;
 
  private:
-  // Components (e.g. motor controllers and sensors) should generally be
-  // declared private and exposed only through public methods.
+  std::unique_ptr<rev::CANSparkMax> intakeSpark;
+  units::unit_t<units::time::second> rampRate = 1_s;
 };

@@ -13,15 +13,8 @@
 class PCM : public frc2::SubsystemBase {
  public:
   PCM();
-
-
-  /**
-   * Will be called periodically whenever the CommandScheduler runs.
-   */
   void Periodic();
 
  private:
-  // Components (e.g. motor controllers and sensors) should generally be
-  // declared private and exposed only through public methods.
   std::shared_ptr<frc::Compressor> compressor;
 };

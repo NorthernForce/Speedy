@@ -3,17 +3,28 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/autonomous/ShooterRoutine.h"
+#include <memory>
 
-ShooterRoutine::ShooterRoutine() {
-  // Use addRequirements() here to declare subsystem dependencies.
-}
+#include "commands/autonomous/MoveToCoordinate.h"
+#include "commands/IntakeBall.h"
+#include "commands/PushOutBall.h"
+
+ShooterRoutine::ShooterRoutine() {}
 
 // Called when the command is initially scheduled.
-void ShooterRoutine::Initialize() {}
+void ShooterRoutine::Initialize() {
+    commandController.reset(new AutoCommandScheduler({
+        new MoveToCoordinate(0, 0), // cross auto line
+        new MoveToCoordinate(0, 0), // move to ball
+        new IntakeBall(),               
+        new MoveToCoordinate(0, 0), // move to goal
+        new PushOutBall()           
+    })); ////TODO: determine positions
+}
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterRoutine::Execute() {
-    
+    commandController->RunSequential();
 }
 
 // Called once the command ends or is interrupted.
@@ -21,5 +32,5 @@ void ShooterRoutine::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool ShooterRoutine::IsFinished() {
-  return false;
+    return commandController->IsFinished();
 }

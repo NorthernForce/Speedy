@@ -53,7 +53,7 @@ void TurnToAngle::SetAngle(double angle) {
 
 // Called when the command is initially scheduled.
 void TurnToAngle::Initialize() {
-    currentAngle = RobotContainer::drivetrain->ahrs->GetYaw();
+    currentAngle = RobotContainer::imu->GetRotation();
     startingAngle = currentAngle;
     rawTargetAngle = currentAngle + distanceToTargetAngle;
     integral = 0;
@@ -61,7 +61,7 @@ void TurnToAngle::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void TurnToAngle::Execute() {
-    currentAngle = RobotContainer::drivetrain->ahrs->GetYaw();
+    currentAngle = RobotContainer::imu->GetRotation();
     frc::SmartDashboard::PutNumber("Robot angle: ", currentAngle);
 
     double rotRaw = GetRotationFromPID(p,i,d);

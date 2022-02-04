@@ -7,21 +7,14 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
-#include "utilities/AutoCommandScheduler.h"
-
-class ShooterRoutine
-    : public frc2::CommandHelper<frc2::CommandBase, ShooterRoutine> {
+class IntakeBall
+    : public frc2::CommandHelper<frc2::CommandBase, IntakeBall> {
  public:
-  ShooterRoutine();
-
-  void Initialize() override;
+  IntakeBall();
 
   void Execute() override;
 
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
- private:
-    std::shared_ptr<AutoCommandScheduler> commandController;
 };

@@ -7,7 +7,10 @@
 
 std::shared_ptr<OI> RobotContainer::oi;
 std::shared_ptr<Drivetrain> RobotContainer::drivetrain;
+std::shared_ptr<IMU> RobotContainer::imu;
+std::shared_ptr<Intake> RobotContainer::intake;
 std::shared_ptr<Navigation> RobotContainer::navigation;
+std::shared_ptr<PCM> RobotContainer::pcm;
 
 RobotContainer::RobotContainer() {
     oi.reset(new OI());
@@ -18,7 +21,10 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::InitSubsystems() {
     drivetrain.reset(new Drivetrain);
+    imu.reset(new IMU);
+    intake.reset(new Intake);
     navigation.reset(new Navigation);
+    pcm.reset(new PCM);
 }
 
 void RobotContainer::InitDefaultCommands() {

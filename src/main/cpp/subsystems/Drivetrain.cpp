@@ -10,10 +10,8 @@
 std::shared_ptr<WPI_TalonFX> Drivetrain::leftPrimary;
 std::shared_ptr<WPI_TalonFX> Drivetrain::rightPrimary;
 std::shared_ptr<frc::DifferentialDrive> Drivetrain::robotDrive;
-std::shared_ptr<AHRS> Drivetrain::ahrs;
 
 Drivetrain::Drivetrain() {
-    ahrs = std::make_shared<AHRS>(frc::SPI::Port::kMXP);
 
     leftPrimary = std::make_shared<WPI_TalonFX>(Constants::MotorIDs::leftPrimary);
     rightPrimary = std::make_shared<WPI_TalonFX>(Constants::MotorIDs::rightPrimary);
@@ -53,7 +51,7 @@ void Drivetrain::ConfigureController(WPI_TalonFX& controller, bool isFollower) {
     const int limitThreshold = 90;
     const int triggerThreshTimeInSec = 1;
     controller.ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, currentLimit, limitThreshold, triggerThreshTimeInSec));
-    if (isFollower) {
+    if (!isFollower) {
         controller.ConfigClosedloopRamp(rampRate);
         controller.ConfigOpenloopRamp(rampRate);
     }
@@ -71,7 +69,7 @@ void Drivetrain::DriveUsingSpeeds(double leftSpeed, double rightSpeed) {
 
 std::pair<double, double> Drivetrain::GetEncoderRotations() {
     double leftSideRotations = leftPrimary->GetSensorCollection().GetIntegratedSensorPosition() / 2048;
-    double rightSideRotations = (rightPrimary->GetSensorCollection().GetIntegratedSensorPosition() * -1) / 2048;
+    double rightSideRotations = (rightPrimary->GetSensorCollection().GetIntegratedSensorPosition() * -1) / 2048; ////TODO: check this
     return std::make_pair(leftSideRotations, rightSideRotations);
 }
 

@@ -6,9 +6,13 @@
 
 #include <frc2/command/Command.h>
 #include "OI.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 
 #include "subsystems/Drivetrain.h"
+#include "subsystems/IMU.h"
+#include "subsystems/Intake.h"
 #include "subsystems/Navigation.h"
+#include "subsystems/PCM.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -22,7 +26,10 @@ class RobotContainer {
   RobotContainer();
   static std::shared_ptr<OI> oi;
   static std::shared_ptr<Drivetrain> drivetrain;
+  static std::shared_ptr<IMU> imu;
+  static std::shared_ptr<Intake> intake;
   static std::shared_ptr<Navigation> navigation;
+  static std::shared_ptr<PCM> pcm;
 
  private:
   // The robot's subsystems and commands are defined here...

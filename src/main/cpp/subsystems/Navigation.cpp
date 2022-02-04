@@ -25,7 +25,7 @@ double Navigation::yPosition;
 Navigation::Navigation() {}
 // This method will be called once per scheduler run
 void Navigation::Periodic() {
-    robotCurrentAngle = RobotContainer::drivetrain->ahrs->GetYaw();
+    robotCurrentAngle = RobotContainer::imu->GetRotation();
     averageSpeedInRPM = (RobotContainer::drivetrain->GetLeftRPM() + RobotContainer::drivetrain->GetRightRPM() / 2);
     ChangeInDistanceTravelled();
     TotalInchesTravelled();
@@ -109,7 +109,7 @@ double Navigation::AngleToPoint(double xTarget, double yTarget) {
         angToPoint = 90 * (1 - 2 * (yChange > 0));
     }
     else {
-        angToPoint = -(atan(yChange/xChange) / Constants::degreesToRadians) + ((1 - 2 * (int)(yChange > 0)) * 180 * (xChange < 0)) - RobotContainer::drivetrain->ahrs->GetYaw();
+        angToPoint = -(atan(yChange/xChange) / Constants::degreesToRadians) + ((1 - 2 * (int)(yChange > 0)) * 180 * (xChange < 0)) - RobotContainer::imu->GetRotation();
     }
     if (abs(angToPoint) > 180) {
         angToPoint += (-360) * (1 - 2 * (angToPoint < 0));

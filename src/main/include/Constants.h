@@ -13,6 +13,8 @@ namespace Constants {
         const uint8_t rightPrimary = 2;
         const uint8_t leftFollower = 3;
         const uint8_t rightFollower = 4;
+
+        const uint8_t intake = 5;
     }
 
     const uint8_t driverController_id = 0;
