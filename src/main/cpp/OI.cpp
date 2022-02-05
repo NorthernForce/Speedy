@@ -1,6 +1,7 @@
 #include "Constants.h"
 #include "OI.h"
 #include "commands/DriveWithJoystick.h"
+#include "commands/IntakeBall.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
 std::shared_ptr<frc::XboxController> OI::driverController;
@@ -16,7 +17,9 @@ void OI::InitControllers() {
     manipulatorController = std::make_shared<frc::XboxController>(Constants::manipulatorController_id);
 }
 
-void OI::MapControllerButtons() {}
+void OI::MapControllerButtons() {
+    SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new IntakeBall);
+}
 
 std::pair<double, double> OI::GetDriveControls() {
   double speed = driverController->GetLeftY();

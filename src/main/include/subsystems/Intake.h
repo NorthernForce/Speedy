@@ -11,7 +11,7 @@
 class Intake : public frc2::SubsystemBase {
  public:
   Intake();
-  void ConfigureSpark(rev::CANSparkMax& controller);
+  void ConfigureSpark();
   void Run(bool reverse=false);
   void Stop();
   void SetSpeed(double speed);
