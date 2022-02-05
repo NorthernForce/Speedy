@@ -6,12 +6,15 @@
 /*----------------------------------------------------------------------------*/
 
 #include <iostream>
+#include <frc/DriverStation.h>
 
 class FMSComms {
+public:
 
+  FMSComms();
   char GetGameData();
+  frc::DriverStation::Alliance GetAlliance();
   void GetGameDataRequirements();
-  std::string gameData;
-  char desiredColor;
+  frc::DriverStation::Alliance alliance;
 
 };

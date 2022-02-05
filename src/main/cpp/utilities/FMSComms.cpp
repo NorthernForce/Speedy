@@ -6,6 +6,20 @@
 /*----------------------------------------------------------------------------*/
 
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/DriverStation.h>
 #include <math.h>
+#include <utilities/FMSComms.h>
 #include <iostream>
+
+FMSComms::FMSComms(){
+    if(frc::DriverStation::GetAlliance() != frc::DriverStation::kInvalid) {
+        FMSComms::GetAlliance();
+    }
+}
+
+frc::DriverStation::Alliance FMSComms::GetAlliance(){
+    alliance = frc::DriverStation::GetAlliance();
+    return alliance;
+}
+
 
