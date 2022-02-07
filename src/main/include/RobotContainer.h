@@ -29,7 +29,6 @@ class RobotContainer {
   static std::shared_ptr<IMU> imu;
   static std::shared_ptr<Intake> intake;
   static std::shared_ptr<Navigation> navigation;
-  static std::shared_ptr<PCM> pcm;
 
  private:
   // The robot's subsystems and commands are defined here...
