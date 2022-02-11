@@ -9,7 +9,8 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "commands/TurnToAngle.h"
+#include "frc2/command/PIDCommand.h"
+#include "utilities/CPlane.h"
 #include <memory>
 
 /**
@@ -22,20 +23,19 @@
 class MoveToCoordinate
     : public frc2::CommandHelper<frc2::CommandBase, MoveToCoordinate> {
  public:
-  MoveToCoordinate(int xPos, int yPos, double speed=0.3);
+  MoveToCoordinate(CPlane::Point destination, double speed=0.3);
 
   void Initialize() override;
 
   // double RemoveJumps(double angToFinalWithJumps);
-  double Limit(double value, double limit);
 
-  double TurnPID();
+  double Distance(double x1, double x2, double y1, double y2);
 
-  void Set(std::vector<double>pidValues); //Sets drive pid values
+  double Limit(double value, double limit=0.5);
 
-  double DrivePID();
+  double DrivePower();
 
-  bool HasOscillated();
+  double TurnPower();
 
   void Execute() override;
 
@@ -44,41 +44,24 @@ class MoveToCoordinate
   bool IsFinished() override;
 
  private:
-  std::unique_ptr<TurnToAngle> turnToAngle;
-
-  int xFinal;
-  int yFinal;
+  CPlane::Point destination;
   const double baseSpeed;
 
-  const int cyclePerSecond = 20;
+  const double turnP = 0;
+  const double turnI = 0;
+  const double turnD = 0;
+  const double driveP = 0;
+  const double driveI = 0;
+  const double driveD = 0;
 
-  std::vector<double> driveValues = {0.245, 0.002, 0.002};
+  frc2::PIDController turnPID{turnP, turnI, turnD};
+  frc2::PIDController drivePID{driveP, driveI, driveD};
 
-  double angleError;
-  double totalAngleError;
-  double origAngleToFinal;
-  double distanceError;
-  double totalDistanceError;
-  double previousDistanceError;
-
-  double xCurrent;
-  double yCurrent;
-  double angToFinal;
-  double distance;
+  double distanceToDestination;
+  double angleToDestination;
 
   double turnSpeed;
   double driveSpeed;
-
-  bool hasOscillated;
-
-  std::vector<double> previousAngToFinals;
-  std::vector<double> averageLeft;
-  std::vector<double> averageRight;
-
-  double leftPower;
-  double rightPower;
-
-  int movementStage;
 
   int finishCounter = 0;
 };
