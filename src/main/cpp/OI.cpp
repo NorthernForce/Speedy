@@ -2,6 +2,7 @@
 #include "OI.h"
 #include "commands/DriveWithJoystick.h"
 #include "commands/IntakeBall.h"
+#include "commands/PushOutBall.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
 std::shared_ptr<frc::XboxController> OI::driverController;
@@ -19,11 +20,12 @@ void OI::InitControllers() {
 
 void OI::MapControllerButtons() {
     SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new IntakeBall);
-}
+    SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new PushOutBall);
+}   
 
 std::pair<double, double> OI::GetDriveControls() {
   double speed = driverController->GetLeftY();
-  double rotation = driverController->GetRightX();
+  double rotation = driverController->GetRightX() * -1;
   double multiplier = GetDriveSpeedMultiplier();
   return std::make_pair(speed*multiplier, rotation*multiplier);
 }

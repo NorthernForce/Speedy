@@ -14,16 +14,9 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class IntakeCargo
-    : public frc2::CommandHelper<frc2::CommandBase, IntakeCargo> {
+class SetCoordinates
+    : public frc2::CommandHelper<frc2::CommandBase, SetCoordinates> {
  public:
-  IntakeCargo();
-
-  void Initialize() override;
-
-  void Execute() override;
-
-  void End(bool interrupted) override;
-
+  SetCoordinates(double x, double y);
   bool IsFinished() override;
 };

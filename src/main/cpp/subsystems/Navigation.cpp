@@ -96,6 +96,11 @@ void Navigation::CoordinatePosition() {
     }
 }
 
+void Navigation::SetCoordinatePosition(double x, double y) {
+    xPosition = x;
+    yPosition = y;
+}
+
 std::pair<double, double> Navigation::GetCoordinatePosition() {
     return std::make_pair(xPosition, yPosition);
 }

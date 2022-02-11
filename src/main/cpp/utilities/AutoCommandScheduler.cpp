@@ -11,11 +11,13 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <math.h>
 #include <iostream>
+#include <frc/Timer.h>
 
 int AutoCommandScheduler::currIndex;
 
 AutoCommandScheduler::AutoCommandScheduler(std::vector<frc2::Command*> &&commandQueue) {
     //frc2::Command **commandQueue = (frc2::Command**) malloc(sizeof(frc2::Command*) * commandQueue.size());
+    timer = std::make_unique<frc::Timer>();
     this->commandQueue = commandQueue;
     maxIndex = commandQueue.size() - 1;
     doCommandsHaveSharedSubsystems = CheckForSubsystemConflictsInCommandQueue();
@@ -23,24 +25,6 @@ AutoCommandScheduler::AutoCommandScheduler(std::vector<frc2::Command*> &&command
 
 AutoCommandScheduler::AutoCommandScheduler() {
     isUsingAuto = true;
-}
-
-std::vector<double> AutoCommandScheduler::StringTokenizer(std::string stringOfNumbers, std::string delim) {
-    std::vector<double> tokens;
-    stringOfNumbers = RemoveWhiteSpace(stringOfNumbers);
-
-    size_t pos = 0;
-    while ((pos = stringOfNumbers.find(delim)) != std::string::npos) {
-        tokens.push_back(std::stod(stringOfNumbers.substr(0, pos)));
-        stringOfNumbers.erase(0, pos + delim.length());
-    }
-    tokens.push_back(std::stod(stringOfNumbers.substr(0, pos)));
-    return tokens;
-}
-
-std::string AutoCommandScheduler::RemoveWhiteSpace(std::string str) {
-    str.erase(remove_if(str.begin(), str.end(), isspace), str.end());
-    return str;
 }
 
 void AutoCommandScheduler::RunSequential() {
@@ -53,6 +37,7 @@ void AutoCommandScheduler::RunSequential() {
 void AutoCommandScheduler::ScheduleInSequence() {
     int prevInd = GetPrevIndex();
     if (!commandQueue[prevInd]->IsScheduled() && currIndex <= maxIndex) {
+        timer->Start();
         commandQueue[currIndex]->Schedule();
         currIndex++;
     }
@@ -81,6 +66,10 @@ void AutoCommandScheduler::ScheduleInParallel() {
     }
     else
         std::cerr << CommandConflictError().what() << '\n';
+}
+
+units::time::second_t AutoCommandScheduler::GetTimeSinceRan() {
+    return timer->Get();
 }
 
 void AutoCommandScheduler::DashboardAuto(std::vector<std::string> &&driverInput, std::vector<std::string> &&dashboardParams) {
@@ -113,6 +102,24 @@ void AutoCommandScheduler::DashboardAuto(std::vector<std::string> &&driverInput,
     hasScheduledAuto = true;
 }
 
+std::vector<double> AutoCommandScheduler::StringTokenizer(std::string stringOfNumbers, std::string delim) {
+    std::vector<double> tokens;
+    stringOfNumbers = RemoveWhiteSpace(stringOfNumbers);
+
+    size_t pos = 0;
+    while ((pos = stringOfNumbers.find(delim)) != std::string::npos) {
+        tokens.push_back(std::stod(stringOfNumbers.substr(0, pos)));
+        stringOfNumbers.erase(0, pos + delim.length());
+    }
+    tokens.push_back(std::stod(stringOfNumbers.substr(0, pos)));
+    return tokens;
+}
+
+std::string AutoCommandScheduler::RemoveWhiteSpace(std::string str) {
+    str.erase(remove_if(str.begin(), str.end(), isspace), str.end());
+    return str;
+}
+
 bool AutoCommandScheduler::CheckForSubsystemConflictsInCommandQueue() {
     for (int currInd = 0; currInd < maxIndex; currInd++) {
         double nextInd = currInd + 1;
@@ -133,8 +140,10 @@ std::vector<frc2::Subsystem*> AutoCommandScheduler::GetRequiredSubsystems() {
 }
 
 void AutoCommandScheduler::CheckAllCommandsHaveFinished() {
-    if (!commandQueue[maxIndex]->IsScheduled())
+    if (!commandQueue[maxIndex]->IsScheduled()) {
         isFinished = true;
+        timer->Stop();
+    }
 }
 
 bool AutoCommandScheduler::IsFinished() {

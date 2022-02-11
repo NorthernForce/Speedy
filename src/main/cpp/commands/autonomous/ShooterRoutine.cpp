@@ -5,21 +5,28 @@
 #include "commands/autonomous/ShooterRoutine.h"
 #include <memory>
 
+#include "commands/ArmDown.h"
+#include "commands/ArmUp.h"
 #include "commands/autonomous/MoveToCoordinate.h"
 #include "commands/IntakeBall.h"
 #include "commands/PushOutBall.h"
+#include "commands/autonomous/SetCoordinates.h"
 
 ShooterRoutine::ShooterRoutine() {}
 
 // Called when the command is initially scheduled.
 void ShooterRoutine::Initialize() {
     commandController.reset(new AutoCommandScheduler({
-        new MoveToCoordinate(0, 0), // cross auto line
-        new MoveToCoordinate(0, 0), // move to ball
-        new IntakeBall(),               
-        new MoveToCoordinate(0, 0), // move to goal
-        new PushOutBall()           
-    })); ////TODO: determine positions
+        new SetCoordinates(11.97, 31.72),
+        new ArmDown(),
+        new MoveToCoordinate(150.79, 25.91), // move to ball
+        new IntakeBall(timed),
+        new ArmUp(),
+        new MoveToCoordinate(11.97, 31.72), // move to goal
+        new PushOutBall(timed),
+        new MoveToCoordinate(44.52, 112.78), // move out of zone
+        new ArmDown()
+    }));
 }
 
 // Called repeatedly when this Command is scheduled to run

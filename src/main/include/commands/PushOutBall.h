@@ -6,11 +6,13 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc/Timer.h>
+#include <memory>
 
 class PushOutBall
     : public frc2::CommandHelper<frc2::CommandBase, PushOutBall> {
  public:
-  PushOutBall();
+  PushOutBall(bool timed=false);
 
   void Execute() override;
 
@@ -19,5 +21,7 @@ class PushOutBall
   bool IsFinished() override;
 
  private:
+    bool timed = false;
+    std::unique_ptr<frc::Timer> timer;
     bool reverse = true;
 };

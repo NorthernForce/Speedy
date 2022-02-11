@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <frc/Timer.h>
 
 class AutoCommandScheduler {
  public:
@@ -18,6 +19,7 @@ class AutoCommandScheduler {
   AutoCommandScheduler();
   void RunSequential();
   void RunParallel();
+  units::time::second_t GetTimeSinceRan();
   void DashboardAuto(std::vector<std::string> &&driverInput, std::vector<std::string> &&dashboardParams);
   bool IsFinished();
   std::vector<frc2::Command*> commandQueue;
@@ -34,6 +36,7 @@ class AutoCommandScheduler {
     void CheckAllCommandsHaveFinished();
     void CleanUpArray(std::vector<frc2::Command*> array);
 
+    std::unique_ptr<frc::Timer> timer;
     static int currIndex;
     int maxIndex;
     bool isFinished = false;

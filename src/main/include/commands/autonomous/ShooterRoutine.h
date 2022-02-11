@@ -24,4 +24,5 @@ class ShooterRoutine
 
  private:
     std::shared_ptr<AutoCommandScheduler> commandController;
+    bool timed = true;
 };

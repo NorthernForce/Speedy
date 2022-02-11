@@ -17,6 +17,9 @@ namespace Constants {
         const uint8_t intake = 5;
     }
 
+    const uint8_t leftArm = 0;
+    const uint8_t rightArm = 1;
+
     const uint8_t driverController_id = 0;
     const uint8_t manipulatorController_id = 1;
     const uint8_t PCMCanBusID = 15;

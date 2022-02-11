@@ -6,21 +6,10 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/Timer.h>
-#include <memory>
 
-class IntakeBall
-    : public frc2::CommandHelper<frc2::CommandBase, IntakeBall> {
+class ArmDown
+    : public frc2::CommandHelper<frc2::CommandBase, ArmDown> {
  public:
-  IntakeBall(bool timed=false);
-
-  void Execute() override;
-
-  void End(bool interrupted) override;
-
+  void Initialize() override;
   bool IsFinished() override;
-
- private:
-    bool timed = false;
-    std::unique_ptr<frc::Timer> timer;
 };
