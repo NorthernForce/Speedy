@@ -14,6 +14,7 @@
 #include "subsystems/Intake.h"
 #include "subsystems/Navigation.h"
 #include "subsystems/PCM.h"
+#include "subsystems/Climber.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -30,6 +31,7 @@ class RobotContainer {
   static std::shared_ptr<IMU> imu;
   static std::shared_ptr<Intake> intake;
   static std::shared_ptr<Navigation> navigation;
+  static std::shared_ptr<Climber> climber;
 
  private:
   // The robot's subsystems and commands are defined here...
