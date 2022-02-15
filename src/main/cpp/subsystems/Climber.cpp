@@ -11,17 +11,16 @@ Climber::Climber() {
 
     leftMotor = std::make_unique<WPI_TalonFX>(Constants::MotorIDs::leftClimber);
     rightMotor = std::make_unique<WPI_TalonFX>(Constants::MotorIDs::rightClimber);
+
+    ConfigureController(*leftMotor);
+    ConfigureController(*rightMotor);
 }
 
-void Climber::ConfigureController(WPI_TalonFX& controller, bool isFollower) {
+void Climber::ConfigureController(WPI_TalonFX& controller) {
     const int currentLimit = 60;
     const int limitThreshold = 90;
     const int triggerThreshTimeInSec = 1;
     controller.ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, currentLimit, limitThreshold, triggerThreshTimeInSec));
-    if (!isFollower) {
-        controller.ConfigClosedloopRamp(rampRate);
-        controller.ConfigOpenloopRamp(rampRate);
-    }
     controller.SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
 }
 
@@ -41,11 +40,10 @@ PivotState Climber::GetPivot() {
     return pivotPosition;
 }
 
-void Climber::Raise() [
+void Climber::Raise() {
     leftMotor->Set(0.5);
     rightMotor->Set(0.5);
-    
-]
+}
 
 void Climber::Lower() {
     leftMotor->Set(0.5);
@@ -53,7 +51,7 @@ void Climber::Lower() {
 }
 
 HookState Climber::GetHookState() {
-
+    return hookPosition;
 }
 
 // This method will be called once per scheduler run

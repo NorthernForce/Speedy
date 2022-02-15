@@ -23,13 +23,13 @@ enum class HookState {
 class Climber : public frc2::SubsystemBase {
  public:
   Climber();
-  void ConfigureController(WPI_TalonFX& controller, bool isFollower);
+  void ConfigureController(WPI_TalonFX& controller);
   void PivotUp();
   void PivotDown();
   PivotState GetPivot();
   void Raise();
   void Lower();
-  void GetHookState();
+  HookState GetHookState();
   void Periodic() override;
 
  private:
@@ -37,7 +37,6 @@ class Climber : public frc2::SubsystemBase {
   std::unique_ptr<frc::Solenoid> rightClimber;
   PivotState pivotPosition;
   HookState hookPosition;
-
   std::unique_ptr<WPI_TalonFX> leftMotor;
   std::unique_ptr<WPI_TalonFX> rightMotor;
 };
