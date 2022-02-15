@@ -19,8 +19,8 @@ void OI::InitControllers() {
 }
 
 void OI::MapControllerButtons() {
-    SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new IntakeBall);
-    SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new PushOutBall);
+    SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new IntakeBall);
+    SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBall);
 }   
 
 std::pair<double, double> OI::GetDriveControls() {
