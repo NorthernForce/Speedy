@@ -27,9 +27,12 @@ class Climber : public frc2::SubsystemBase {
   void PivotUp();
   void PivotDown();
   PivotState GetPivot();
+  void SetPivot(PivotState state);
   void Raise();
   void Lower();
   HookState GetHookState();
+  void SetHookState(HookState state);
+  void SetPivot(HookState state);
   void Periodic() override;
 
  private:

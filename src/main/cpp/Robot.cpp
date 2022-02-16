@@ -7,7 +7,11 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
 
-void Robot::RobotInit() {}
+#include "subsystems/Climber.h"
+
+void Robot::RobotInit() {
+    RobotContainer::climber->SetPivot(PivotState::Up);
+}
 
 /**
  * This function is called every robot packet, no matter the mode. Use
@@ -34,7 +38,9 @@ void Robot::DisabledPeriodic() {}
  * This autonomous runs the autonomous command selected by your {@link
  * RobotContainer} class.
  */
-void Robot::AutonomousInit() {}
+void Robot::AutonomousInit() {
+    RobotContainer::climber->PivotDown();
+}
 
 void Robot::AutonomousPeriodic() {}
 

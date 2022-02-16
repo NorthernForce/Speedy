@@ -40,6 +40,10 @@ PivotState Climber::GetPivot() {
     return pivotPosition;
 }
 
+void Climber::SetPivot(PivotState state) {
+    pivotPosition = state;
+}
+
 void Climber::Raise() {
     leftMotor->Set(0.5);
     rightMotor->Set(0.5);
@@ -52,6 +56,10 @@ void Climber::Lower() {
 
 HookState Climber::GetHookState() {
     return hookPosition;
+}
+
+void Climber::SetHookState(HookState state) {
+    hookPosition = state;
 }
 
 // This method will be called once per scheduler run

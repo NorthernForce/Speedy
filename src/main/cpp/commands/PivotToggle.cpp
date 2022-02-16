@@ -13,14 +13,13 @@ PivotToggle::PivotToggle() {
 
 // Called when the command is initially scheduled.
 void PivotToggle::Initialize() {
- if(RobotContainer::climber->GetPivot() == PivotState::Down) {
-   RobotContainer::climber->PivotUp();
- } else if (RobotContainer::climber->GetPivot() == PivotState::Up) {
-   RobotContainer::climber->PivotDown();
- } else {
-   printf("Pivot not in range");
- }
-
+    if(RobotContainer::climber->GetPivot() == PivotState::Down) {
+        RobotContainer::climber->PivotUp();
+    } else if (RobotContainer::climber->GetPivot() == PivotState::Up) {
+        RobotContainer::climber->PivotDown();
+    } else {
+        printf("Pivot not in range\n");
+    }
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -31,5 +30,5 @@ void PivotToggle::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool PivotToggle::IsFinished() {
-  return false;
+  return true;
 }
