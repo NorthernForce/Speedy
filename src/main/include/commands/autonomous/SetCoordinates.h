@@ -6,6 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "utilities/CPlane.h"
 
 /**
  * An example command.
@@ -18,5 +19,6 @@ class SetCoordinates
     : public frc2::CommandHelper<frc2::CommandBase, SetCoordinates> {
  public:
   SetCoordinates(double x, double y);
+  SetCoordinates(CPlane::Point location);
   bool IsFinished() override;
 };

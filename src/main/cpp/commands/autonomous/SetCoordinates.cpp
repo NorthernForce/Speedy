@@ -11,6 +11,10 @@ SetCoordinates::SetCoordinates(double x, double y) {
         );
 }
 
+SetCoordinates::SetCoordinates(CPlane::Point location) {
+    RobotContainer::coordinates->SetLocation(location);
+}
+
 bool SetCoordinates::IsFinished() {
     return true;
 }
