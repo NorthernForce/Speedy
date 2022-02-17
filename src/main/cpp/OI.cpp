@@ -3,6 +3,11 @@
 #include "commands/DriveWithJoystick.h"
 #include "commands/IntakeBall.h"
 #include "commands/PushOutBall.h"
+#include "commands/ArmDown.h"
+#include "commands/ArmUp.h"
+#include "commands/LowerClimber.h"
+#include "commands/RaiseClimber.h"
+#include "commands/PivotToggle.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
 std::shared_ptr<frc::XboxController> OI::driverController;
@@ -19,8 +24,15 @@ void OI::InitControllers() {
 }
 
 void OI::MapControllerButtons() {
-    SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new IntakeBall);
-    SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new PushOutBall);
+    //driver
+    SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new IntakeBall);
+    SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBall);
+
+    //manipulator
+    SimpleButton(manipulatorController, Xbox::lt_bumper).WhileHeld(new LowerClimber);
+    SimpleButton(manipulatorController, Xbox::rt_bumper).WhileHeld(new RaiseClimber);
+    SimpleButton(manipulatorController, Xbox::A_button).WhenPressed(new PivotToggle);
+
 }   
 
 std::pair<double, double> OI::GetDriveControls() {

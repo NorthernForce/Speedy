@@ -11,6 +11,7 @@ std::shared_ptr<IMU> RobotContainer::imu;
 std::shared_ptr<Intake> RobotContainer::intake;
 std::shared_ptr<Navigation> RobotContainer::navigation;
 std::shared_ptr<Coordinates> RobotContainer::coordinates;
+std::shared_ptr<Climber> RobotContainer::climber;
 
 RobotContainer::RobotContainer() {
     oi.reset(new OI());
