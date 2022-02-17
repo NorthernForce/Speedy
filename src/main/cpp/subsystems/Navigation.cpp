@@ -19,105 +19,58 @@
 #include <unistd.h>
 #endif
 
-double Navigation::xPosition;
-double Navigation::yPosition;
-
 Navigation::Navigation() {}
 // This method will be called once per scheduler run
-void Navigation::Periodic() {
-    robotCurrentAngle = RobotContainer::imu->GetRotation();
-    averageSpeedInRPM = (RobotContainer::drivetrain->GetLeftRPM() + RobotContainer::drivetrain->GetRightRPM() / 2);
-    ChangeInDistanceTravelled();
-    TotalInchesTravelled();
-    CoordinatePosition();
-    // std::cout << "EncoderPos" << RobotContainer::drivetrain->GetEncoderRotations().first;
-    smartdashCycles++;
-    smartdashCycles = smartdashCycles % 20;
-    if(!smartdashCycles) {
-        frc::SmartDashboard::PutNumber("Left Inches", totalInchesTravelled.first);
-        frc::SmartDashboard::PutNumber("Right Inches", totalInchesTravelled.second);
-        frc::SmartDashboard::PutNumber("xPostition: ", xPosition);
-        frc::SmartDashboard::PutNumber("yPosition: ", yPosition);
-        frc::SmartDashboard::PutNumber("angleToFinal", AngleToPoint(12,0));
-    }
+void Navigation::Periodic() {}
+
+units::inch_t Navigation::DistanceToPoint(CPlane::Point p1, CPlane::Point p2) {
+    delta = p2.Subtract(p1, true);
+    return units::math::hypot(delta.x, delta.y);
 }
 
-//Calculates how far the robot has moved since the last call of the method in inches
-void Navigation::ChangeInDistanceTravelled() {
-    //Calculates left encoder rotations since last call
-    double leftEncoderPos = RobotContainer::drivetrain->GetEncoderRotations().first;
-    double leftDistTravelled = leftEncoderPos - previousLeftEncoder;
-    previousLeftEncoder = leftEncoderPos;
-    //Calculates right encoder rotations since last call
-    double rightEncoderPos = RobotContainer::drivetrain->GetEncoderRotations().second;
-    double rightDistTravelled = rightEncoderPos - previousRightEncoder;
-    previousRightEncoder = rightEncoderPos;
-
-    leftDistTravelled /= Constants::gearRatio;
-    rightDistTravelled /= Constants::gearRatio;
-
-    // //Converts encoder rotations into inches based off current gear
-    // if (RobotContainer::driveShifter->GetGear() == DriveShifter::Gear::High) {
-    //     leftDistTravelled /= Constants::Shifting::highMultiplier;
-    //     rightDistTravelled /= Constants::Shifting::highMultiplier;
-    // }
-    // else {
-    //     leftDistTravelled /= Constants::Shifting::lowMultiplier;
-    //     rightDistTravelled /= Constants::Shifting::lowMultiplier;
-    // }
-    changeInDistanceTravelled = std::make_pair(leftDistTravelled, rightDistTravelled);
+//If only given one point --> assumes 1st point is robot
+units::inch_t Navigation::DistanceToPoint(CPlane::Point p2) {
+    return DistanceToPoint(RobotContainer::coordinates->GetLocation(), p2);
 }
 
-
-void Navigation::TotalInchesTravelled() {
-    totalInchesTravelled.first += changeInDistanceTravelled.first;
-    totalInchesTravelled.second += changeInDistanceTravelled.second;
-}
-
-//Sets position to zero regardless of actual position
-void Navigation::ZeroPosition() {
-    xPosition = 0;
-    yPosition = 0;
-    //Called to update previous encoder pos
-    ChangeInDistanceTravelled();
-}
-
-void Navigation::CoordinatePosition() {
-    double averageInchesChange;
-    //Combines wheel rotations into one measurement
-    averageInchesChange = (changeInDistanceTravelled.first + changeInDistanceTravelled.second) / 2;
-
-    //Adds the change in distance to the x and y coordinates
-    xPosition -= averageInchesChange * std::cos(Constants::degreesToRadians * -robotCurrentAngle); // 0° & 180°
-    yPosition -= averageInchesChange * std::sin(Constants::degreesToRadians * -robotCurrentAngle); //90° & 270°
-    //Updates the smartdash once per 20 cycles
-    if(!smartdashCycles) {
-        frc::SmartDashboard::PutNumber("Nav Average inches: ", averageInchesChange);
-    }
-}
-
-void Navigation::SetCoordinatePosition(double x, double y) {
-    xPosition = x;
-    yPosition = y;
-}
-
-std::pair<double, double> Navigation::GetCoordinatePosition() {
-    return std::make_pair(xPosition, yPosition);
-}
-
-double Navigation::AngleToPoint(double xTarget, double yTarget) {
-    double angToPoint;
-    double xChange = xTarget - xPosition;
-    double yChange = yTarget - yPosition;
-
-    if (xChange == 0) {
-        angToPoint = 90 * (1 - 2 * (yChange > 0));
+units::degree_t Navigation::SimplifyAngle(units::degree_t angle) {
+    if (units::math::abs(angle) < 180_deg) {
+        return angle;
     }
     else {
-        angToPoint = -(atan(yChange/xChange) / Constants::degreesToRadians) + ((1 - 2 * (int)(yChange > 0)) * 180 * (xChange < 0)) - RobotContainer::imu->GetRotation();
+        if (angle < 0_deg) {
+            return angle + 360_deg;
+        }
+        else {
+            return angle - 360_deg;
+        }
     }
-    if (abs(angToPoint) > 180) {
-        angToPoint += (-360) * (1 - 2 * (angToPoint < 0));
+}
+
+units::degree_t Navigation::AngleToPoint(CPlane::Point p1, CPlane::Point p2) {
+    delta = p2.Subtract(p1, true);
+    if (delta.x == 0_in) {
+        if (delta.y < 0_in) {
+            return -90_deg;
+        }
+        else {
+            return 90_deg;
+        }
     }
-    return angToPoint;
+    else {
+        angleToPoint = units::math::atan2(delta.y, delta.x);
+        if (delta.x < 0_in) {
+            return SimplifyAngle(angleToPoint + 180_deg);
+        }
+        else {
+            return angleToPoint;
+        }
+    }
+}
+
+units::degree_t Navigation::AngleToPoint(CPlane::Point p2) {
+    return SimplifyAngle(
+        AngleToPoint( RobotContainer::coordinates->GetLocation(), p2)
+        - RobotContainer::coordinates->Theta()
+    );
 }

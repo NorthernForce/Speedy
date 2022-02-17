@@ -10,41 +10,24 @@
 #include <frc2/command/SubsystemBase.h>
 #include "Constants.h"
 #include <ctre/Phoenix.h>
+#include "utilities/CPlane.h"
 
 class Navigation : public frc2::SubsystemBase {
  public:
   Navigation();
   void Periodic();
-  void ChangeInDistanceTravelled();
-  void TotalInchesTravelled();
-  void ZeroPosition();
-  void CoordinatePosition();
-  void SetCoordinatePosition(double x, double y);
-  std::pair<double, double> GetCoordinatePosition();
-  double AngleToPoint(double xPos, double yPos);
+  
+  units::inch_t DistanceToPoint(CPlane::Point p1, CPlane::Point p2);
+  units::inch_t DistanceToPoint(CPlane::Point p2);
+  
+  units::degree_t SimplifyAngle(units::degree_t angle);
+
+  units::degree_t AngleToPoint(CPlane::Point p1, CPlane::Point p2);
+  units::degree_t AngleToPoint(CPlane::Point p2);
 
  private:
-    uint32_t smartdashCycles;
-    double robotStartingAngle;
-    double robotCurrentAngle;
-    double robotAngleDifference = robotStartingAngle - robotCurrentAngle;
-    // double cameraStartingAngle;
-    // double cameraCurrentAngle;
-    // double cameraAngleDifference = cameraStartingAngle - cameraCurrentAngle;
-    double previousLeftEncoder = 0;
-    double previousRightEncoder = 0;
-    std::pair<double, double> changeInDistanceTravelled;
-    std::pair<double, double> totalInchesTravelled;
-
-    double averageSpeedInRPM;
-    double totalDistanceTravelled;
-    double lastDistanceTravelled;
-
-    static double xPosition;
-    static double yPosition;
+    CPlane::Point delta{};
+    units::degree_t angleToPoint;
 
     double NavXScaling = Constants::XResetMultiplier;
-
-    // const double cameraOffsetFromCenter;
-    double distanceToObstacle;
 };

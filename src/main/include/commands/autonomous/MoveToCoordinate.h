@@ -7,10 +7,10 @@
 
 #pragma once
 
+#include "RobotContainer.h"
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include "frc2/command/PIDCommand.h"
-#include "utilities/CPlane.h"
 #include <memory>
 
 /**
@@ -24,12 +24,11 @@ class MoveToCoordinate
     : public frc2::CommandHelper<frc2::CommandBase, MoveToCoordinate> {
  public:
   MoveToCoordinate(CPlane::Point destination, double speed=0.3);
+  MoveToCoordinate(double xDestination, double yDestination, double speed=0.3);
 
   void Initialize() override;
 
   // double RemoveJumps(double angToFinalWithJumps);
-
-  double Distance(double x1, double x2, double y1, double y2);
 
   double Limit(double value, double limit=0.5);
 
@@ -44,8 +43,8 @@ class MoveToCoordinate
   bool IsFinished() override;
 
  private:
-  CPlane::Point destination;
-  const double baseSpeed;
+  CPlane::Point destination{0_in, 0_in};
+  double baseSpeed;
 
   const double turnP = 0;
   const double turnI = 0;
@@ -57,8 +56,8 @@ class MoveToCoordinate
   frc2::PIDController turnPID{turnP, turnI, turnD};
   frc2::PIDController drivePID{driveP, driveI, driveD};
 
-  double distanceToDestination;
-  double angleToDestination;
+  units::inch_t distanceToDestination;
+  units::degree_t angleToDestination;
 
   double turnSpeed;
   double driveSpeed;

@@ -6,7 +6,9 @@
 #include "RobotContainer.h"
 
 SetCoordinates::SetCoordinates(double x, double y) {
-    RobotContainer::navigation->SetCoordinatePosition(x, y);
+    RobotContainer::coordinates->SetLocation(
+        CPlane::Point(units::inch_t(x), units::inch_t(y))
+        );
 }
 
 bool SetCoordinates::IsFinished() {

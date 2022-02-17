@@ -7,7 +7,6 @@
 
 
 #include "commands/autonomous/MoveToCoordinate.h"
-#include "RobotContainer.h"
 #include "frc/smartdashboard/SmartDashboard.h"
 #include <memory>
 #include <cmath>
@@ -16,16 +15,24 @@
 #include <vector>
 
 MoveToCoordinate::MoveToCoordinate(CPlane::Point destination, double speed) 
-  : baseSpeed(speed), destination(destination) {
+  : destination(destination), baseSpeed(speed) {
   AddRequirements(RobotContainer::drivetrain.get());
   SetName("MoveToCoordinate");
 }
 
-// Called when the command is initially scheduled.
-void MoveToCoordinate::Initialize() {}
+MoveToCoordinate::MoveToCoordinate(double xDestination, double yDestination, double speed) : baseSpeed(speed) {
+  AddRequirements(RobotContainer::drivetrain.get());
+  SetName("MoveToCoordinate");
+  units::inch_t x{xDestination};
+  units::inch_t y{yDestination};
+  destination = CPlane::Point(x, y, false);
+}
 
-double MoveToCoordinate::Distance(double x1, double x2, double y1, double y2) {
-  return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+// Called when the command is initially scheduled.
+void MoveToCoordinate::Initialize() {
+  if (destination.relative) {
+    destination = destination.Add(RobotContainer::coordinates->GetLocation());
+  }
 }
 
 double MoveToCoordinate::Limit(double value, double limit) {
@@ -33,21 +40,21 @@ double MoveToCoordinate::Limit(double value, double limit) {
 }
 
 double MoveToCoordinate::DrivePower() {
-  distanceToDestination = Distance(0, destination.x, 0, destination.y);
-  if (distanceToDestination >= 72.0) {
+  distanceToDestination = RobotContainer::navigation->DistanceToPoint(destination);
+  if (distanceToDestination >= 72_in) {
     driveSpeed = baseSpeed;
   }
   else {
-    driveSpeed = Limit(drivePID.Calculate(distanceToDestination), baseSpeed);
+    driveSpeed = Limit(drivePID.Calculate(distanceToDestination.value()), baseSpeed);
   }
   
   return driveSpeed;
 }
 
 double MoveToCoordinate::TurnPower() {
-  angleToDestination = RobotContainer::navigation->AngleToPoint(destination.x, destination.y);
-  if (abs(angleToDestination) >= 90.0) {
-    if (angleToDestination > 0.0) {
+  angleToDestination = RobotContainer::navigation->AngleToPoint(destination);
+  if (units::math::abs(angleToDestination) >= 90_deg) {
+    if (angleToDestination > 0_deg) {
       turnSpeed = baseSpeed;
     }
     else {
@@ -55,15 +62,22 @@ double MoveToCoordinate::TurnPower() {
     }
   }
   else {
-    turnSpeed = Limit(turnPID.Calculate(distanceToDestination), baseSpeed);
+    turnSpeed = Limit(turnPID.Calculate(angleToDestination.value()), baseSpeed);
   }
-  
-  return driveSpeed;
+
+  return turnSpeed;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void MoveToCoordinate::Execute() {
   RobotContainer::drivetrain->Drive(DrivePower(), TurnPower());
+
+  if (distanceToDestination < 0.5_in) {
+    finishCounter ++;
+  }
+  else {
+    finishCounter = 0;
+  }
 }  
 
 // Called once the command ends or is interrupted.
@@ -72,18 +86,4 @@ void MoveToCoordinate::End(bool interrupted) {
 }
 
 // Returns true when the command should end.
-bool MoveToCoordinate::IsFinished() {
-  if (distanceToDestination < 0.5) {
-    finishCounter ++;
-  }
-  else {
-    finishCounter = 0;
-  }
-
-  if (finishCounter > 30) {
-    return true;
-  }
-  else {
-    return false;
-  }
-}
+bool MoveToCoordinate::IsFinished() { return finishCounter > 30; }
