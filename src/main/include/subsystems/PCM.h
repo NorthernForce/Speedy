@@ -17,5 +17,5 @@ class PCM : public frc2::SubsystemBase {
 
  private:
   std::shared_ptr<frc::Compressor> compressor;
-  double pressure_read;
+  units::pounds_per_square_inch_t pressure_read;
 };
