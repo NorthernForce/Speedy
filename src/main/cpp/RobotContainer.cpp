@@ -29,6 +29,7 @@ void RobotContainer::InitSubsystems() {
     navigation.reset(new Navigation);
     pcm.reset(new PCM);
     coordinates.reset(new Coordinates);
+    climber.reset(new Climber);
 }
 
 void RobotContainer::InitDefaultCommands() {

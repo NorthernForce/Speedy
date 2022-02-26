@@ -16,11 +16,11 @@ namespace Constants {
 
         const uint8_t intake = 5;
 
-        const uint8_t leftClimber = 6;
-        const uint8_t rightClimber = 7;
+        const uint8_t rightClimber = 6;
+        const uint8_t leftClimber = 7;
     }
 
-    const uint8_t climber = 8;
+    const uint8_t climber = 4;
     const uint8_t arm = 9;
 
     const uint8_t driverController_id = 0;

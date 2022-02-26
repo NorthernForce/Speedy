@@ -22,7 +22,6 @@ void Intake::SetSpeed(double speed) {
     intakeSpark->Set(speed);
 }
 
-// rt bumper driver controller
 void Intake::ConfigureSpark() {
     const uint16_t currentLimit = 60;
     const uint16_t limitThreshold = 90;

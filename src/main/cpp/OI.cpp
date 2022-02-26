@@ -29,8 +29,8 @@ void OI::MapControllerButtons() {
     SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBall);
 
     //manipulator
-    SimpleButton(manipulatorController, Xbox::rt_bumper).WhileHeld(new ArmDown);
-    SimpleButton(manipulatorController, Xbox::lt_bumper).WhileHeld(new ArmUp);
+    SimpleButton(manipulatorController, Xbox::rt_bumper).WhenPressed(new ArmDown);
+    SimpleButton(manipulatorController, Xbox::lt_bumper).WhenPressed(new ArmUp);
     SimpleButton(manipulatorController, Xbox::X_button).WhileHeld(new LowerClimber);
     SimpleButton(manipulatorController, Xbox::Y_button).WhileHeld(new RaiseClimber);
     SimpleButton(manipulatorController, Xbox::A_button).WhenPressed(new PivotToggle);
