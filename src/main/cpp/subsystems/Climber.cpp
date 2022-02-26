@@ -6,8 +6,7 @@
 #include "Constants.h"
 
 Climber::Climber() {
-    leftClimber = std::make_unique<frc::Solenoid>(frc::PneumaticsModuleType::REVPH, Constants::leftClimber);
-    rightClimber = std::make_unique<frc::Solenoid>(frc::PneumaticsModuleType::REVPH, Constants::rightClimber);
+    climber = std::make_unique<frc::Solenoid>(frc::PneumaticsModuleType::REVPH, Constants::leftClimber);
 
     leftMotor = std::make_unique<WPI_TalonFX>(Constants::MotorIDs::leftClimber);
     rightMotor = std::make_unique<WPI_TalonFX>(Constants::MotorIDs::rightClimber);
@@ -25,14 +24,12 @@ void Climber::ConfigureController(WPI_TalonFX& controller) {
 }
 
 void Climber::PivotUp() {
-    leftClimber->Set(true);
-    rightClimber->Set(true);
+    climber->Set(true);
     pivotPosition = PivotState::Up;
 }
 
 void Climber::PivotDown() {
-    leftClimber->Set(false);
-    rightClimber->Set(false);
+    climber->Set(false);
     pivotPosition = PivotState::Down;
 }
 

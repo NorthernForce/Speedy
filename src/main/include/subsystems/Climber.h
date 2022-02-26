@@ -36,8 +36,7 @@ class Climber : public frc2::SubsystemBase {
   void Periodic() override;
 
  private:
-  std::unique_ptr<frc::Solenoid> leftClimber;
-  std::unique_ptr<frc::Solenoid> rightClimber;
+  std::unique_ptr<frc::Solenoid> climber;
   PivotState pivotPosition;
   HookState hookPosition;
   std::unique_ptr<WPI_TalonFX> leftMotor;

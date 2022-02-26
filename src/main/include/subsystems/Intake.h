@@ -24,6 +24,5 @@ class Intake : public frc2::SubsystemBase {
 
  private:
   std::unique_ptr<rev::CANSparkMax> intakeSpark;
-  std::unique_ptr<frc::Solenoid> leftArm;
-  std::unique_ptr<frc::Solenoid> rightArm;
+  std::unique_ptr<frc::Solenoid> arm;
 };
