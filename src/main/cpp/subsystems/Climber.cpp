@@ -6,7 +6,7 @@
 #include "Constants.h"
 
 Climber::Climber() {
-    climber = std::make_unique<frc::Solenoid>(15, frc::PneumaticsModuleType::REVPH, Constants::leftClimber);
+    climber = std::make_unique<frc::Solenoid>(Constants::PCMCanBusID, frc::PneumaticsModuleType::REVPH, Constants::climber);
 
     leftMotor = std::make_unique<WPI_TalonFX>(Constants::MotorIDs::leftClimber);
     rightMotor = std::make_unique<WPI_TalonFX>(Constants::MotorIDs::rightClimber);

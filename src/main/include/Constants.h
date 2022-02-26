@@ -20,10 +20,8 @@ namespace Constants {
         const uint8_t rightClimber = 7;
     }
 
-    const uint8_t leftArm = 0;
-    const uint8_t rightArm = 1;
-    const uint8_t leftClimber = 2;
-    const uint8_t rightClimber = 3;
+    const uint8_t climber = 8;
+    const uint8_t arm = 9;
 
     const uint8_t driverController_id = 0;
     const uint8_t manipulatorController_id = 1;
