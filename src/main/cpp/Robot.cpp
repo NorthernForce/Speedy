@@ -10,7 +10,7 @@
 #include "subsystems/Climber.h"
 
 void Robot::RobotInit() {
-    RobotContainer::climber->SetPivot(PivotState::Up);
+    //RobotContainer::climber->SetPivot(PivotState::Up);
 }
 
 /**
@@ -39,7 +39,7 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
-    RobotContainer::climber->PivotDown();
+    //RobotContainer::climber->PivotDown();
 }
 
 void Robot::AutonomousPeriodic() {}

@@ -32,6 +32,7 @@ class RobotContainer {
   static std::shared_ptr<IMU> imu;
   static std::shared_ptr<Intake> intake;
   static std::shared_ptr<Navigation> navigation;
+  static std::shared_ptr<PCM> pcm;
   static std::shared_ptr<Coordinates> coordinates;
   static std::shared_ptr<Climber> climber;
 

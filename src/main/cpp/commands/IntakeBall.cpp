@@ -5,10 +5,8 @@
 #include "commands/IntakeBall.h"
 #include "RobotContainer.h"
 
-IntakeBall::IntakeBall(bool timed) : timed(timed) {
+IntakeBall::IntakeBall() {
     AddRequirements(RobotContainer::intake.get());
-    timer = std::make_unique<frc::Timer>();
-    timer->Start();
 }
 
 void IntakeBall::Execute() {
@@ -20,7 +18,5 @@ void IntakeBall::End(bool interrupted) {
 }
 
 bool IntakeBall::IsFinished() {
-    if (timed)
-        return timer->Get() > 2_s;
     return false;
 }

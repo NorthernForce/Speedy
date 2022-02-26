@@ -20,10 +20,10 @@ void ShooterRoutine::Initialize() {
         new SetCoordinates(11.97, 31.72),
         new ArmDown(),
         new MoveToCoordinate(150.79, 25.91), // move to ball
-        new IntakeBall(timed),
+        new IntakeBall(),
         new ArmUp(),
         new MoveToCoordinate(11.97, 31.72), // move to goal
-        new PushOutBall(timed),
+        new PushOutBall(),
         new MoveToCoordinate(44.52, 112.78), // move out of zone
         new ArmDown()
     }));

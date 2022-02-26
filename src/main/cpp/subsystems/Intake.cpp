@@ -6,7 +6,6 @@
 
 Intake::Intake() {
     intakeSpark = std::make_unique<rev::CANSparkMax>(Constants::MotorIDs::intake, rev::CANSparkMax::MotorType::kBrushless);
-    intakeSpark->SetInverted(true);
 
     arm = std::make_unique<frc::Solenoid>(15, frc::PneumaticsModuleType::REVPH, Constants::leftArm);
 }
@@ -30,6 +29,7 @@ void Intake::ConfigureSpark() {
     intakeSpark->SetSmartCurrentLimit(currentLimit);
     intakeSpark->SetSecondaryCurrentLimit(limitThreshold);
     intakeSpark->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    intakeSpark->SetInverted(true);
 }
 
 void Intake::ArmUp() {
