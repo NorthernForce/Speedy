@@ -14,14 +14,11 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class LowerClimber
-    : public frc2::CommandHelper<frc2::CommandBase, LowerClimber> {
+class ToggleArm
+    : public frc2::CommandHelper<frc2::CommandBase, ToggleArm> {
  public:
-  LowerClimber();
 
-  void Execute() override;
-
-  void End(bool interrupted) override;
+  void Initialize() override;
 
   bool IsFinished() override;
 };

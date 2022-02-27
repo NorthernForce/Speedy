@@ -15,6 +15,9 @@ void RaiseClimber::Execute() {
     RobotContainer::climber->Raise();
 }
 
+void RaiseClimber::End(bool interrupted) {
+    RobotContainer::climber->Stop();
+}
 // Returns true when the command should end.
 bool RaiseClimber::IsFinished() {
   return false;

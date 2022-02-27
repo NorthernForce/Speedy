@@ -31,12 +31,22 @@ void Intake::ConfigureSpark() {
     intakeSpark->SetInverted(true);
 }
 
+ArmState Intake::GetPivot() {
+    return armPosition;
+}
+
+void Intake::SetArmState(ArmState state) {
+    armPosition = state;
+}
+
 void Intake::ArmUp() {
     arm->Set(true);
+    armPosition = ArmState::Up;
 }
 
 void Intake::ArmDown() {
     arm->Set(false);
+    armPosition = ArmState::Down;
 }
 
 // This method will be called once per scheduler run

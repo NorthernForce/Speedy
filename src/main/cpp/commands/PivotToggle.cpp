@@ -4,7 +4,6 @@
 
 #include "commands/PivotToggle.h"
 #include "RobotContainer.h"
-#include "subsystems/Climber.h"
 
 // Called when the command is initially scheduled.
 void PivotToggle::Initialize() {

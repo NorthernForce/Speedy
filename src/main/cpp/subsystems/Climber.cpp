@@ -42,13 +42,18 @@ void Climber::SetPivot(PivotState state) {
 }
 
 void Climber::Raise() {
-    leftMotor->Set(0.5);
-    rightMotor->Set(0.5);
+    leftMotor->Set(-0.85);
+    rightMotor->Set(0.85);
 }
 
 void Climber::Lower() {
-    leftMotor->Set(0.5);
-    rightMotor->Set(0.5);
+    leftMotor->Set(0.45);
+    rightMotor->Set(-0.45);
+}
+
+void Climber::Stop(){
+    leftMotor->Set(0);
+    rightMotor->Set(0);
 }
 
 HookState Climber::GetHookState() {
