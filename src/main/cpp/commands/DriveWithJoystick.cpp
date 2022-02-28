@@ -10,9 +10,6 @@ DriveWithJoystick::DriveWithJoystick() {
     AddRequirements(RobotContainer::drivetrain.get());
 }
 
-// Called when the command is initially scheduled.
-void DriveWithJoystick::Initialize() {}
-
 // Called repeatedly when this Command is scheduled to run
 void DriveWithJoystick::Execute() {
     auto driveControls = RobotContainer::oi->GetDriveControls();

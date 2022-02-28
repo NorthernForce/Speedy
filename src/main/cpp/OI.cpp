@@ -1,5 +1,5 @@
 #include "Constants.h"
-#include "OI.h"
+#include "RobotContainer.h"
 #include "commands/DriveWithJoystick.h"
 #include "commands/IntakeBall.h"
 #include "commands/PushOutBall.h"
@@ -17,6 +17,7 @@ std::shared_ptr<frc::XboxController> OI::manipulatorController;
 OI::OI() {
     frc::SmartDashboard::PutNumber("Drive Speed:", 1.0); 
     InitControllers();
+    //frc::SmartDashboard::PutString("Drive Speed", RobotContainer::fmsComms->GetAllianceString(RobotContainer::fmsComms->GetAlliance()));
 }
 
 void OI::InitControllers() {

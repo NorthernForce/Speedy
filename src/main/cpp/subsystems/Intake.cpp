@@ -48,6 +48,3 @@ void Intake::ArmDown() {
     arm->Set(false);
     armPosition = ArmState::Down;
 }
-
-// This method will be called once per scheduler run
-void Intake::Periodic() {}

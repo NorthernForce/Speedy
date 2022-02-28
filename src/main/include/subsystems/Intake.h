@@ -28,8 +28,6 @@ class Intake : public frc2::SubsystemBase {
   void ArmUp();
   void ArmDown();
 
-  void Periodic() override;
-
  private:
   ArmState armPosition = ArmState::Up;
   std::unique_ptr<rev::CANSparkMax> intakeSpark;

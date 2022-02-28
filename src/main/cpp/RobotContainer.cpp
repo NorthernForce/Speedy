@@ -13,6 +13,7 @@ std::shared_ptr<Navigation> RobotContainer::navigation;
 std::shared_ptr<PCM> RobotContainer::pcm;
 std::shared_ptr<Coordinates> RobotContainer::coordinates;
 std::shared_ptr<Climber> RobotContainer::climber;
+std::shared_ptr<FMSComms> RobotContainer::fmsComms;
 
 
 RobotContainer::RobotContainer() {
@@ -30,6 +31,7 @@ void RobotContainer::InitSubsystems() {
     pcm.reset(new PCM);
     coordinates.reset(new Coordinates);
     climber.reset(new Climber);
+    fmsComms.reset(new FMSComms);
 }
 
 void RobotContainer::InitDefaultCommands() {
