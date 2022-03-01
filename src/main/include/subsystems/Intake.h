@@ -28,8 +28,9 @@ class Intake : public frc2::SubsystemBase {
   void ArmUp();
   void ArmDown();
 
+  ArmState armPosition;
+
  private:
-  ArmState armPosition = ArmState::Up;
   std::unique_ptr<rev::CANSparkMax> intakeSpark;
   std::unique_ptr<frc::Solenoid> arm;
 };

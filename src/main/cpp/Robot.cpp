@@ -11,6 +11,8 @@
 
 void Robot::RobotInit() {
     //RobotContainer::climber->SetPivot(PivotState::Up);
+    //RobotContainer::intake->SetArmState(ArmState::Down);
+
 }
 
 /**
