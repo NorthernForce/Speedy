@@ -46,12 +46,12 @@ class MoveToCoordinate
   CPlane::Point destination{0_in, 0_in};
   double baseSpeed;
 
-  const double turnP = 0;
+  const double turnP = 1;
   const double turnI = 0;
   const double turnD = 0;
-  const double driveP = 0;
-  const double driveI = 0;
-  const double driveD = 0;
+  double driveP = 1;
+  double driveI = 0;
+  double driveD = 0;
 
   frc2::PIDController turnPID{turnP, turnI, turnD};
   frc2::PIDController drivePID{driveP, driveI, driveD};
