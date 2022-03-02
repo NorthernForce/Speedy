@@ -11,7 +11,7 @@ Intake::Intake() {
 }
 
 void Intake::Run(bool reverse) {
-    intakeSpark->Set(reverse ? -1.0 : 0.45);
+    intakeSpark->Set(reverse ? -1.0 : 0.9);
 }
 
 void Intake::Stop() {
