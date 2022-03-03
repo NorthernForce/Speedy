@@ -73,6 +73,11 @@ std::pair<double, double> Drivetrain::GetEncoderRotations() {
     return std::make_pair(leftSideRotations, rightSideRotations);
 }
 
+double Drivetrain::GetAvgEncoderRotations(std::pair<double, double>) {
+    double avgRotations = GetEncoderRotations().first + GetEncoderRotations().second;
+    return avgRotations;
+}
+
 void Drivetrain::SetEncoderPositions(double lt, double rt) {
     leftPrimary->SetSelectedSensorPosition(lt);
     rightPrimary->SetSelectedSensorPosition(rt);

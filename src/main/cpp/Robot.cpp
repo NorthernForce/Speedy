@@ -3,11 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "Robot.h"
+#include "RobotContainer.h"
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
 
 #include "subsystems/Climber.h"
+#include "commands/autonomous/ShootThenCrossLine.h"
 
 void Robot::RobotInit() {
     //RobotContainer::climber->SetPivot(PivotState::Up);
@@ -24,7 +26,10 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
-}
+  printf("%lf", RobotContainer::drivetrain->leftPrimary->GetSelectedSensorPosition());
+  printf("%lf", RobotContainer::drivetrain->rightPrimary->GetSelectedSensorPosition());
+  
+  }
 
 /**
  * This function is called once each time the robot enters Disabled mode. You
