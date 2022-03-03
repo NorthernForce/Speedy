@@ -7,6 +7,7 @@
 #include <frc2/command/SubsystemBase.h>
 #include <ctre/Phoenix.h>
 #include <frc/drive/DifferentialDrive.h>
+#include "Constants.h"
 
 class Drivetrain : public frc2::SubsystemBase {
  public:
@@ -21,6 +22,7 @@ class Drivetrain : public frc2::SubsystemBase {
   void SetEncoderPositions(double lt, double rt);
   double GetLeftRPM();
   double GetRightRPM();
+  bool IsTipping();
   void Periodic() override;
 
   static std::shared_ptr<WPI_TalonFX> leftPrimary;
@@ -31,4 +33,5 @@ class Drivetrain : public frc2::SubsystemBase {
   std::shared_ptr<WPI_TalonFX> leftFollower;
   std::shared_ptr<WPI_TalonFX> rightFollower;
   const int rampRate = 0.2;
+  units::degree_t tipAngle = 15_deg;
 };

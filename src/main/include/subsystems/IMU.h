@@ -13,6 +13,7 @@ class IMU : public frc2::SubsystemBase {
   void Periodic() override;
   double GetRollAngle();
   double GetRotation();
+  double GetTipAngle();
   void ZeroRotation();
   void Reset();
 

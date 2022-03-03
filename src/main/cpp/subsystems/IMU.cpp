@@ -15,6 +15,7 @@ IMU::IMU() {
 // This method will be called once per scheduler run
 void IMU::Periodic() {
     frc::SmartDashboard::PutNumber("Robot angle: ", GetRotation());
+    frc::SmartDashboard::PutNumber("Robot roll: ", GetRollAngle());
 }
 
 double IMU::GetRollAngle() {
@@ -23,6 +24,10 @@ double IMU::GetRollAngle() {
 
 double IMU::GetRotation() {
     return ahrs->GetYaw();
+}
+
+double IMU::GetTipAngle() {
+    return ahrs->GetRoll();
 }
 
 void IMU::ZeroRotation() {

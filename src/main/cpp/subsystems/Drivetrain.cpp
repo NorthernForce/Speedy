@@ -6,13 +6,13 @@
 #include "Constants.h"
 #include "frc/smartdashboard/SmartDashboard.h"
 #include <frc/SPI.h>
+#include "RobotContainer.h"
 
 std::shared_ptr<WPI_TalonFX> Drivetrain::leftPrimary;
 std::shared_ptr<WPI_TalonFX> Drivetrain::rightPrimary;
 std::shared_ptr<frc::DifferentialDrive> Drivetrain::robotDrive;
 
 Drivetrain::Drivetrain() {
-
     leftPrimary = std::make_shared<WPI_TalonFX>(Constants::MotorIDs::leftPrimary);
     rightPrimary = std::make_shared<WPI_TalonFX>(Constants::MotorIDs::rightPrimary);
     leftFollower = std::make_shared<WPI_TalonFX>(Constants::MotorIDs::leftFollower);
@@ -59,7 +59,7 @@ void Drivetrain::ConfigureController(WPI_TalonFX& controller, bool isFollower) {
 }
 
 void Drivetrain::Drive(double speed, double rotation) {
-    robotDrive->ArcadeDrive(speed, rotation * 0.85);
+    robotDrive->ArcadeDrive(speed, rotation * 0.75);
 }
 
 void Drivetrain::DriveUsingSpeeds(double leftSpeed, double rightSpeed) {
@@ -84,6 +84,10 @@ double Drivetrain::GetLeftRPM() {
 
 double Drivetrain::GetRightRPM() {
     return rightPrimary->GetSensorCollection().GetIntegratedSensorVelocity();
+}
+
+bool Drivetrain::IsTipping() {
+    return RobotContainer::imu->GetRollAngle() > abs(tipAngle.value());
 }
  
 void Drivetrain::Periodic() {
