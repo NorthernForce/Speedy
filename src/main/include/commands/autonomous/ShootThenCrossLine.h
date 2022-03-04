@@ -27,5 +27,6 @@ class ShootThenCrossLine
 
   bool IsFinished() override;
 
-  std::pair<double, double> justaTest;
+  private:
+    bool reverse = true;
 };

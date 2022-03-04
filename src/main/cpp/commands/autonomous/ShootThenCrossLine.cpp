@@ -9,6 +9,7 @@
 ShootThenCrossLine::ShootThenCrossLine() {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(RobotContainer::drivetrain.get());
+  AddRequirements(RobotContainer::intake.get());
 }
 
 // Called when the command is initially scheduled.
@@ -18,8 +19,9 @@ void ShootThenCrossLine::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShootThenCrossLine::Execute() {
-    justaTest = RobotContainer::drivetrain->GetEncoderRotations();
     RobotContainer::drivetrain->DriveUsingSpeeds(.2, .2);
+    RobotContainer::intake->Run(reverse);
+
 }
 
 // Called once the command ends or is interrupted.
@@ -27,7 +29,7 @@ void ShootThenCrossLine::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool ShootThenCrossLine::IsFinished() {
-    RobotContainer::drivetrain->GetAvgEncoderRotations(justaTest);
+    RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations());
   return (true);
 
 }
