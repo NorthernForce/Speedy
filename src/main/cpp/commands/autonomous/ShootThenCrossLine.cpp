@@ -20,8 +20,12 @@ void ShootThenCrossLine::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShootThenCrossLine::Execute() {
+
     RobotContainer::intake->ArmUp();
-    RobotContainer::intake->Run();
+    if(RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) > 20) {
+        RobotContainer::intake->Run();
+    }
+
     RobotContainer::drivetrain->DriveUsingSpeeds(.15, .15);
     // if (RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) > -20 * Constants::encoderToInch) {
     //      RobotContainer::drivetrain->DriveUsingSpeeds(0, 0);
