@@ -28,8 +28,9 @@ void OI::InitControllers() {
 
 void OI::MapControllerButtons() {
     //driver
-    SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new IntakeBall);
-    SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBall);
+    bool isIntakeTimed = false;
+    SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new IntakeBall(isIntakeTimed));
+    SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBall(isIntakeTimed));
     SimpleButton(driverController, Xbox::X_button).WhenPressed(new MoveToCoordinate(24, 0));
 
     //manipulator

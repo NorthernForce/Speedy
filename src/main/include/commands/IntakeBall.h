@@ -12,7 +12,7 @@
 class IntakeBall
     : public frc2::CommandHelper<frc2::CommandBase, IntakeBall> {
  public:
-  IntakeBall();
+  IntakeBall(bool timed);
 
   void Execute() override;
 
@@ -21,4 +21,6 @@ class IntakeBall
   bool IsFinished() override;
 
  private:
+    frc::Timer timer;
+    bool timed = false;
 };

@@ -5,8 +5,10 @@
 #include "commands/IntakeBall.h"
 #include "RobotContainer.h"
 
-IntakeBall::IntakeBall() {
+IntakeBall::IntakeBall(bool timed) : timed(timed) {
     AddRequirements(RobotContainer::intake.get());
+    timer.Reset();
+    timer.Start();
 }
 
 void IntakeBall::Execute() {
@@ -18,5 +20,7 @@ void IntakeBall::End(bool interrupted) {
 }
 
 bool IntakeBall::IsFinished() {
+    if (timed)
+        return timer.Get() > 1_s;
     return false;
 }

@@ -12,7 +12,7 @@
 class PushOutBall
     : public frc2::CommandHelper<frc2::CommandBase, PushOutBall> {
  public:
-  PushOutBall();
+  PushOutBall(bool timed);
 
   void Execute() override;
 
@@ -22,4 +22,6 @@ class PushOutBall
 
  private:
     bool reverse = true;
+    bool timed = false;
+    frc::Timer timer;
 };
