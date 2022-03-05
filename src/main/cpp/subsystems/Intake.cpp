@@ -17,22 +17,25 @@ Intake::Intake() {
 }
 
 void Intake::Run(bool reverse) {
-    intakeTopSpark->Set(reverse ? -1.0 : 1.0);
+    intakeTopSpark->Set(reverse ? 1.0 : -1.0);
+    intakeBottomSpark->Set(reverse ? 1.0 : -1.0);
 }
 
 void Intake::Stop() {
     intakeTopSpark->Set(0);
+    intakeBottomSpark->Set(0);
 }
 
 void Intake::SetSpeed(double speed) {
     intakeTopSpark->Set(speed);
+    intakeBottomSpark->Set(speed);
 }
 
 void Intake::ConfigureSpark(rev::CANSparkMax & controller) {
-    const uint16_t currentLimit = 60;
-    const uint16_t limitThreshold = 90;
-    controller.SetSmartCurrentLimit(currentLimit);
-    controller.SetSecondaryCurrentLimit(limitThreshold);
+    //const uint16_t currentLimit = 60;
+    //const uint16_t limitThreshold = 90;
+    // controller.SetSmartCurrentLimit(currentLimit);
+    // controller.SetSecondaryCurrentLimit(limitThreshold);
     controller.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     controller.SetInverted(true);
 }

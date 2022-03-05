@@ -33,8 +33,6 @@ void OI::MapControllerButtons() {
     SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
     SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBall);
 
-
-
     //manipulator
     SimpleButton(manipulatorController, Xbox::X_button).WhileHeld(new LowerClimber);
     SimpleButton(manipulatorController, Xbox::Y_button).WhileHeld(new RaiseClimber);
@@ -46,7 +44,7 @@ void OI::MapControllerButtons() {
 
 std::pair<double, double> OI::GetDriveControls() {
   double speed = driverController->GetLeftY();
-  double rotation = driverController->GetRightX() * -1;
+  double rotation = driverController->GetRightX();
   double multiplier = GetDriveSpeedMultiplier();
   return std::make_pair(speed*multiplier, rotation*multiplier);
 }

@@ -33,9 +33,9 @@ void Drivetrain::SetFollowers() {
 }
 
 void Drivetrain::SetInvert(){
-    rightPrimary->SetInverted(true);
+    rightPrimary->SetInverted(false);
     rightFollower->SetInverted(InvertType::FollowMaster);
-    leftPrimary->SetInverted(false);
+    leftPrimary->SetInverted(true);
     leftFollower->SetInverted(InvertType::FollowMaster);
 }
 
@@ -84,12 +84,8 @@ void Drivetrain::SetEncoderPositions(double lt, double rt) {
 }
 
 void Drivetrain::PrintEncoderValues() {
-  printf("Left Encoder : %lf", leftPrimary->GetSelectedSensorPosition());
-  printf("\n");
-  printf("Right Encoder: %lf", rightPrimary->GetSelectedSensorPosition());
-  printf("\n");
-  printf("Avg Encoder: %lf", GetAvgEncoderRotations(GetEncoderRotations()));
-  printf("\n");
+  printf("Left Encoder : %lf\n", leftPrimary->GetSelectedSensorPosition());
+  printf("Right Encoder: %lf\n", rightPrimary->GetSelectedSensorPosition());
 }
 
 double Drivetrain::GetLeftRPM() {
