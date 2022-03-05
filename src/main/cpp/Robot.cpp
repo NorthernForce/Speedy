@@ -14,6 +14,7 @@
 void Robot::RobotInit() {
     //RobotContainer::climber->SetPivot(PivotState::Up);
     //RobotContainer::intake->SetArmState(ArmState::Down);
+    RobotContainer::drivetrain->SetEncoderPositions(0, 0);
 }
 
 /**
@@ -26,11 +27,14 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
-  printf("%lf", RobotContainer::drivetrain->leftPrimary->GetSelectedSensorPosition());
-  printf("%lf", RobotContainer::drivetrain->rightPrimary->GetSelectedSensorPosition());
+  printf("Left Encoder : %lf", RobotContainer::drivetrain->leftPrimary->GetSelectedSensorPosition(), "/n");
+  printf("\n");
+  printf("Right Encoder: %lf", RobotContainer::drivetrain->rightPrimary->GetSelectedSensorPosition());
+  printf("\n");
+  printf("Avg Encoder: %lf", RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()));
+  printf("\n");
   
   }
-
 /**
  * This function is called once each time the robot enters Disabled mode. You
  * can use it to reset any subsystem information you want to clear when the
@@ -46,9 +50,17 @@ void Robot::DisabledPeriodic() {}
  */
 void Robot::AutonomousInit() {
     //RobotContainer::climber->PivotDown();
-}
+     autoCommandScheduler.reset(new AutoCommandScheduler({
+         new ShootThenCrossLine()
+    }));
 
-void Robot::AutonomousPeriodic() {}
+    //new ShootThenCrossLine();
+    }
+
+void Robot::AutonomousPeriodic() {
+    autoCommandScheduler->RunSequential();
+    //frc2::CommandScheduler::GetInstance().Run();
+}
 
 void Robot::TeleopInit() {}
 

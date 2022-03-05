@@ -4,6 +4,7 @@
 
 #include "commands/autonomous/ShootThenCrossLine.h"
 #include "RobotContainer.h"
+#include "Constants.h"
 #include "subsystems/Drivetrain.h"
 
 ShootThenCrossLine::ShootThenCrossLine() {
@@ -19,17 +20,29 @@ void ShootThenCrossLine::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShootThenCrossLine::Execute() {
-    RobotContainer::drivetrain->DriveUsingSpeeds(.2, .2);
-    RobotContainer::intake->Run(reverse);
+    RobotContainer::intake->ArmUp();
+    RobotContainer::intake->Run();
+    RobotContainer::drivetrain->DriveUsingSpeeds(.15, .15);
+    // if (RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) > -20 * Constants::encoderToInch) {
+    //      RobotContainer::drivetrain->DriveUsingSpeeds(0, 0);
+    //  }
 
 }
 
 // Called once the command ends or is interrupted.
-void ShootThenCrossLine::End(bool interrupted) {}
+void ShootThenCrossLine::End(bool interrupted) {
+    RobotContainer::drivetrain->DriveUsingSpeeds(0, 0);
+
+}
 
 // Returns true when the command should end.
 bool ShootThenCrossLine::IsFinished() {
     RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations());
-  return (true);
+    if ((RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) > 60)) {
+        RobotContainer::drivetrain->DriveUsingSpeeds(0, 0);
+        return true;
+    } else {
+        return false;
+    }
 
 }

@@ -17,6 +17,8 @@
 #include "subsystems/Coordinates.h"
 #include "subsystems/Climber.h"
 
+#include "commands/autonomous/ShootThenCrossLine.h"
+
 #include "utilities/FMSComms.h"
 
 /**
@@ -38,6 +40,7 @@ class RobotContainer {
   static std::shared_ptr<Coordinates> coordinates;
   static std::shared_ptr<Climber> climber;
   static std::shared_ptr<FMSComms> fmsComms;
+  static std::shared_ptr<ShootThenCrossLine> shootThenCrossLine;
 
  private:
   // The robot's subsystems and commands are defined here...

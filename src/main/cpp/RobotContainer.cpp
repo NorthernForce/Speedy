@@ -14,7 +14,7 @@ std::shared_ptr<PCM> RobotContainer::pcm;
 std::shared_ptr<Coordinates> RobotContainer::coordinates;
 std::shared_ptr<Climber> RobotContainer::climber;
 std::shared_ptr<FMSComms> RobotContainer::fmsComms;
-
+std::shared_ptr<ShootThenCrossLine> RobotContainer::shootThenCrossLine;
 
 RobotContainer::RobotContainer() {
     oi.reset(new OI());

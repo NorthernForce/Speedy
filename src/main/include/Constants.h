@@ -32,5 +32,7 @@ namespace Constants {
 
     const double gearRatio = (9/62) * (18/30);
 
+    const double encoderToInch = -1175;
+
     const units::unit_t<units::length::inch> wheelCircum = 6_in;
 }

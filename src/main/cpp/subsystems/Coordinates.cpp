@@ -53,7 +53,7 @@ void Coordinates::Periodic() {
     p1 = p1.Add(p2);
     
     printf("x position: %f\n", p1.x.value());
-    frc::SmartDashboard::PutNumber("X Position:", location.x.value());
-    frc::SmartDashboard::PutNumber("Y Position:", location.y.value());
-    frc::SmartDashboard::PutNumber("Theta: ", Theta().value());
+    //frc::SmartDashboard::PutNumber("X Position:", location.x.value());
+    //frc::SmartDashboard::PutNumber("Y Position:", location.y.value());
+    //frc::SmartDashboard::PutNumber("Theta: ", Theta().value());
 }

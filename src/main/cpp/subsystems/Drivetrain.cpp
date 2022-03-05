@@ -74,7 +74,7 @@ std::pair<double, double> Drivetrain::GetEncoderRotations() {
 }
 
 double Drivetrain::GetAvgEncoderRotations(std::pair<double, double>) {
-    double avgRotations = GetEncoderRotations().first + GetEncoderRotations().second;
+    double avgRotations = (GetEncoderRotations().first + GetEncoderRotations().second)/2;
     return avgRotations;
 }
 
