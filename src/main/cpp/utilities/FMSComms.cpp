@@ -7,6 +7,7 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/DriverStation.h>
+#include <frc/Timer.h>
 #include <math.h>
 #include <utilities/FMSComms.h>
 #include <iostream>
@@ -30,6 +31,10 @@ std::string FMSComms::GetAllianceString(frc::DriverStation::Alliance AllianceGet
     } else {
         return "invalid";
     }
+}
+
+double FMSComms::DisplayMatchTime() {
+    return frc::SmartDashboard::PutNumber("Match Time", frc::Timer::GetMatchTime().value());
 }
 
 /*

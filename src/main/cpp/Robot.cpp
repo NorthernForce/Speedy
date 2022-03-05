@@ -11,6 +11,8 @@
 #include "subsystems/Climber.h"
 #include "commands/autonomous/ShootThenCrossLine.h"
 
+#include <frc/Timer.h>
+
 void Robot::RobotInit() {
     //RobotContainer::climber->SetPivot(PivotState::Up);
     //RobotContainer::intake->SetArmState(ArmState::Down);
@@ -27,6 +29,7 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
+  RobotContainer::fmsComms->DisplayMatchTime();
 
   //RobotContainer::drivetrain->PrintEncoderValues();
   
