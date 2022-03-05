@@ -2,6 +2,8 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+//3 1 2, power/ground is 0
+
 #include "subsystems/Climber.h"
 #include "Constants.h"
 
@@ -13,6 +15,16 @@ Climber::Climber() {
 
     ConfigureController(*leftMotor);
     ConfigureController(*rightMotor);
+    InitClimberPositionSensors();
+}
+
+void Climber::InitClimberPositionSensors(){
+    climberPosition = {
+    new frc::DigitalInput(Constants::DigitalPorts::climberPort0),
+    new frc::DigitalInput(Constants::DigitalPorts::climberPort1),
+    new frc::DigitalInput(Constants::DigitalPorts::climberPort2),
+    new frc::DigitalInput(Constants::DigitalPorts::climberPort3),
+};
 }
 
 void Climber::ConfigureController(WPI_TalonFX& controller) {
@@ -41,19 +53,37 @@ void Climber::SetPivot(PivotState state) {
     pivotPosition = state;
 }
 
-void Climber::Raise() {
-    leftMotor->Set(-0.85);
-    rightMotor->Set(0.85);
+void Climber::Raise(ClimberState state) {
+    if ((int)state != (int)climberState+1) {
+        leftMotor->Set(-0.85);
+        rightMotor->Set(0.85);
+    }
 }
 
-void Climber::Lower() {
-    leftMotor->Set(0.45);
-    rightMotor->Set(-0.45);
+void Climber::Lower(ClimberState state) {
+    if ((int)state!= (int)climberState-1) {
+        leftMotor->Set(0.65);
+        rightMotor->Set(-0.65);
+    }
 }
 
 void Climber::Stop(){
     leftMotor->Set(0);
     rightMotor->Set(0);
+}
+
+ClimberState Climber::GetClimberState(std::vector<frc::DigitalInput*> climberPosition) {
+    if (climberPosition[1]->Get() == false){
+        climberState = ClimberState::Up;
+    } else if (climberPosition[2]->Get() == false) {
+        climberState = ClimberState::Mid;
+    } else if (climberPosition[3]->Get() == false) {
+        climberState = ClimberState::Down;
+    } else{
+        climberState = ClimberState::Unknown;
+    };
+
+    return climberState;
 }
 
 HookState Climber::GetHookState() {

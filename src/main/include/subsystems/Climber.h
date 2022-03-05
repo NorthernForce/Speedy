@@ -6,6 +6,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include <memory>
+#include <frc/DigitalInput.h>
 
 #include <frc/Solenoid.h>
 #include <ctre/Phoenix.h>
@@ -20,26 +21,41 @@ enum class HookState {
     Up
 };
 
+enum class ClimberState {
+    Unknown,
+    Down,
+    Mid,
+    Up
+};
+
 class Climber : public frc2::SubsystemBase {
  public:
   Climber();
   void ConfigureController(WPI_TalonFX& controller);
+
   void PivotUp();
   void PivotDown();
+
   PivotState GetPivot();
-  void SetPivot(PivotState state);
-  void Raise();
-  void Lower();
-  void Stop();
   HookState GetHookState();
+  void InitClimberPositionSensors();
+  ClimberState GetClimberState(std::vector<frc::DigitalInput*> climberPosition);
+  void SetPivot(PivotState state);
   void SetHookState(HookState state);
-  void SetPivot(HookState state);
+  void SetClimberState(ClimberState state);
+
+  void Raise(ClimberState state);
+  void Lower(ClimberState state);
+  void Stop();
   void Periodic() override;
+
+  std::vector<frc::DigitalInput*> climberPosition;
 
  private:
   std::unique_ptr<frc::Solenoid> climber;
   PivotState pivotPosition;
   HookState hookPosition;
+  ClimberState climberState;
   std::unique_ptr<WPI_TalonFX> leftMotor;
   std::unique_ptr<WPI_TalonFX> rightMotor;
 };

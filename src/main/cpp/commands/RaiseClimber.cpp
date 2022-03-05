@@ -4,15 +4,21 @@
 
 #include "commands/RaiseClimber.h"
 #include "RobotContainer.h"
+#include "subsystems/Climber.h"
 
 RaiseClimber::RaiseClimber() {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(RobotContainer::climber.get());
 }
 
+void RaiseClimber::Initialize() {
+    currentState = RobotContainer::climber->GetClimberState(RobotContainer::climber->climberPosition);
+    (int)currentState;
+}
+
 // Called repeatedly when this Command is scheduled to run
 void RaiseClimber::Execute() {
-    RobotContainer::climber->Raise();
+    RobotContainer::climber->Raise((int)RobotContainer::climber->GetClimberState(RobotContainer::climber->climberPosition));
 }
 
 void RaiseClimber::End(bool interrupted) {

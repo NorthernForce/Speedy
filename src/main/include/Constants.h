@@ -27,6 +27,13 @@ namespace Constants {
     const uint8_t manipulatorController_id = 1;
     const uint8_t PCMCanBusID = 15;
 
+    namespace DigitalPorts {
+        const uint8_t climberPort0 = 0;
+        const uint8_t climberPort1 = 2;
+        const uint8_t climberPort2 = 1;
+        const uint8_t climberPort3 = 3;
+    }
+
     const double degreesToRadians = M_PI/180;
     const double XResetMultiplier = 0.996194698092;
 
