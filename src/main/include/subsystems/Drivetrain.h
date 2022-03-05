@@ -16,14 +16,17 @@ class Drivetrain : public frc2::SubsystemBase {
   void SetInvert();
   void ConfigureAllControllers();
   void ConfigureController(WPI_TalonFX& controller, bool isFollower=false);
+
   void Drive(double speed, double rotation);
   void DriveUsingSpeeds(double leftSpeed, double rightSpeed);
+
   std::pair<double, double> GetEncoderRotations();
   double GetAvgEncoderRotations(std::pair<double, double>);
   void SetEncoderPositions(double lt, double rt);
   void PrintEncoderValues();
   double GetLeftRPM();
   double GetRightRPM();
+  
   bool IsTipping();
   void Periodic() override;
 

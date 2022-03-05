@@ -84,7 +84,7 @@ void Drivetrain::SetEncoderPositions(double lt, double rt) {
 }
 
 void Drivetrain::PrintEncoderValues() {
-  printf("Left Encoder : %lf", leftPrimary->GetSelectedSensorPosition(), "/n");
+  printf("Left Encoder : %lf", leftPrimary->GetSelectedSensorPosition());
   printf("\n");
   printf("Right Encoder: %lf", rightPrimary->GetSelectedSensorPosition());
   printf("\n");

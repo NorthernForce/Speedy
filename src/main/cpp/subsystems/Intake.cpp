@@ -3,32 +3,38 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "RobotContainer.h"
+#include "subsystems/Intake.h"
 
 Intake::Intake() {
-    intakeSpark = std::make_unique<rev::CANSparkMax>(Constants::MotorIDs::intake, rev::CANSparkMax::MotorType::kBrushless);
+    intakeTopSpark = std::make_unique<rev::CANSparkMax>(Constants::MotorIDs::intakeTop, rev::CANSparkMax::MotorType::kBrushless);
+    intakeBottomSpark = std::make_unique<rev::CANSparkMax>(Constants::MotorIDs::intakeBottom, rev::CANSparkMax::MotorType::kBrushless);
 
     arm = std::make_unique<frc::Solenoid>(Constants::PCMCanBusID, frc::PneumaticsModuleType::REVPH, Constants::arm);
+
+    ConfigureSpark(*intakeTopSpark);
+    ConfigureSpark(*intakeBottomSpark);
+    
 }
 
 void Intake::Run(bool reverse) {
-    intakeSpark->Set(reverse ? -1.0 : 1.0);
+    intakeTopSpark->Set(reverse ? -1.0 : 1.0);
 }
 
 void Intake::Stop() {
-    intakeSpark->Set(0);
+    intakeTopSpark->Set(0);
 }
 
 void Intake::SetSpeed(double speed) {
-    intakeSpark->Set(speed);
+    intakeTopSpark->Set(speed);
 }
 
-void Intake::ConfigureSpark() {
+void Intake::ConfigureSpark(rev::CANSparkMax & controller) {
     const uint16_t currentLimit = 60;
     const uint16_t limitThreshold = 90;
-    intakeSpark->SetSmartCurrentLimit(currentLimit);
-    intakeSpark->SetSecondaryCurrentLimit(limitThreshold);
-    intakeSpark->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-    intakeSpark->SetInverted(true);
+    controller.SetSmartCurrentLimit(currentLimit);
+    controller.SetSecondaryCurrentLimit(limitThreshold);
+    controller.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    controller.SetInverted(true);
 }
 
 ArmState Intake::GetPivot() {

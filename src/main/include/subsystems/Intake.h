@@ -17,7 +17,7 @@ enum class ArmState{
 class Intake : public frc2::SubsystemBase {
  public:
   Intake();
-  void ConfigureSpark();
+  void ConfigureSpark(rev::CANSparkMax & controller);
   void Run(bool reverse=false);
   void Stop();
   void SetSpeed(double speed);
@@ -31,6 +31,8 @@ class Intake : public frc2::SubsystemBase {
   ArmState armPosition;
 
  private:
-  std::unique_ptr<rev::CANSparkMax> intakeSpark;
+  std::unique_ptr<rev::CANSparkMax> intakeTopSpark;
+  std::unique_ptr<rev::CANSparkMax> intakeBottomSpark;
+
   std::unique_ptr<frc::Solenoid> arm;
 };
