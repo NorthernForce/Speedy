@@ -21,6 +21,7 @@ class Drivetrain : public frc2::SubsystemBase {
   std::pair<double, double> GetEncoderRotations();
   double GetAvgEncoderRotations(std::pair<double, double>);
   void SetEncoderPositions(double lt, double rt);
+  void PrintEncoderValues();
   double GetLeftRPM();
   double GetRightRPM();
   bool IsTipping();

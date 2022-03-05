@@ -27,12 +27,8 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
-  printf("Left Encoder : %lf", RobotContainer::drivetrain->leftPrimary->GetSelectedSensorPosition(), "/n");
-  printf("\n");
-  printf("Right Encoder: %lf", RobotContainer::drivetrain->rightPrimary->GetSelectedSensorPosition());
-  printf("\n");
-  printf("Avg Encoder: %lf", RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()));
-  printf("\n");
+
+  //RobotContainer::drivetrain->PrintEncoderValues();
   
   }
 /**
