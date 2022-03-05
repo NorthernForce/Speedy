@@ -18,7 +18,6 @@ std::shared_ptr<frc::XboxController> OI::manipulatorController;
 OI::OI() {
     frc::SmartDashboard::PutNumber("Drive Speed:", 1.0); 
     InitControllers();
-    //frc::SmartDashboard::PutString("Drive Speed", RobotContainer::fmsComms->GetAllianceString(RobotContainer::fmsComms->GetAlliance()));
 }
 
 void OI::InitControllers() {
@@ -31,12 +30,15 @@ void OI::MapControllerButtons() {
     SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new IntakeBall);
     SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBall);
     SimpleButton(driverController, Xbox::X_button).WhenPressed(new MoveToCoordinate(24, 0));
+    SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
+    SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBall);
+
+
 
     //manipulator
     SimpleButton(manipulatorController, Xbox::X_button).WhileHeld(new LowerClimber);
     SimpleButton(manipulatorController, Xbox::Y_button).WhileHeld(new RaiseClimber);
     //SimpleButton(manipulatorController, Xbox::X_button).WhenPressed(new ToggleArm);
-    SimpleButton(manipulatorController, Xbox::A_button).WhenPressed(new PivotToggle);
     SimpleButton(manipulatorController, Xbox::lt_bumper).WhenPressed(new ArmUp);
     SimpleButton(manipulatorController, Xbox::rt_bumper).WhenPressed(new ArmDown);
 
