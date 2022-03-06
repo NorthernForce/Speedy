@@ -16,6 +16,7 @@ PCM::PCM() {
 }
 
 // This method will be called once per scheduler run
-void PCM::Periodic() {
-    //frc::SmartDashboard::PutNumber("Compressor PSI:", compressor->GetPressure().value());
+void PCM::Periodic() 
+{
+    pressure_read = compressor->GetPressure();
 }
