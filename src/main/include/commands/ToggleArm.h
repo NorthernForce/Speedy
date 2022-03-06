@@ -7,9 +7,18 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
-class PivotToggle
-    : public frc2::CommandHelper<frc2::CommandBase, PivotToggle> {
+/**
+ * An example command.
+ *
+ * <p>Note that this extends CommandHelper, rather extending CommandBase
+ * directly; this is crucially important, or else the decorator functions in
+ * Command will *not* work!
+ */
+class ToggleArm
+    : public frc2::CommandHelper<frc2::CommandBase, ToggleArm> {
  public:
+
   void Initialize() override;
+
   bool IsFinished() override;
 };

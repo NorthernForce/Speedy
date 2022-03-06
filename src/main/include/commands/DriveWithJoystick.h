@@ -18,7 +18,6 @@ class DriveWithJoystick
     : public frc2::CommandHelper<frc2::CommandBase, DriveWithJoystick> {
  public:
   DriveWithJoystick();
-  void Initialize() override;
   void Execute() override;
   void End(bool interrupted) override;
   bool IsFinished() override;

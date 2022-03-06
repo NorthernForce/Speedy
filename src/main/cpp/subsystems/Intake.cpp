@@ -6,14 +6,11 @@
 
 Intake::Intake() {
     intakeSpark = std::make_unique<rev::CANSparkMax>(Constants::MotorIDs::intake, rev::CANSparkMax::MotorType::kBrushless);
-    intakeSpark->SetInverted(true);
-
-    leftArm = std::make_unique<frc::Solenoid>(frc::PneumaticsModuleType::REVPH, Constants::leftArm);
-    rightArm = std::make_unique<frc::Solenoid>(frc::PneumaticsModuleType::REVPH, Constants::rightArm);
+    arm = std::make_unique<frc::Solenoid>(Constants::PCMCanBusID, frc::PneumaticsModuleType::REVPH, Constants::arm);
 }
 
 void Intake::Run(bool reverse) {
-    intakeSpark->Set(reverse ? -1.0 : 0.45);
+    intakeSpark->Set(reverse ? -1.0 : 1.0);
 }
 
 void Intake::Stop() {
@@ -24,24 +21,29 @@ void Intake::SetSpeed(double speed) {
     intakeSpark->Set(speed);
 }
 
-// rt bumper driver controller
 void Intake::ConfigureSpark() {
     const uint16_t currentLimit = 60;
     const uint16_t limitThreshold = 90;
     intakeSpark->SetSmartCurrentLimit(currentLimit);
     intakeSpark->SetSecondaryCurrentLimit(limitThreshold);
     intakeSpark->SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    intakeSpark->SetInverted(true);
+}
+
+ArmState Intake::GetPivot() {
+    return armPosition;
+}
+
+void Intake::SetArmState(ArmState state) {
+    armPosition = state;
 }
 
 void Intake::ArmUp() {
-    leftArm->Set(true);
-    rightArm->Set(true);
+    arm->Set(true);
+    armPosition = ArmState::Up;
 }
 
 void Intake::ArmDown() {
-    leftArm->Set(false);
-    rightArm->Set(false);
+    arm->Set(false);
+    armPosition = ArmState::Down;
 }
-
-// This method will be called once per scheduler run
-void Intake::Periodic() {}

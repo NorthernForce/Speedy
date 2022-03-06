@@ -3,14 +3,20 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "Robot.h"
+#include "RobotContainer.h"
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
 
 #include "subsystems/Climber.h"
+#include "commands/autonomous/ShootThenCrossLine.h"
+
+#include <frc/Timer.h>
 
 void Robot::RobotInit() {
-    RobotContainer::climber->SetPivot(PivotState::Up);
+    //RobotContainer::climber->SetPivot(PivotState::Up);
+    //RobotContainer::intake->SetArmState(ArmState::Down);
+    RobotContainer::drivetrain->SetEncoderPositions(0, 0);
 }
 
 /**
@@ -23,8 +29,11 @@ void Robot::RobotInit() {
  */
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
-}
+  RobotContainer::fmsComms->DisplayMatchTime();
 
+  //RobotContainer::drivetrain->PrintEncoderValues();
+  
+  }
 /**
  * This function is called once each time the robot enters Disabled mode. You
  * can use it to reset any subsystem information you want to clear when the
@@ -39,10 +48,18 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
-    RobotContainer::climber->PivotDown();
-}
+    //RobotContainer::climber->PivotDown();
+     autoCommandScheduler.reset(new AutoCommandScheduler({
+         new ShootThenCrossLine()
+    }));
 
-void Robot::AutonomousPeriodic() {}
+    //new ShootThenCrossLine();
+    }
+
+void Robot::AutonomousPeriodic() {
+    autoCommandScheduler->RunSequential();
+    //frc2::CommandScheduler::GetInstance().Run();
+}
 
 void Robot::TeleopInit() {}
 

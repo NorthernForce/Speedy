@@ -9,6 +9,11 @@
 #include <frc/Solenoid.h>
 #include <memory>
 
+enum class ArmState{
+    Down,
+    Up
+};
+
 class Intake : public frc2::SubsystemBase {
  public:
   Intake();
@@ -17,13 +22,15 @@ class Intake : public frc2::SubsystemBase {
   void Stop();
   void SetSpeed(double speed);
 
+  ArmState GetPivot();
+  void SetArmState(ArmState state);
+
   void ArmUp();
   void ArmDown();
 
-  void Periodic() override;
+  ArmState armPosition;
 
  private:
   std::unique_ptr<rev::CANSparkMax> intakeSpark;
-  std::unique_ptr<frc::Solenoid> leftArm;
-  std::unique_ptr<frc::Solenoid> rightArm;
+  std::unique_ptr<frc::Solenoid> arm;
 };

@@ -17,6 +17,10 @@
 #include "subsystems/Coordinates.h"
 #include "subsystems/Climber.h"
 
+#include "commands/autonomous/ShootThenCrossLine.h"
+
+#include "utilities/FMSComms.h"
+
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -32,8 +36,11 @@ class RobotContainer {
   static std::shared_ptr<IMU> imu;
   static std::shared_ptr<Intake> intake;
   static std::shared_ptr<Navigation> navigation;
+  static std::shared_ptr<PCM> pcm;
   static std::shared_ptr<Coordinates> coordinates;
   static std::shared_ptr<Climber> climber;
+  static std::shared_ptr<FMSComms> fmsComms;
+  static std::shared_ptr<ShootThenCrossLine> shootThenCrossLine;
 
  private:
   // The robot's subsystems and commands are defined here...

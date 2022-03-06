@@ -43,4 +43,8 @@ class Coordinates : public frc2::SubsystemBase {
   units::inch_t distance;
   units::inch_t dx;
   units::inch_t dy;
+
+  CPlane::Point p1{1_in, 1_in};
+  CPlane::Point p2{2_in, 2_in};
+  CPlane::Point p3{0_in, 0_in};
 };

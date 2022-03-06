@@ -64,5 +64,6 @@
         "iomanip": "cpp",
         "mutex": "cpp",
         "*.inc": "cpp"
-    }
+    },
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

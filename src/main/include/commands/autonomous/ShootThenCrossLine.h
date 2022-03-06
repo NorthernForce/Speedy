@@ -14,14 +14,19 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class LowerClimber
-    : public frc2::CommandHelper<frc2::CommandBase, LowerClimber> {
+class ShootThenCrossLine
+    : public frc2::CommandHelper<frc2::CommandBase, ShootThenCrossLine> {
  public:
-  LowerClimber();
+  ShootThenCrossLine();
+
+  void Initialize() override;
 
   void Execute() override;
 
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+  private:
+    bool reverse = true;
 };

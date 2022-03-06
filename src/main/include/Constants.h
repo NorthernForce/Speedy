@@ -16,14 +16,12 @@ namespace Constants {
 
         const uint8_t intake = 5;
 
-        const uint8_t leftClimber = 6;
-        const uint8_t rightClimber = 7;
+        const uint8_t rightClimber = 6;
+        const uint8_t leftClimber = 7;
     }
 
-    const uint8_t leftArm = 0;
-    const uint8_t rightArm = 1;
-    const uint8_t leftClimber = 2;
-    const uint8_t rightClimber = 3;
+    const uint8_t climber = 4;
+    const uint8_t arm = 9;
 
     const uint8_t driverController_id = 0;
     const uint8_t manipulatorController_id = 1;
@@ -33,6 +31,8 @@ namespace Constants {
     const double XResetMultiplier = 0.996194698092;
 
     const double gearRatio = (9/62) * (18/30);
+
+    const double encoderToInch = -1175;
 
     const units::unit_t<units::length::inch> wheelCircum = 6_in;
 }

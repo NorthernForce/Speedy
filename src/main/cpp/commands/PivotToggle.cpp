@@ -4,12 +4,6 @@
 
 #include "commands/PivotToggle.h"
 #include "RobotContainer.h"
-#include "subsystems/Climber.h"
-
-PivotToggle::PivotToggle() {
-  // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements(RobotContainer::climber.get());
-}
 
 // Called when the command is initially scheduled.
 void PivotToggle::Initialize() {
@@ -21,12 +15,6 @@ void PivotToggle::Initialize() {
         printf("Pivot not in range\n");
     }
 }
-
-// Called repeatedly when this Command is scheduled to run
-void PivotToggle::Execute() {}
-
-// Called once the command ends or is interrupted.
-void PivotToggle::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool PivotToggle::IsFinished() {

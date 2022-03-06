@@ -15,6 +15,10 @@ void LowerClimber::Execute() {
     RobotContainer::climber->Lower();
 }
 
+void LowerClimber::End(bool interrupted) {
+    RobotContainer::climber->Stop();
+}
+
 // Returns true when the command should end.
 bool LowerClimber::IsFinished() {
   return false;

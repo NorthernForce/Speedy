@@ -33,6 +33,9 @@ void MoveToCoordinate::Initialize() {
   if (destination.relative) {
     destination = destination.Add(RobotContainer::coordinates->GetLocation());
   }
+  driveP = frc::SmartDashboard::GetNumber("driveP:", driveP);
+  driveI = frc::SmartDashboard::GetNumber("driveI:", driveI);
+  driveD = frc::SmartDashboard::GetNumber("driveD:", driveD);
 }
 
 double MoveToCoordinate::Limit(double value, double limit) {
@@ -70,6 +73,9 @@ double MoveToCoordinate::TurnPower() {
 
 // Called repeatedly when this Command is scheduled to run
 void MoveToCoordinate::Execute() {
+  frc::SmartDashboard::PutNumber("driveP:", driveP);
+  frc::SmartDashboard::PutNumber("driveI:", driveI);
+  frc::SmartDashboard::PutNumber("driveD:", driveD);
   RobotContainer::drivetrain->Drive(DrivePower(), TurnPower());
 
   if (distanceToDestination < 0.5_in) {

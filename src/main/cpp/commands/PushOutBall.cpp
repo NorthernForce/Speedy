@@ -5,10 +5,8 @@
 #include "commands/PushOutBall.h"
 #include "RobotContainer.h"
 
-PushOutBall::PushOutBall(bool timed) : timed(timed) {
+PushOutBall::PushOutBall() {
     AddRequirements(RobotContainer::intake.get());
-    timer = std::unique_ptr<frc::Timer>();
-    timer->Start();
 }
 
 void PushOutBall::Execute() {
@@ -20,7 +18,5 @@ void PushOutBall::End(bool interrupted) {
 }
 
 bool PushOutBall::IsFinished() {
-    if (timed)
-        return timer->Get() > 1_s;
     return false;
 }

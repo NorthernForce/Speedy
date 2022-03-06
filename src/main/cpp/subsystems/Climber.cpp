@@ -6,8 +6,7 @@
 #include "Constants.h"
 
 Climber::Climber() {
-    leftClimber = std::make_unique<frc::Solenoid>(frc::PneumaticsModuleType::REVPH, Constants::leftClimber);
-    rightClimber = std::make_unique<frc::Solenoid>(frc::PneumaticsModuleType::REVPH, Constants::rightClimber);
+    climber = std::make_unique<frc::Solenoid>(Constants::PCMCanBusID, frc::PneumaticsModuleType::REVPH, Constants::climber);
 
     leftMotor = std::make_unique<WPI_TalonFX>(Constants::MotorIDs::leftClimber);
     rightMotor = std::make_unique<WPI_TalonFX>(Constants::MotorIDs::rightClimber);
@@ -25,14 +24,12 @@ void Climber::ConfigureController(WPI_TalonFX& controller) {
 }
 
 void Climber::PivotUp() {
-    leftClimber->Set(true);
-    rightClimber->Set(true);
+    climber->Set(true);
     pivotPosition = PivotState::Up;
 }
 
 void Climber::PivotDown() {
-    leftClimber->Set(false);
-    rightClimber->Set(false);
+    climber->Set(false);
     pivotPosition = PivotState::Down;
 }
 
@@ -45,13 +42,18 @@ void Climber::SetPivot(PivotState state) {
 }
 
 void Climber::Raise() {
-    leftMotor->Set(0.5);
-    rightMotor->Set(0.5);
+    leftMotor->Set(-0.85);
+    rightMotor->Set(0.85);
 }
 
 void Climber::Lower() {
-    leftMotor->Set(0.5);
-    rightMotor->Set(0.5);
+    leftMotor->Set(0.45);
+    rightMotor->Set(-0.45);
+}
+
+void Climber::Stop(){
+    leftMotor->Set(0);
+    rightMotor->Set(0);
 }
 
 HookState Climber::GetHookState() {
