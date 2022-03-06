@@ -7,6 +7,7 @@
 
 #include "subsystems/PCM.h"
 #include "Constants.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <memory>
 
 PCM::PCM() {
@@ -15,4 +16,6 @@ PCM::PCM() {
 }
 
 // This method will be called once per scheduler run
-void PCM::Periodic() {}
+void PCM::Periodic() {
+    //frc::SmartDashboard::PutNumber("Compressor PSI:", compressor->GetPressure().value());
+}

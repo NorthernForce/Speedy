@@ -17,6 +17,7 @@ void Robot::RobotInit() {
     //RobotContainer::climber->SetPivot(PivotState::Up);
     //RobotContainer::intake->SetArmState(ArmState::Down);
     RobotContainer::drivetrain->SetEncoderPositions(0, 0);
+    RobotContainer::intake->ArmUp();
 }
 
 /**
@@ -39,7 +40,9 @@ void Robot::RobotPeriodic() {
  * can use it to reset any subsystem information you want to clear when the
  * robot is disabled.
  */
-void Robot::DisabledInit() {}
+void Robot::DisabledInit() {
+    RobotContainer::intake->ArmUp();
+}
 
 void Robot::DisabledPeriodic() {}
 

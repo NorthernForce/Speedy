@@ -14,10 +14,11 @@ namespace Constants {
         const uint8_t leftFollower = 3;
         const uint8_t rightFollower = 4;
 
-        const uint8_t intake = 5;
+        const uint8_t intakeTop = 5;
+        const uint8_t intakeBottom = 6;
 
-        const uint8_t rightClimber = 6;
-        const uint8_t leftClimber = 7;
+        const uint8_t rightClimber = 7;
+        const uint8_t leftClimber = 8;
     }
 
     const uint8_t climber = 4;
