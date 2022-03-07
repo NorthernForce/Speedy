@@ -29,11 +29,11 @@ units::inch_t Coordinates::DistanceTravelled() {
 }
 
 units::degree_t Coordinates::Theta() {
-    /*
-    Add start angle and make sure this works with the
-    trig functions (clockwise is negative)
-    */
-    return units::degree_t(RobotContainer::imu->GetRotation());
+    return units::degree_t(RobotContainer::imu->GetRotation()) + navXOffsetAngle;
+}
+
+void Coordinates::SetTheta(units::degree_t newTheta) {
+    navXOffsetAngle = newTheta - units::degree_t(RobotContainer::imu->GetRotation());
 }
 
 CPlane::Point Coordinates::PointMoved() {

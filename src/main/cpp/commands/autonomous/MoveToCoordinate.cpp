@@ -14,13 +14,14 @@
 #include "Robot.h"
 #include <vector>
 
-MoveToCoordinate::MoveToCoordinate(CPlane::Point destination, double speed) 
-  : destination(destination), baseSpeed(speed) {
+MoveToCoordinate::MoveToCoordinate(CPlane::Point destination, double speed, bool stop) 
+  : destination(destination), baseSpeed(speed), stopAtPoint(stop) {
   AddRequirements(RobotContainer::drivetrain.get());
   SetName("MoveToCoordinate");
 }
 
-MoveToCoordinate::MoveToCoordinate(double xDestination, double yDestination, double speed) : baseSpeed(speed) {
+MoveToCoordinate::MoveToCoordinate(double xDestination, double yDestination, double speed, bool stop)
+: baseSpeed(speed), stopAtPoint(stop) {
   AddRequirements(RobotContainer::drivetrain.get());
   SetName("MoveToCoordinate");
   units::inch_t x{xDestination};
@@ -71,19 +72,37 @@ double MoveToCoordinate::TurnPower() {
   return turnSpeed;
 }
 
-// Called repeatedly when this Command is scheduled to run
-void MoveToCoordinate::Execute() {
-  frc::SmartDashboard::PutNumber("driveP:", driveP);
-  frc::SmartDashboard::PutNumber("driveI:", driveI);
-  frc::SmartDashboard::PutNumber("driveD:", driveD);
-  RobotContainer::drivetrain->Drive(DrivePower(), TurnPower());
+bool MoveToCoordinate::StopFinish() {
+  if (stopAtPoint) {
+    if (distanceToDestination < 0.5_in) {
+      finishCounter ++;
+    }
+    else {
+      finishCounter = 0;
+    }
 
-  if (distanceToDestination < 0.5_in) {
-    finishCounter ++;
+    return finishCounter > 30;
   }
   else {
-    finishCounter = 0;
+    return false;
   }
+}
+
+bool MoveToCoordinate::SpeedFinish() {
+  if (!stopAtPoint && distanceToDestination < 3.0_in) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+// Called repeatedly when this Command is scheduled to run
+void MoveToCoordinate::Execute() {
+  // frc::SmartDashboard::PutNumber("driveP:", driveP);
+  // frc::SmartDashboard::PutNumber("driveI:", driveI);
+  // frc::SmartDashboard::PutNumber("driveD:", driveD);
+  RobotContainer::drivetrain->Drive(DrivePower(), TurnPower());
 }  
 
 // Called once the command ends or is interrupted.
@@ -92,4 +111,4 @@ void MoveToCoordinate::End(bool interrupted) {
 }
 
 // Returns true when the command should end.
-bool MoveToCoordinate::IsFinished() { return finishCounter > 30; }
+bool MoveToCoordinate::IsFinished() { return (StopFinish() || SpeedFinish()); }

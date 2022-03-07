@@ -13,17 +13,20 @@ class Coordinates : public frc2::SubsystemBase {
 
   CPlane::Point GetLocation();
 
+  void SetLocation(CPlane::Point newLocation);
+
   units::degree_t EncoderDegreesChange();
 
   units::inch_t DistanceTravelled();
 
   units::degree_t Theta();
 
+  void SetTheta(units::degree_t newTheta);
+
   CPlane::Point PointMoved();
 
   void UpdateLocation();
 
-  void SetLocation(CPlane::Point newLocation);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -39,6 +42,8 @@ class Coordinates : public frc2::SubsystemBase {
   units::degree_t encChange;
 
   units::dimensionless_t wheelSpinPercent;
+
+  units::degree_t navXOffsetAngle;
 
   units::inch_t distance;
   units::inch_t dx;
