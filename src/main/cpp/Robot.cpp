@@ -32,6 +32,8 @@ void Robot::RobotPeriodic() {
   RobotContainer::fmsComms->DisplayMatchTime();
 
   //RobotContainer::drivetrain->PrintEncoderValues();
+
+  RobotContainer::climber->PrintClimberSensors(RobotContainer::climber->climberPosition);
   
   }
 /**

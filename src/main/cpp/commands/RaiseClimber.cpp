@@ -9,17 +9,19 @@
 RaiseClimber::RaiseClimber() {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(RobotContainer::climber.get());
+  state = RobotContainer::climber->GetClimberState(RobotContainer::climber->climberPosition);
+
 }
 
 void RaiseClimber::Initialize() {
-    currentState = RobotContainer::climber->GetClimberState(RobotContainer::climber->climberPosition);
-    (int)currentState;
+        //(int)currentState;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void RaiseClimber::Execute() {
-    RobotContainer::climber->Raise((int)RobotContainer::climber->GetClimberState(RobotContainer::climber->climberPosition));
-}
+    if((int)state!= (int)RobotContainer::climber->GetClimberState(RobotContainer::climber->climberPosition)+1){
+        RobotContainer::climber->Raise();
+    }}
 
 void RaiseClimber::End(bool interrupted) {
     RobotContainer::climber->Stop();

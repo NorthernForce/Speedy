@@ -40,12 +40,13 @@ class Climber : public frc2::SubsystemBase {
   HookState GetHookState();
   void InitClimberPositionSensors();
   ClimberState GetClimberState(std::vector<frc::DigitalInput*> climberPosition);
+  void PrintClimberSensors(std::vector<frc::DigitalInput*> climberPosition);
   void SetPivot(PivotState state);
   void SetHookState(HookState state);
   void SetClimberState(ClimberState state);
 
-  void Raise(ClimberState state);
-  void Lower(ClimberState state);
+  void Raise();
+  void Lower();
   void Stop();
   void Periodic() override;
 

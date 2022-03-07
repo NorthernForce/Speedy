@@ -6,6 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "subsystems/Climber.h"
 
 /**
  * An example command.
@@ -24,4 +25,8 @@ class LowerClimber
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+  private:
+
+  ClimberState state;
 };

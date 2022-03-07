@@ -53,18 +53,14 @@ void Climber::SetPivot(PivotState state) {
     pivotPosition = state;
 }
 
-void Climber::Raise(ClimberState state) {
-    if ((int)state != (int)climberState+1) {
-        leftMotor->Set(-0.85);
-        rightMotor->Set(0.85);
-    }
+void Climber::Raise() {
+    leftMotor->Set(-0.85);
+    rightMotor->Set(0.85);
 }
 
-void Climber::Lower(ClimberState state) {
-    if ((int)state!= (int)climberState-1) {
-        leftMotor->Set(0.65);
-        rightMotor->Set(-0.65);
-    }
+void Climber::Lower() {
+    leftMotor->Set(0.65);
+    rightMotor->Set(-0.65);
 }
 
 void Climber::Stop(){
@@ -84,6 +80,13 @@ ClimberState Climber::GetClimberState(std::vector<frc::DigitalInput*> climberPos
     };
 
     return climberState;
+}
+
+void Climber::PrintClimberSensors(std::vector<frc::DigitalInput*> climberPosition) {
+    printf("Bottom Sensor : %lf\n", climberPosition[1]->Get());
+    printf("Mid Sensor : %lf\n", climberPosition[2]->Get());
+    printf("Top Sensor : %lf\n", climberPosition[3]->Get());
+
 }
 
 HookState Climber::GetHookState() {

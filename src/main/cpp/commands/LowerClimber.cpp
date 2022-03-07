@@ -8,14 +8,20 @@
 LowerClimber::LowerClimber() {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(RobotContainer::climber.get());
+  ClimberState state = RobotContainer::climber->GetClimberState(RobotContainer::climber->climberPosition);
+  //set climber state equal to state
 }
 
 // Called repeatedly when this Command is scheduled to run
 void LowerClimber::Execute() {
+    //if statement with state == climber state-1
+    if((int)state!= (int)RobotContainer::climber->GetClimberState(RobotContainer::climber->climberPosition)-1){
     RobotContainer::climber->Lower();
+    }
 }
 
 void LowerClimber::End(bool interrupted) {
+    //set climber state equal to zero
     RobotContainer::climber->Stop();
 }
 

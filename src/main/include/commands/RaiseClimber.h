@@ -28,5 +28,7 @@ class RaiseClimber
 
   bool IsFinished() override;
 
-  ClimberState currentState;
+private: 
+
+  ClimberState state;
 };
