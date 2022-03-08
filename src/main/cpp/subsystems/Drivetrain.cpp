@@ -73,6 +73,13 @@ std::pair<double, double> Drivetrain::GetEncoderRotations() {
     return std::make_pair(leftSideRotations, rightSideRotations);
 }
 
+std::pair<units::inch_t, units::inch_t> Drivetrain::GetInchesTravelled() {
+    std::pair<double, double> rotations = GetEncoderRotations();
+    units::inch_t leftInches = units::inch_t(rotations.first * Constants::encoderToInch);
+    units::inch_t rightInches = units::inch_t(rotations.second * Constants::encoderToInch);
+    return std::make_pair(leftInches, rightInches);
+}
+
 double Drivetrain::GetAvgEncoderRotations(std::pair<double, double>) {
     double avgRotations = (GetEncoderRotations().first + GetEncoderRotations().second)/2;
     return avgRotations;

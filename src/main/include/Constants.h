@@ -31,9 +31,11 @@ namespace Constants {
     const double degreesToRadians = M_PI/180;
     const double XResetMultiplier = 0.996194698092;
 
-    const double gearRatio = (9/62) * (18/30);
+    const double gearRatio = (9/62) * (30/18);
+                          // (9/62) * (18/30)
+    const int cpr = 2048;
 
-    const double encoderToInch = -1175;
+    const double encoderToInch = 2 * gearRatio * cpr;
 
     const units::unit_t<units::length::inch> wheelCircum = 6_in;
 }

@@ -6,6 +6,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include "utilities/CPlane.h"
+#include <units/length.h>
 
 class Coordinates : public frc2::SubsystemBase {
  public:
@@ -37,7 +38,7 @@ class Coordinates : public frc2::SubsystemBase {
   CPlane::Point location{0_in, 0_in};
 
   units::degree_t lastAvgEncPos;
-  std::pair<double, double> currEncPositions;
+  std::pair<units::inch_t, units::inch_t> currEncPositions;
   units::degree_t avgCurrEncPos;
   units::degree_t encChange;
 
