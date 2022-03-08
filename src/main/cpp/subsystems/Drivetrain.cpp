@@ -68,8 +68,8 @@ void Drivetrain::DriveUsingSpeeds(double leftSpeed, double rightSpeed) {
 }
 
 std::pair<double, double> Drivetrain::GetEncoderRotations() {
-    double leftSideRotations = leftPrimary->GetSensorCollection().GetIntegratedSensorPosition() / 2048;
-    double rightSideRotations = (rightPrimary->GetSensorCollection().GetIntegratedSensorPosition() * -1) / 2048; ////TODO: check this
+    double leftSideRotations = (leftPrimary->GetSensorCollection().GetIntegratedSensorPosition() * -1) / 2048;
+    double rightSideRotations = rightPrimary->GetSensorCollection().GetIntegratedSensorPosition() / 2048;
     return std::make_pair(leftSideRotations, rightSideRotations);
 }
 

@@ -65,5 +65,6 @@
         "mutex": "cpp",
         "*.inc": "cpp"
     },
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "wpilib.autoStartRioLog": true
 }

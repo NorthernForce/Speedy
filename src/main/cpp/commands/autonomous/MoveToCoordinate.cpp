@@ -112,3 +112,4 @@ void MoveToCoordinate::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool MoveToCoordinate::IsFinished() { return (StopFinish() || SpeedFinish()); }
+ 

@@ -43,7 +43,7 @@ class Coordinates : public frc2::SubsystemBase {
 
   units::dimensionless_t wheelSpinPercent;
 
-  units::degree_t navXOffsetAngle;
+  units::degree_t navXOffsetAngle = 0_deg;
 
   units::inch_t distance;
   units::inch_t dx;

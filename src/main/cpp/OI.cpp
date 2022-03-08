@@ -30,7 +30,7 @@ void OI::MapControllerButtons() {
     //driver
     SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new IntakeBall);
     SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBall);
-    SimpleButton(driverController, Xbox::X_button).WhenPressed(new MoveToCoordinate(24, 0));
+    SimpleButton(driverController, Xbox::X_button).WhenPressed(new MoveToCoordinate(CPlane::Point(24_in, 0_in, true)));
     SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
 
     //manipulator

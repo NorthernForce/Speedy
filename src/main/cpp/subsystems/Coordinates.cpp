@@ -29,11 +29,11 @@ units::inch_t Coordinates::DistanceTravelled() {
 }
 
 units::degree_t Coordinates::Theta() {
-    return units::degree_t(RobotContainer::imu->GetRotation()) + navXOffsetAngle;
+    return units::degree_t(-RobotContainer::imu->GetRotation()) + navXOffsetAngle;
 }
 
 void Coordinates::SetTheta(units::degree_t newTheta) {
-    navXOffsetAngle = newTheta - units::degree_t(RobotContainer::imu->GetRotation());
+    navXOffsetAngle = newTheta - units::degree_t(-RobotContainer::imu->GetRotation());
 }
 
 CPlane::Point Coordinates::PointMoved() {
@@ -50,10 +50,9 @@ void Coordinates::UpdateLocation() {
 // This method will be called once per scheduler run
 void Coordinates::Periodic() { 
     UpdateLocation();
-    p1 = p1.Add(p2);
-    
-    printf("x position: %f\n", p1.x.value());
-    //frc::SmartDashboard::PutNumber("X Position:", location.x.value());
-    //frc::SmartDashboard::PutNumber("Y Position:", location.y.value());
-    //frc::SmartDashboard::PutNumber("Theta: ", Theta().value());
+
+    printf("periodic %f,%f\n", location.x.value(), location.y.value());
+    frc::SmartDashboard::PutNumber("X Position:", location.x.value());
+    frc::SmartDashboard::PutNumber("Y Position:", location.y.value());
+    frc::SmartDashboard::PutNumber("Theta: ", Theta().value());
 }
