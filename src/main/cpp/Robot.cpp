@@ -4,6 +4,7 @@
 
 #include "Robot.h"
 #include "RobotContainer.h"
+#include <cameraserver/CameraServer.h>
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
@@ -18,6 +19,7 @@ void Robot::RobotInit() {
     //RobotContainer::intake->SetArmState(ArmState::Down);
     RobotContainer::drivetrain->SetEncoderPositions(0, 0);
     RobotContainer::intake->ArmUp();
+    frc::CameraServer::StartAutomaticCapture();
 }
 
 /**
@@ -31,6 +33,7 @@ void Robot::RobotInit() {
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
   RobotContainer::fmsComms->DisplayMatchTime();
+  frc::SmartDashboard::PutNumber("distance: ", RobotContainer::ultrasonic->getDistance());
 
   //RobotContainer::drivetrain->PrintEncoderValues();
   
