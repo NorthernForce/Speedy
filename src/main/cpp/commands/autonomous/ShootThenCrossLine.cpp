@@ -21,9 +21,12 @@ void ShootThenCrossLine::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void ShootThenCrossLine::Execute() {
 
-    RobotContainer::intake->ArmUp();
-    if(RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) > 20) {
+    if(RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) > -20) {
+        RobotContainer::intake->ArmDown();
         RobotContainer::intake->Run();
+    } else if(RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) < -50) {
+        RobotContainer::intake->Run(true);
+        RobotContainer::intake->ArmUp();
     }
 
     RobotContainer::drivetrain->DriveUsingSpeeds(.15, .15);
@@ -42,7 +45,7 @@ void ShootThenCrossLine::End(bool interrupted) {
 // Returns true when the command should end.
 bool ShootThenCrossLine::IsFinished() {
     RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations());
-    if ((RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) > 60)) {
+    if ((RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) < -60)) {
         RobotContainer::drivetrain->DriveUsingSpeeds(0, 0);
         return true;
     } else {

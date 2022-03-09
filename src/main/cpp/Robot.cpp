@@ -11,6 +11,11 @@
 
 #include "subsystems/Climber.h"
 #include "commands/autonomous/ShootThenCrossLine.h"
+#include "commands/autonomous/DriveToDistance.h"
+#include "commands/autonomous/DriveToDistanceIntake.h"
+#include "commands/TurnToAngle.h"
+#include "commands/ArmDown.h"
+#include "commands/ArmUp.h"
 
 #include <frc/Timer.h>
 
@@ -33,9 +38,9 @@ void Robot::RobotInit() {
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
   RobotContainer::fmsComms->DisplayMatchTime();
-  frc::SmartDashboard::PutNumber("distance: ", RobotContainer::ultrasonic->getDistance());
-  frc::SmartDashboard::PutString("Drive Speed", RobotContainer::fmsComms->GetAllianceString(RobotContainer::fmsComms->GetAlliance()));
-  //RobotContainer::drivetrain->PrintEncoderValues();
+  //frc::SmartDashboard::PutNumber("distance: ", RobotContainer::ultrasonic->getDistance());
+  //frc::SmartDashboard::PutString("Drive Speed", RobotContainer::fmsComms->GetAllianceString(RobotContainer::fmsComms->GetAlliance()));
+  RobotContainer::drivetrain->PrintEncoderValues();
   
   }
 /**
@@ -56,7 +61,19 @@ void Robot::DisabledPeriodic() {}
 void Robot::AutonomousInit() {
     //RobotContainer::climber->PivotDown();
      autoCommandScheduler.reset(new AutoCommandScheduler({
-         new ShootThenCrossLine()
+         //new ShootThenCrossLine()
+         //new ArmDown(),
+         //new DriveToDistanceIntake(.3, -30, true),
+         new TurnToAngle(270)
+        //  new ArmUp(),
+        //  new DriveToDistanceIntake(.3, 20, false),
+        //  new TurnToAngle(180),
+        //  new DriveToDistanceIntake(.3, 20, true),
+        //  new TurnToAngle(-90),
+        //  new DriveToDistance(.3, 20),
+        //  new TurnToAngle(-90),
+        //  new ArmUp(),
+        //  new DriveToDistance(.3, 20),
     }));
     }
 
