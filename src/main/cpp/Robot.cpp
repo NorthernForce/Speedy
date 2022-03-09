@@ -34,7 +34,7 @@ void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
   RobotContainer::fmsComms->DisplayMatchTime();
   frc::SmartDashboard::PutNumber("distance: ", RobotContainer::ultrasonic->getDistance());
-
+  frc::SmartDashboard::PutString("Drive Speed", RobotContainer::fmsComms->GetAllianceString(RobotContainer::fmsComms->GetAlliance()));
   //RobotContainer::drivetrain->PrintEncoderValues();
   
   }
@@ -58,13 +58,10 @@ void Robot::AutonomousInit() {
      autoCommandScheduler.reset(new AutoCommandScheduler({
          new ShootThenCrossLine()
     }));
-
-    //new ShootThenCrossLine();
     }
 
 void Robot::AutonomousPeriodic() {
     autoCommandScheduler->RunSequential();
-    //frc2::CommandScheduler::GetInstance().Run();
 }
 
 void Robot::TeleopInit() {

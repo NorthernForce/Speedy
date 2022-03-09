@@ -14,7 +14,7 @@ public:
   FMSComms();
   char GetGameData();
   frc::DriverStation::Alliance GetAlliance();
-  std::string GetAllianceString(frc::DriverStation::Alliance AllianceGet());
+  std::string GetAllianceString(frc::DriverStation::Alliance);
   void GetGameDataRequirements();
   double DisplayMatchTime();
   frc::DriverStation::Alliance alliance;

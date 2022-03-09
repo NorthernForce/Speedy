@@ -7,7 +7,7 @@
 #include "Constants.h"
 #include "subsystems/Drivetrain.h"
 
-//I know this is incredibely ugly Hunter and I'm sorry but it does work
+//I know this is very ugly Hunter and I'm sorry but it does work hopefully
 
 ShootTwoBalls::ShootTwoBalls() {
   // Use addRequirements() here to declare subsystem dependencies.
