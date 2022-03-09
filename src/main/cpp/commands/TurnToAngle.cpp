@@ -37,7 +37,7 @@ TurnToAngle::TurnToAngle(double target) {
 void TurnToAngle::SetDashboardDefaultPIDs() {
     int i = 0;
     for (char c : {'P', 'I', 'D'}) {
-        std::string dashboardKey = ("TurnToAngle: " + std::to_string(c));
+        std::string dashboardKey = (std::string)"TurnToAngle: " += c;
         if (frc::SmartDashboard::GetNumber(dashboardKey, 0) == 0)
             frc::SmartDashboard::PutNumber(dashboardKey, defaultPIDs[i]);
         i++;
@@ -62,15 +62,13 @@ void TurnToAngle::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void TurnToAngle::Execute() {
     currentAngle = RobotContainer::imu->GetRotation();
-    frc::SmartDashboard::PutNumber("Robot angle: ", currentAngle);
 
-    double rotRaw = GetRotationFromPID(p,i,d);
-    double rotMult = GetRotationMultiplier();
-    double rotLim = LimitMaxTurnSpeed(rotRaw * rotMult);
-    frc::SmartDashboard::PutNumber("rotation multiplier:", rotMult);
+    rotRaw = GetRotationFromPID(p,i,d);
+    rotMult = GetRotationMultiplier();
+    rotLim = LimitMaxTurnSpeed(rotRaw * rotMult);
+    frc::SmartDashboard::PutNumber("final rot:", (rotLim));
     
-    auto driveControls = RobotContainer::oi->GetDriveControls();
-    RobotContainer::drivetrain->Drive(driveControls.first, rotLim + driveControls.second * 0.5);
+    RobotContainer::drivetrain->Drive(0, rotLim);
 }
 
 double TurnToAngle::GetRotationFromPID(double p, double i, double d) {
@@ -88,10 +86,11 @@ double TurnToAngle::GetRotationFromPID(double p, double i, double d) {
 double TurnToAngle::GetRotationMultiplier() {
     double rotMultiplier;
     if (error < 0)
-        rotMultiplier = 0.05 * pow(3.2, -1*error);
+        rotMultiplier = 6 * pow(3.2, -error);
     else
-        rotMultiplier = 0.05 * pow(3.2, error);
+        rotMultiplier = 6 * pow(3.2, error);
     frc::SmartDashboard::PutNumber("tta: error", error);
+    frc::SmartDashboard::PutNumber("rotation multiplier:", rotMultiplier);
     return rotMultiplier;
 }
 

@@ -11,6 +11,7 @@
 
 #include "subsystems/Climber.h"
 #include "commands/autonomous/ShootThenCrossLine.h"
+#include "commands/TurnToAngle.h"
 
 #include <frc/Timer.h>
 
@@ -56,7 +57,8 @@ void Robot::DisabledPeriodic() {}
 void Robot::AutonomousInit() {
     //RobotContainer::climber->PivotDown();
      autoCommandScheduler.reset(new AutoCommandScheduler({
-         new ShootThenCrossLine()
+        //  new ShootThenCrossLine()
+        new TurnToAngle(90)
     }));
     }
 

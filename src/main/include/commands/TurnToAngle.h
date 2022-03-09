@@ -57,13 +57,17 @@ class TurnToAngle
   double d;
 
   const double maxTurnSpeed = 0.4;
-  const double minError = 0.025;
+  const double minError = 0.01;
   double error;
   double errorPrior = 0;
   double integral = 0;
   double derivative = 0;
   double startingAngle = 0;
   double targetAngle = 0;
+
+  double rotRaw = 0;
+  double rotMult = 0;
+  double rotLim = 0;
   
   static bool isTurnFinished;
 };
