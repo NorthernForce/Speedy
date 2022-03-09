@@ -18,6 +18,7 @@ class Drivetrain : public frc2::SubsystemBase {
   void ConfigureController(WPI_TalonFX& controller, bool isFollower=false);
   void Drive(double speed, double rotation);
   void DriveUsingSpeeds(double leftSpeed, double rightSpeed);
+  bool DriveToDistance(double desiredDistance, double speed);
   std::pair<double, double> GetEncoderRotations();
   std::pair<units::inch_t, units::inch_t> GetInchesTravelled();
   double GetAvgEncoderRotations(std::pair<double, double>);
