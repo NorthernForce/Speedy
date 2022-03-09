@@ -33,6 +33,7 @@ void Robot::RobotInit() {
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
   RobotContainer::fmsComms->DisplayMatchTime();
+  frc::SmartDashboard::PutNumber("distance: ", RobotContainer::ultrasonic->getDistance());
 
   //RobotContainer::drivetrain->PrintEncoderValues();
   

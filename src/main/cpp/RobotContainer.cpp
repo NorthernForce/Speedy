@@ -15,6 +15,7 @@ std::shared_ptr<Coordinates> RobotContainer::coordinates;
 std::shared_ptr<Climber> RobotContainer::climber;
 std::shared_ptr<FMSComms> RobotContainer::fmsComms;
 std::shared_ptr<ShootThenCrossLine> RobotContainer::shootThenCrossLine;
+std::shared_ptr<Ultrasonic> RobotContainer::ultrasonic;
 
 RobotContainer::RobotContainer() {
     oi.reset(new OI());
@@ -32,6 +33,7 @@ void RobotContainer::InitSubsystems() {
     coordinates.reset(new Coordinates);
     climber.reset(new Climber);
     fmsComms.reset(new FMSComms);
+    ultrasonic.reset(new Ultrasonic);
 }
 
 void RobotContainer::InitDefaultCommands() {
