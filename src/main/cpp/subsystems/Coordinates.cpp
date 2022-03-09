@@ -53,8 +53,8 @@ void Coordinates::Periodic() {
     
     printf("dx: %f\n", PointMoved().x.value());
 
-    frc::SmartDashboard::PutNumber("X Position:", location.x.value());
+    frc::SmartDashboard::PutNumber("X Position:", RobotContainer::drivetrain->GetInchesTravelled().first.value());
     frc::SmartDashboard::PutNumber("Y Position:", location.y.value());
-    frc::SmartDashboard::PutNumber("distance: ", DistanceTravelled().value());
+    frc::SmartDashboard::PutNumber("distance1: ", DistanceTravelled().value());
     frc::SmartDashboard::PutNumber("Theta: ", Theta().value());
 }

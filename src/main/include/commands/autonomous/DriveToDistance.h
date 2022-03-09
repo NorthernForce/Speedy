@@ -14,10 +14,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ShootTwoBalls
-    : public frc2::CommandHelper<frc2::CommandBase, ShootTwoBalls> {
+class DriveToDistance
+    : public frc2::CommandHelper<frc2::CommandBase, DriveToDistance> {
  public:
-  ShootTwoBalls();
+  DriveToDistance(double distance, double speed);
 
   void Initialize() override;
 
@@ -27,11 +27,9 @@ class ShootTwoBalls
 
   bool IsFinished() override;
 
-private:
+ private:
+  double desiredDistance;
+  double desiredSpeed;
 
-bool stepOne = false;
-bool stepTwo = false;
-bool stepThree = false;
-bool stepFour = false;
-bool stepFive = false;
+
 };

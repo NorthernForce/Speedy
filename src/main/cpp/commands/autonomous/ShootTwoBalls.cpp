@@ -23,26 +23,38 @@ void ShootTwoBalls::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShootTwoBalls::Execute() {
-    
-    RobotContainer::intake->ArmUp();
-    if(RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) > 20) {
-        RobotContainer::intake->Run();
-    }
 
-    if ((RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) < 60)) {
+    if (stepOne == false && (RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) > -20)) {
         //brings it behind line
-        RobotContainer::drivetrain->DriveUsingSpeeds(.15, .15);
-    } else if ((RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) > 60 && (RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) < 80))) {
-        //turn right
-        RobotContainer::drivetrain->DriveUsingSpeeds(.4, .3);
-    } else if ((RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) > 60 && (RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) < 80))) {
-        //pick up ball
-        RobotContainer::drivetrain->DriveUsingSpeeds(.4, .3);
-        RobotContainer::intake->Run(true);
-        //true is intake reverse
+        RobotContainer::drivetrain->DriveUsingSpeeds(.25, .25);
+        RobotContainer::intake->ArmDown();
+        RobotContainer::intake->Run();
 
+    } else if (stepOne == false && (RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) < -20 && (RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) > -53))) {
+        //behind line
+        RobotContainer::drivetrain->DriveUsingSpeeds(.4, .4);
+    } else if (stepOne == false && RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) < -53) {
+        stepOne = true;
+        RobotContainer::drivetrain->SetEncoderPositions(0, 0);
     }
 
+    if(stepOne == true && stepTwo == false && RobotContainer::drivetrain->GetEncoderRotations().first < 25106 && RobotContainer::drivetrain->GetEncoderRotations().second > -22679) {
+        //turn left
+        RobotContainer::drivetrain->DriveUsingSpeeds(-.25, .25);
+    } else if(stepOne == true && stepTwo == false && RobotContainer::drivetrain->GetEncoderRotations().first > 25106 && RobotContainer::drivetrain->GetEncoderRotations().second < -22679) {
+        stepTwo = true;
+        RobotContainer::drivetrain->SetEncoderPositions(0, 0);
+    }
+
+    if(stepTwo == true && stepThree == false && (RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) < 35.6)) {
+        //go forward to and pick up ball
+        RobotContainer::drivetrain->DriveUsingSpeeds(.4, .4);
+        RobotContainer::intake->ArmUp();
+        RobotContainer::intake->Run(true);
+    } else if(stepTwo == true && stepThree == false && (RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) > 35.6)) {
+        stepThree = true;
+        RobotContainer::drivetrain->SetEncoderPositions(0, 0);
+    }
 }
 
 // Called once the command ends or is interrupted.
