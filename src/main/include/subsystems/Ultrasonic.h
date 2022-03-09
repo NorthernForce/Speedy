@@ -1,3 +1,11 @@
+//////////////////////////////////////////////////////////////
+// Ultrasonic Declarations
+//
+// This Class represents the Ultrsonic Sensor's Functionality.
+//
+// Jay Crosby
+// March 8, 2022
+//////////////////////////////////////////////////////////////
 
 #pragma once
 
@@ -6,22 +14,22 @@
 
 #include "Constants.h"
 
-
+//Class Declaration
 class Ultrasonic : public frc2::SubsystemBase {
  public:
-  Ultrasonic();
-  ~Ultrasonic();
+  Ultrasonic();             //Constuctor
+  ~Ultrasonic();            //Destructor
 
-  void Periodic();
+  void Periodic();          //Runs durng the Periodic Cycle
 
-  double getDistance();
+  double getDistance();     //Gets te Distance in Inches
 
  private:
-    std::shared_ptr<frc::AnalogInput> m_ultrasonic;
-    double m_dist;
-    double m_rawVal;
+    std::shared_ptr<frc::AnalogInput> m_ultrasonic;   //Analog Port that the Sensor is attached to 
+    double m_dist;                                    //Sensed Distance in Inches
+    double m_rawVal;                                  //Raw Value from theAnalog Port (0 - 4095)
 
-    double calcDistance();
+    double calcDistance();                            //Applies Scaling and Conversion to return Distance 
 
     
 };
