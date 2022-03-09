@@ -64,7 +64,9 @@ void Robot::AutonomousPeriodic() {
     //frc2::CommandScheduler::GetInstance().Run();
 }
 
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() {
+    RobotContainer::intake->ArmUp();
+}
 
 /**
  * This function is called periodically during operator control.

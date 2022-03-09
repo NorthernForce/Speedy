@@ -38,8 +38,8 @@ void Coordinates::SetTheta(units::degree_t newTheta) {
 
 CPlane::Point Coordinates::PointMoved() {
     distance = DistanceTravelled();
-    dx = distance * units::math::sin(Theta());
-    dy = distance * units::math::cos(Theta());
+    dx = units::math::round(distance * units::math::sin(Theta()) * 5) / 5;
+    dy = units::math::round(distance * units::math::cos(Theta()) * 5) / 5;
     return CPlane::Point(dx, dy, true);
 }
 
@@ -50,10 +50,11 @@ void Coordinates::UpdateLocation() {
 // This method will be called once per scheduler run
 void Coordinates::Periodic() { 
     UpdateLocation();
-    p1 = p1.Add(p2);
     
-    printf("x position: %f\n", p1.x.value());
-    //frc::SmartDashboard::PutNumber("X Position:", location.x.value());
-    //frc::SmartDashboard::PutNumber("Y Position:", location.y.value());
-    //frc::SmartDashboard::PutNumber("Theta: ", Theta().value());
+    printf("dx: %f\n", PointMoved().x.value());
+
+    frc::SmartDashboard::PutNumber("X Position:", location.x.value());
+    frc::SmartDashboard::PutNumber("Y Position:", location.y.value());
+    frc::SmartDashboard::PutNumber("distance: ", DistanceTravelled().value());
+    frc::SmartDashboard::PutNumber("Theta: ", Theta().value());
 }

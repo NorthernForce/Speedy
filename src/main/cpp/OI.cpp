@@ -10,6 +10,7 @@
 #include "commands/RaiseClimber.h"
 #include "commands/PivotToggle.h"
 #include "commands/autonomous/MoveToCoordinate.h"
+#include "commands/autonomous/SetCoordinates.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
 std::shared_ptr<frc::XboxController> OI::driverController;
@@ -30,6 +31,7 @@ void OI::MapControllerButtons() {
     //driver
     SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new IntakeBall);
     SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBall);
+    SimpleButton(driverController, Xbox::A_button).WhenPressed(new SetCoordinates(CPlane::Point(0_in, 0_in)));
     SimpleButton(driverController, Xbox::X_button).WhenPressed(new MoveToCoordinate(CPlane::Point(24_in, 0_in, true)));
     SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
 
