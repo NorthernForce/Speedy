@@ -68,9 +68,16 @@ void Drivetrain::DriveUsingSpeeds(double leftSpeed, double rightSpeed) {
 }
 
 std::pair<double, double> Drivetrain::GetEncoderRotations() {
-    double leftSideRotations = leftPrimary->GetSensorCollection().GetIntegratedSensorPosition() / 2048;
-    double rightSideRotations = (rightPrimary->GetSensorCollection().GetIntegratedSensorPosition() * -1) / 2048; ////TODO: check this
+    double leftSideRotations = (leftPrimary->GetSensorCollection().GetIntegratedSensorPosition() * -1) / 2048;
+    double rightSideRotations = rightPrimary->GetSensorCollection().GetIntegratedSensorPosition() / 2048;
     return std::make_pair(leftSideRotations, rightSideRotations);
+}
+
+std::pair<units::inch_t, units::inch_t> Drivetrain::GetInchesTravelled() {
+    std::pair<double, double> rotations = GetEncoderRotations();
+    units::inch_t leftInches = units::inch_t(rotations.first * Constants::encoderToInch);
+    units::inch_t rightInches = units::inch_t(rotations.second * Constants::encoderToInch);
+    return std::make_pair(leftInches, rightInches);
 }
 
 double Drivetrain::GetAvgEncoderRotations(std::pair<double, double>) {

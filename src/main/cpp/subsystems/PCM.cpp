@@ -7,6 +7,7 @@
 
 #include "subsystems/PCM.h"
 #include "Constants.h"
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <memory>
 
 PCM::PCM() {

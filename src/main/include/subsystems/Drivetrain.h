@@ -19,6 +19,7 @@ class Drivetrain : public frc2::SubsystemBase {
   void Drive(double speed, double rotation);
   void DriveUsingSpeeds(double leftSpeed, double rightSpeed);
   std::pair<double, double> GetEncoderRotations();
+  std::pair<units::inch_t, units::inch_t> GetInchesTravelled();
   double GetAvgEncoderRotations(std::pair<double, double>);
   void SetEncoderPositions(double lt, double rt);
   void PrintEncoderValues();

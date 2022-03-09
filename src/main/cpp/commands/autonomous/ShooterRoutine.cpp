@@ -17,7 +17,7 @@ ShooterRoutine::ShooterRoutine() {}
 // Called when the command is initially scheduled.
 void ShooterRoutine::Initialize() {
     commandController.reset(new AutoCommandScheduler({
-        new SetCoordinates(11.97, 31.72),
+        new SetCoordinates(21.5, 56),
         new ArmDown(),
         new MoveToCoordinate(150.79, 25.91), // move to ball
         new IntakeBall(),

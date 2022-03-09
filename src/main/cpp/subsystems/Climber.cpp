@@ -47,8 +47,8 @@ void Climber::Raise() {
 }
 
 void Climber::Lower() {
-    leftMotor->Set(0.45);
-    rightMotor->Set(-0.45);
+    leftMotor->Set(0.65);
+    rightMotor->Set(-0.65);
 }
 
 void Climber::Stop(){

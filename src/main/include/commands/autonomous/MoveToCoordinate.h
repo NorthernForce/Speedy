@@ -23,8 +23,8 @@
 class MoveToCoordinate
     : public frc2::CommandHelper<frc2::CommandBase, MoveToCoordinate> {
  public:
-  MoveToCoordinate(CPlane::Point destination, double speed=0.3);
-  MoveToCoordinate(double xDestination, double yDestination, double speed=0.3);
+  MoveToCoordinate(CPlane::Point destination, double speed=0.3, bool stop=true);
+  MoveToCoordinate(double xDestination, double yDestination, double speed=0.3, bool stop=true);
 
   void Initialize() override;
 
@@ -36,6 +36,10 @@ class MoveToCoordinate
 
   double TurnPower();
 
+  bool StopFinish();
+
+  bool SpeedFinish();
+
   void Execute() override;
 
   void End(bool interrupted) override;
@@ -45,6 +49,7 @@ class MoveToCoordinate
  private:
   CPlane::Point destination{0_in, 0_in};
   double baseSpeed;
+  bool stopAtPoint;
 
   const double turnP = 1;
   const double turnI = 0;

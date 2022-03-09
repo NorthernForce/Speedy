@@ -6,6 +6,7 @@
 
 #include <frc2/command/SubsystemBase.h>
 #include "utilities/CPlane.h"
+#include <units/length.h>
 
 class Coordinates : public frc2::SubsystemBase {
  public:
@@ -13,17 +14,20 @@ class Coordinates : public frc2::SubsystemBase {
 
   CPlane::Point GetLocation();
 
+  void SetLocation(CPlane::Point newLocation);
+
   units::degree_t EncoderDegreesChange();
 
   units::inch_t DistanceTravelled();
 
   units::degree_t Theta();
 
+  void SetTheta(units::degree_t newTheta);
+
   CPlane::Point PointMoved();
 
   void UpdateLocation();
 
-  void SetLocation(CPlane::Point newLocation);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -34,11 +38,13 @@ class Coordinates : public frc2::SubsystemBase {
   CPlane::Point location{0_in, 0_in};
 
   units::degree_t lastAvgEncPos;
-  std::pair<double, double> currEncPositions;
+  std::pair<units::inch_t, units::inch_t> currEncPositions;
   units::degree_t avgCurrEncPos;
   units::degree_t encChange;
 
   units::dimensionless_t wheelSpinPercent;
+
+  units::degree_t navXOffsetAngle = 0_deg;
 
   units::inch_t distance;
   units::inch_t dx;
