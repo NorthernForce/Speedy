@@ -159,6 +159,8 @@ bool TurnToAngle::IsFinished() {
     isTurnFinished = std::abs(error) < minError;
         
     return (isTurnFinished || HasPassedTargetAngle());
+    //return (isTurnFinished);
+
 }
 
 double TurnToAngle::GetCurrentError() {

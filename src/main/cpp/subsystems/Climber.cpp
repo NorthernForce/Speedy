@@ -69,11 +69,11 @@ void Climber::SetHookState(HookState state) {
 // This method will be called once per scheduler run
 void Climber::Periodic() {
     states = {
-        new frc::DigitalInput(0),
-        new frc::DigitalInput(1),
-        new frc::DigitalInput(2)
+        // new frc::DigitalInput(0),
+        // new frc::DigitalInput(1),
+        // new frc::DigitalInput(2)
     };
-    frc::SmartDashboard::PutBoolean("Digital 0: ", states[0]->Get());
-    frc::SmartDashboard::PutBoolean("Digital 1: ", states[1]->Get());
-    frc::SmartDashboard::PutBoolean("Digital 2: ", states[2]->Get());
+    // frc::SmartDashboard::PutBoolean("Digital 0: ", states[0]->Get());
+    // frc::SmartDashboard::PutBoolean("Digital 1: ", states[1]->Get());
+    // frc::SmartDashboard::PutBoolean("Digital 2: ", states[2]->Get());
 }

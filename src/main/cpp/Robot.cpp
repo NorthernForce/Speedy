@@ -63,17 +63,17 @@ void Robot::AutonomousInit() {
      autoCommandScheduler.reset(new AutoCommandScheduler({
         //  new ShootThenCrossLine()
          //new ShootThenCrossLine()
-        new ArmDown(),
-        new DriveToDistanceIntake(.3, -52, true),
-        new TurnToAngle(-90),
-        new ArmUp(),
-        new DriveToDistanceIntake(-.3, 35.6, false),
-        new TurnToAngle(160),
+        //new ArmDown(),
+        new DriveToDistanceIntake(.2, -24.5, false),
+        new TurnToAngle(-220),
+        //new ArmUp(),
+        new DriveToDistanceIntake(-.3, 39, true),
+        //new TurnToAngle(-300),
+        new DriveToDistanceIntake(.3, 48, true),
+        // new DriveToDistance(.3, -20),
+        new TurnToAngle(-105),
+        // //new ArmDown(),
         new DriveToDistanceIntake(-.3, 40, true),
-        new DriveToDistance(.3, -20),
-        new TurnToAngle(-90),
-        new ArmDown(),
-        new DriveToDistance(-.3, 20),
     }));
 }
 
