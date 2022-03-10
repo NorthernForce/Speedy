@@ -23,7 +23,7 @@ frc::DriverStation::Alliance FMSComms::GetAlliance(){
     return alliance;
 }
 
-std::string FMSComms::GetAllianceString(frc::DriverStation::Alliance AllianceGet()) {
+std::string FMSComms::GetAllianceString(frc::DriverStation::Alliance) {
     if (GetAlliance() == frc::DriverStation::Alliance::kRed) {
         return "Red";
     } else if (GetAlliance() == frc::DriverStation::Alliance::kBlue) {

@@ -67,6 +67,18 @@ void Drivetrain::DriveUsingSpeeds(double leftSpeed, double rightSpeed) {
     rightPrimary->Set(rightSpeed);
 }
 
+bool Drivetrain::DriveToDistance(double desiredDistance, double speed) {
+    if(desiredDistance < GetAvgEncoderRotations(GetEncoderRotations()) * Constants::encoderToInch) {
+        leftPrimary->Set(speed);
+        rightPrimary->Set(speed);
+        return false;
+    } else {
+        leftPrimary->Set(0);
+        rightPrimary->Set(0);
+        return true;
+    }
+}
+
 std::pair<double, double> Drivetrain::GetEncoderRotations() {
     double leftSideRotations = (leftPrimary->GetSensorCollection().GetIntegratedSensorPosition() * -1) / 2048;
     double rightSideRotations = rightPrimary->GetSensorCollection().GetIntegratedSensorPosition() / 2048;
