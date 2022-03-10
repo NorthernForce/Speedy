@@ -32,6 +32,7 @@ void DriveToDistanceIntake::Execute() {
 // Called once the command ends or is interrupted.
 void DriveToDistanceIntake::End(bool interrupted) {
     RobotContainer::drivetrain->DriveUsingSpeeds(0, 0);
+    printf("Drive To Distance Intake Complete \n");
 }
 
 // Returns true when the command should end.

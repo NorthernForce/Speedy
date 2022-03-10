@@ -62,7 +62,18 @@ void Robot::AutonomousInit() {
     //RobotContainer::climber->PivotDown();
      autoCommandScheduler.reset(new AutoCommandScheduler({
         //  new ShootThenCrossLine()
-        new TurnToAngle(-90)
+         //new ShootThenCrossLine()
+        new ArmDown(),
+        new DriveToDistanceIntake(.3, -52, true),
+        new TurnToAngle(-90),
+        new ArmUp(),
+        new DriveToDistanceIntake(-.3, 35.6, false),
+        new TurnToAngle(160),
+        new DriveToDistanceIntake(-.3, 40, true),
+        new DriveToDistance(.3, -20),
+        new TurnToAngle(-90),
+        new ArmDown(),
+        new DriveToDistance(-.3, 20),
     }));
 }
 

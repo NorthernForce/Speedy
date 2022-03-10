@@ -28,7 +28,9 @@ void DriveToDistance::Execute() {
 }
 
 // Called once the command ends or is interrupted.
-void DriveToDistance::End(bool interrupted) {}
+void DriveToDistance::End(bool interrupted) {
+    printf("Drive To Distance Complete \n");
+}
 
 // Returns true when the command should end.
 bool DriveToDistance::IsFinished() {
