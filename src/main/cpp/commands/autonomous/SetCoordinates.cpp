@@ -6,12 +6,12 @@
 #include "RobotContainer.h"
 
 SetCoordinates::SetCoordinates(double x, double y) {
-    RobotContainer::coordinates->SetLocation(
-        CPlane::Point(units::inch_t(x), units::inch_t(y))
-        );
+    location = CPlane::Point(units::inch_t(x), units::inch_t(y));
 }
 
-SetCoordinates::SetCoordinates(CPlane::Point location) {
+SetCoordinates::SetCoordinates(CPlane::Point location) : location(location) {}
+
+void SetCoordinates::Initialize() {
     RobotContainer::coordinates->SetLocation(location);
 }
 

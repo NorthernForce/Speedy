@@ -34,9 +34,20 @@ void MoveToCoordinate::Initialize() {
   if (destination.relative) {
     destination = destination.Add(RobotContainer::coordinates->GetLocation());
   }
+  // frc::SmartDashboard::PutNumber("driveP:", 0);
+  // frc::SmartDashboard::PutNumber("driveI:", 0);
+  // frc::SmartDashboard::PutNumber("driveD:", 0);
+  // frc::SmartDashboard::PutNumber("turnP:", 0);
+  // frc::SmartDashboard::PutNumber("turnI:", 0);
+  // frc::SmartDashboard::PutNumber("turnD:", 0);
+
   driveP = frc::SmartDashboard::GetNumber("driveP:", driveP);
   driveI = frc::SmartDashboard::GetNumber("driveI:", driveI);
   driveD = frc::SmartDashboard::GetNumber("driveD:", driveD);
+
+  driveP = frc::SmartDashboard::GetNumber("turnP:", turnP);
+  driveI = frc::SmartDashboard::GetNumber("turnI:", turnI);
+  driveD = frc::SmartDashboard::GetNumber("turnD:", turnD);
 }
 
 double MoveToCoordinate::Limit(double value, double limit) {
@@ -44,18 +55,23 @@ double MoveToCoordinate::Limit(double value, double limit) {
 }
 
 double MoveToCoordinate::DrivePower() {
+  frc2::PIDController drivePID{driveP, driveI, driveD};
+
   distanceToDestination = RobotContainer::navigation->DistanceToPoint(destination);
   if (distanceToDestination >= 72_in) {
     driveSpeed = baseSpeed;
   }
   else {
-    driveSpeed = Limit(drivePID.Calculate(distanceToDestination.value()), baseSpeed);
+    driveSpeed = Limit(drivePID.Calculate(distanceToDestination.value(), 0), baseSpeed);
   }
   
   return driveSpeed;
 }
 
 double MoveToCoordinate::TurnPower() {
+  frc2::PIDController turnPID{turnP, turnI, turnD};
+
+
   angleToDestination = RobotContainer::navigation->AngleToPoint(destination);
   if (units::math::abs(angleToDestination) >= 90_deg) {
     if (angleToDestination > 0_deg) {
@@ -66,7 +82,7 @@ double MoveToCoordinate::TurnPower() {
     }
   }
   else {
-    turnSpeed = Limit(turnPID.Calculate(angleToDestination.value()), baseSpeed);
+    turnSpeed = Limit(turnPID.Calculate(angleToDestination.value(), 0), baseSpeed);
   }
 
   return turnSpeed;
@@ -74,6 +90,7 @@ double MoveToCoordinate::TurnPower() {
 
 bool MoveToCoordinate::StopFinish() {
   if (stopAtPoint) {
+
     if (distanceToDestination < 0.5_in) {
       finishCounter ++;
     }
@@ -99,6 +116,9 @@ bool MoveToCoordinate::SpeedFinish() {
 
 // Called repeatedly when this Command is scheduled to run
 void MoveToCoordinate::Execute() {
+  printf("Dist Err %f: \n", distanceToDestination);
+  // printf("Ang Err %f: \n", angleToDestination);
+
   // frc::SmartDashboard::PutNumber("driveP:", driveP);
   // frc::SmartDashboard::PutNumber("driveI:", driveI);
   // frc::SmartDashboard::PutNumber("driveD:", driveD);

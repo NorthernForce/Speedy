@@ -11,6 +11,7 @@
 #include "commands/PivotToggle.h"
 #include "commands/autonomous/MoveToCoordinate.h"
 #include "commands/autonomous/SetCoordinates.h"
+#include "commands/autonomous/SetTheta.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
 std::shared_ptr<frc::XboxController> OI::driverController;
@@ -31,13 +32,17 @@ void OI::MapControllerButtons() {
     //driver
     SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new IntakeBall);
     SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBall);
-    SimpleButton(driverController, Xbox::A_button).WhenPressed(new SetCoordinates(CPlane::Point(0_in, 0_in)));
-    SimpleButton(driverController, Xbox::X_button).WhenPressed(new MoveToCoordinate(CPlane::Point(24_in, 0_in, true)));
+    SimpleButton(driverController, Xbox::B_button).WhileHeld(new SetCoordinates(CPlane::Point(0_in, 0_in)));
+    SimpleButton(driverController, Xbox::B_button).WhileHeld(new SetTheta(0_deg));
+    SimpleButton(driverController, Xbox::X_button).WhenPressed(new MoveToCoordinate(CPlane::Point(24_in, 0_in)), 0.4);
     SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
 
     //manipulator
+
     SimpleButton(manipulatorController, Xbox::X_button).WhileHeld(new LowerClimber);
     SimpleButton(manipulatorController, Xbox::Y_button).WhileHeld(new RaiseClimber);
+
+
     //SimpleButton(manipulatorController, Xbox::X_button).WhenPressed(new ToggleArm);
     SimpleButton(manipulatorController, Xbox::A_button).WhenPressed(new PivotToggle);
     SimpleButton(manipulatorController, Xbox::lt_bumper).WhenPressed(new ArmUp);

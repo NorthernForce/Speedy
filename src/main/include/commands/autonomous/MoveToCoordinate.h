@@ -51,15 +51,15 @@ class MoveToCoordinate
   double baseSpeed;
   bool stopAtPoint;
 
-  const double turnP = 1;
-  const double turnI = 0;
-  const double turnD = 0;
-  double driveP = 1;
-  double driveI = 0;
-  double driveD = 0;
+  double turnP;
+  double turnI;
+  double turnD;
+  double driveP;
+  double driveI;
+  double driveD;
 
-  frc2::PIDController turnPID{turnP, turnI, turnD};
-  frc2::PIDController drivePID{driveP, driveI, driveD};
+  // frc2::PIDController turnPID;
+  // frc2::PIDController drivePID;
 
   units::inch_t distanceToDestination;
   units::degree_t angleToDestination;

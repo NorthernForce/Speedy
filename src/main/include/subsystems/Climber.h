@@ -9,6 +9,8 @@
 
 #include <frc/Solenoid.h>
 #include <ctre/Phoenix.h>
+#include <frc/DigitalInput.h>
+#include <frc2/command/SubsystemBase.h>
 
 enum class PivotState {
     Down,
@@ -42,4 +44,5 @@ class Climber : public frc2::SubsystemBase {
   HookState hookPosition;
   std::unique_ptr<WPI_TalonFX> leftMotor;
   std::unique_ptr<WPI_TalonFX> rightMotor;
+  std::vector<frc::DigitalInput*> states;
 };

@@ -6,7 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "utilities/CPlane.h"
+#include "RobotContainer.h"
 
 /**
  * An example command.
@@ -15,14 +15,19 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class SetCoordinates
-    : public frc2::CommandHelper<frc2::CommandBase, SetCoordinates> {
+class SetTheta
+    : public frc2::CommandHelper<frc2::CommandBase, SetTheta> {
  public:
-  SetCoordinates(double x, double y);
-  SetCoordinates(CPlane::Point location);
-  void Initialize();
+  SetTheta(units::degree_t theta);
+
+  void Initialize() override;
+
+  void Execute() override;
+
+  void End(bool interrupted) override;
+
   bool IsFinished() override;
- 
+
  private:
-  CPlane::Point location;
+  units::degree_t theta;
 };

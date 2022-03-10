@@ -35,9 +35,11 @@ namespace Constants {
                           // (9/62) * (18/30)
     const int cpr = 2048;
 
-    const double encoderToInch = 2 * gearRatio * cpr;
-
     const units::unit_t<units::length::inch> wheelCircum = 6_in;
+
+    // const double encoderToInch = 2 * gearRatio * wheelCircum.value();
+    const double encoderToInch = 1.10988 * 0.24 * wheelCircum.value();
+
 
     //Analog Port for the Ultrasonic Sensor
     static constexpr int kUltrasonicPort = 0;
