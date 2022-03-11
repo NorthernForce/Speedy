@@ -116,7 +116,7 @@ bool MoveToCoordinate::SpeedFinish() {
 
 // Called repeatedly when this Command is scheduled to run
 void MoveToCoordinate::Execute() {
-  printf("Dist Err %f: \n", distanceToDestination);
+  //printf("Dist Err %f: \n", distanceToDestination);
   // printf("Ang Err %f: \n", angleToDestination);
 
   // frc::SmartDashboard::PutNumber("driveP:", driveP);

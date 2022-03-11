@@ -17,7 +17,7 @@
 class DriveToDistanceIntake
     : public frc2::CommandHelper<frc2::CommandBase, DriveToDistanceIntake> {
  public:
-  DriveToDistanceIntake(double distance, double speed, bool reverse);
+  DriveToDistanceIntake(double speed, double distance, bool reverse);
 
   void Initialize() override;
 

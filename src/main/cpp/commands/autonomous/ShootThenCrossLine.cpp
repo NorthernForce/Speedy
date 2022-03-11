@@ -39,6 +39,7 @@ void ShootThenCrossLine::Execute() {
 // Called once the command ends or is interrupted.
 void ShootThenCrossLine::End(bool interrupted) {
     RobotContainer::drivetrain->DriveUsingSpeeds(0, 0);
+    printf("Shoot Then Cross Line Complete \n");
 
 }
 

@@ -17,7 +17,7 @@
 class DriveToDistance
     : public frc2::CommandHelper<frc2::CommandBase, DriveToDistance> {
  public:
-  DriveToDistance(double distance, double speed);
+  DriveToDistance(double speed , double distance);
 
   void Initialize() override;
 
