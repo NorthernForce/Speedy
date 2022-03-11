@@ -69,11 +69,11 @@ void Robot::AutonomousInit() {
         //new ArmUp(),
         new DriveToDistanceIntake(-.3, 39, true),
         //new TurnToAngle(-300),
-        new DriveToDistanceIntake(.3, 48, true),
+        //*new DriveToDistanceIntake(.3, 48, true),
         // new DriveToDistance(.3, -20),
-        new TurnToAngle(-105),
+        //*new TurnToAngle(-105),
         // //new ArmDown(),
-        new DriveToDistanceIntake(-.3, 40, true),
+        //*new DriveToDistanceIntake(-.3, 40, true),
     }));
 }
 
