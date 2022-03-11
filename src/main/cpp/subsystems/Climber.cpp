@@ -66,14 +66,21 @@ void Climber::SetHookState(HookState state) {
     hookPosition = state;
 }
 
+void Climber::Initialize() {
+    // states = {
+    //     frc::DigitalInput dio0{0},
+    //     frc::Digitalnput dio1{1},
+    //     frc::DigitalInput dio2{2}
+    // };
+}
+
 // This method will be called once per scheduler run
 void Climber::Periodic() {
-    states = {
-        new frc::DigitalInput(0),
-        new frc::DigitalInput(1),
-        new frc::DigitalInput(2)
-    };
-    frc::SmartDashboard::PutBoolean("Digital 0: ", states[0]->Get());
-    frc::SmartDashboard::PutBoolean("Digital 1: ", states[1]->Get());
-    frc::SmartDashboard::PutBoolean("Digital 2: ", states[2]->Get());
+    frc::SmartDashboard::PutBoolean("Digital 0: ", dio0.Get());
+    frc::SmartDashboard::PutBoolean("Digital 1: ", dio1.Get());
+    frc::SmartDashboard::PutBoolean("Digital 2: ", dio2.Get());
+    //TRUE IS WHEN THE SHAFT IS ABOVE
+    //DIGITAL 2 IS BOTTOM
+    //DIGITAL 0 IS MID SENSOR
+    //DIGITAL 1 IS TOP SENSOR
 }
