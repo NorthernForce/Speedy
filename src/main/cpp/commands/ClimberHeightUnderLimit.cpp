@@ -14,13 +14,16 @@ void ClimberHeightUnderLimit::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void ClimberHeightUnderLimit::Execute() {
-  RobotContainer::climber->Lower();
+  if (
+    RobotContainer::climber->GetPivot() == PivotState::Up &&
+    RobotContainer::climber->GetOpticalSensor(Constants::DigitalIDs::middleOptical)
+  ) {
+    RobotContainer::climber->Lower();
+  }
 }
 
 // Called once the command ends or is interrupted.
 void ClimberHeightUnderLimit::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool ClimberHeightUnderLimit::IsFinished() {
-  return !RobotContainer::climber->GetOpticalSensor(Constants::DigitalIDs::middleOptical);
-}
+bool ClimberHeightUnderLimit::IsFinished() { return false; }

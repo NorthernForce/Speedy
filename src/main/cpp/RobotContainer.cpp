@@ -39,5 +39,5 @@ void RobotContainer::InitSubsystems() {
 
 void RobotContainer::InitDefaultCommands() {
     drivetrain->SetDefaultCommand(DriveWithJoystick());
-    // climber->SetDefaultCommand(ClimberHeightUnderLimit());
+    climber->SetDefaultCommand(ClimberHeightUnderLimit());
 }
