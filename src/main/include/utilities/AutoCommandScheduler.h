@@ -37,7 +37,7 @@ class AutoCommandScheduler {
     void CleanUpArray(std::vector<frc2::Command*> array);
 
     std::unique_ptr<frc::Timer> timer;
-    static int currIndex;
+    int currIndex;
     int maxIndex;
     bool isFinished = false;
     bool doCommandsHaveSharedSubsystems = false;

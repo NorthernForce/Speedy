@@ -13,7 +13,6 @@
 #include <iostream>
 #include <frc/Timer.h>
 
-int AutoCommandScheduler::currIndex;
 
 AutoCommandScheduler::AutoCommandScheduler(std::vector<frc2::Command*> &&commandQueue) {
     //frc2::Command **commandQueue = (frc2::Command**) malloc(sizeof(frc2::Command*) * commandQueue.size());
