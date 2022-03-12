@@ -7,9 +7,9 @@
 
 // Called when the command is initially scheduled.
 void PivotToggle::Initialize() {
-    if(RobotContainer::climber->GetPivot() == PivotState::Down) {
+    if(RobotContainer::climber->GetPivot() == PivotState::Up) {
         RobotContainer::climber->PivotUp();
-    } else if (RobotContainer::climber->GetPivot() == PivotState::Up) {
+    } else if (RobotContainer::climber->GetPivot() == PivotState::Down) {
         RobotContainer::climber->PivotDown();
     } else {
         printf("Pivot not in range\n");

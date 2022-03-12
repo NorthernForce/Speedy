@@ -20,5 +20,13 @@ void RaiseClimber::End(bool interrupted) {
 }
 // Returns true when the command should end.
 bool RaiseClimber::IsFinished() {
-  return false;
+  return (
+    (
+      RobotContainer::climber->GetPivot() == PivotState::Down && 
+      RobotContainer::climber->GetOpticalSensor(Constants::DigitalIDs::topOptical)
+    ) || (
+      RobotContainer::climber->GetPivot() == PivotState::Up &&
+      RobotContainer::climber->GetOpticalSensor(Constants::DigitalIDs::middleOptical)
+    )
+  );
 }

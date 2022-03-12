@@ -64,10 +64,10 @@ void Robot::AutonomousInit() {
         //  new ShootThenCrossLine()
          //new ShootThenCrossLine()
         //new ArmDown(),
-        new DriveToDistanceIntake(.2, -24.5, false),
-        new TurnToAngle(-220),
+        new DriveToDistanceIntake(.2, -40, false),
+        //new TurnToAngle(-220),
         //new ArmUp(),
-        new DriveToDistanceIntake(-.3, 39, true),
+        //new DriveToDistanceIntake(-.3, 39, true),
         //new TurnToAngle(-300),
         //*new DriveToDistanceIntake(.3, 48, true),
         // new DriveToDistance(.3, -20),

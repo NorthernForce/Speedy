@@ -35,7 +35,7 @@ class Climber : public frc2::SubsystemBase {
   HookState GetHookState();
   void SetHookState(HookState state);
   void SetPivot(HookState state);
-  void Initialize();
+  bool GetOpticalSensor(int sensor);
   void Periodic() override;
 
  private:
@@ -44,8 +44,9 @@ class Climber : public frc2::SubsystemBase {
   HookState hookPosition;
   std::unique_ptr<WPI_TalonFX> leftMotor;
   std::unique_ptr<WPI_TalonFX> rightMotor;
-  frc::DigitalInput dio0{0};
-  frc::DigitalInput dio1{1};
-  frc::DigitalInput dio2{2};
+
+  std::unique_ptr<frc::DigitalInput> bottom;
+  std::unique_ptr<frc::DigitalInput> middle;
+  std::unique_ptr<frc::DigitalInput> top; 
 
 };

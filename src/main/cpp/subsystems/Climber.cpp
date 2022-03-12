@@ -13,6 +13,10 @@ Climber::Climber() {
     leftMotor = std::make_unique<WPI_TalonFX>(Constants::MotorIDs::leftClimber);
     rightMotor = std::make_unique<WPI_TalonFX>(Constants::MotorIDs::rightClimber);
 
+    bottom = std::make_unique<frc::DigitalInput>(Constants::DigitalIDs::bottomOptical);
+    middle = std::make_unique<frc::DigitalInput>(Constants::DigitalIDs::middleOptical);
+    top = std::make_unique<frc::DigitalInput>(Constants::DigitalIDs::topOptical);
+
     ConfigureController(*leftMotor);
     ConfigureController(*rightMotor);
 }
@@ -66,19 +70,22 @@ void Climber::SetHookState(HookState state) {
     hookPosition = state;
 }
 
-void Climber::Initialize() {
-    // states = {
-    //     frc::DigitalInput dio0{0},
-    //     frc::Digitalnput dio1{1},
-    //     frc::DigitalInput dio2{2}
-    // };
+bool Climber::GetOpticalSensor(int sensor) {
+    switch (sensor) {
+        case Constants::DigitalIDs::bottomOptical:
+            return bottom->Get();
+        case Constants::DigitalIDs::middleOptical:
+            return middle->Get();
+        case Constants::DigitalIDs::topOptical:
+            return top->Get();
+    }
 }
 
 // This method will be called once per scheduler run
 void Climber::Periodic() {
-    frc::SmartDashboard::PutBoolean("Digital 0: ", dio0.Get());
-    frc::SmartDashboard::PutBoolean("Digital 1: ", dio1.Get());
-    frc::SmartDashboard::PutBoolean("Digital 2: ", dio2.Get());
+    // frc::SmartDashboard::PutBoolean("Digital 0: ", dio0.Get());
+    // frc::SmartDashboard::PutBoolean("Digital 1: ", dio1.Get());
+    // frc::SmartDashboard::PutBoolean("Digital 2: ", dio2.Get());
     //TRUE IS WHEN THE SHAFT IS ABOVE
     //DIGITAL 2 IS BOTTOM
     //DIGITAL 0 IS MID SENSOR
