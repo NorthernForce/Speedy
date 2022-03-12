@@ -32,6 +32,7 @@ void Climber::ConfigureController(WPI_TalonFX& controller) {
 void Climber::PivotUp() {
     climber->Set(false);
     pivotPosition = PivotState::Up;
+    heightCheckNeeded = true;
 }
 
 void Climber::PivotDown() {
@@ -62,6 +63,23 @@ void Climber::Stop(){
     rightMotor->Set(0);
 }
 
+bool Climber::TooTall(){
+    return ((GetPivot() == PivotState::Up && GetOpticalSensor(Constants::DigitalIDs::middleOptical))
+        || (GetOpticalSensor(Constants::DigitalIDs::topOptical)));
+}
+
+void Climber::CheckHeight(){
+    if (heightCheckNeeded) {
+        if(TooTall()) {
+            Lower();
+        }
+        else {
+            Stop();
+            heightCheckNeeded = false;
+        }
+    }
+}
+
 HookState Climber::GetHookState() {
     return hookPosition;
 }
@@ -78,16 +96,12 @@ bool Climber::GetOpticalSensor(int sensor) {
             return middle->Get();
         case Constants::DigitalIDs::topOptical:
             return top->Get();
+        default:
+            return false;
     }
 }
 
 // This method will be called once per scheduler run
 void Climber::Periodic() {
-    // frc::SmartDashboard::PutBoolean("Digital 0: ", dio0.Get());
-    // frc::SmartDashboard::PutBoolean("Digital 1: ", dio1.Get());
-    // frc::SmartDashboard::PutBoolean("Digital 2: ", dio2.Get());
-    //TRUE IS WHEN THE SHAFT IS ABOVE
-    //DIGITAL 2 IS BOTTOM
-    //DIGITAL 0 IS MID SENSOR
-    //DIGITAL 1 IS TOP SENSOR
+    CheckHeight();
 }

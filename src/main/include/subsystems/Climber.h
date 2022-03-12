@@ -32,6 +32,8 @@ class Climber : public frc2::SubsystemBase {
   void Raise();
   void Lower();
   void Stop();
+  bool TooTall();
+  void CheckHeight();
   HookState GetHookState();
   void SetHookState(HookState state);
   void SetPivot(HookState state);
@@ -44,6 +46,8 @@ class Climber : public frc2::SubsystemBase {
   HookState hookPosition;
   std::unique_ptr<WPI_TalonFX> leftMotor;
   std::unique_ptr<WPI_TalonFX> rightMotor;
+
+  bool heightCheckNeeded = true;
 
   std::unique_ptr<frc::DigitalInput> bottom;
   std::unique_ptr<frc::DigitalInput> middle;
