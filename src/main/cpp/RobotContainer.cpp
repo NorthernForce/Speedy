@@ -4,7 +4,6 @@
 
 #include "RobotContainer.h"
 #include "commands/DriveWithJoystick.h"
-#include "commands/ClimberHeightUnderLimit.h"
 
 std::shared_ptr<OI> RobotContainer::oi;
 std::shared_ptr<Drivetrain> RobotContainer::drivetrain;
@@ -39,5 +38,4 @@ void RobotContainer::InitSubsystems() {
 
 void RobotContainer::InitDefaultCommands() {
     drivetrain->SetDefaultCommand(DriveWithJoystick());
-    climber->SetDefaultCommand(ClimberHeightUnderLimit());
 }

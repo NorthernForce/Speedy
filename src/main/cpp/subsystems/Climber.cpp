@@ -67,7 +67,7 @@ bool Climber::TooTall(){
     return ((GetPivot() == PivotState::Up && GetOpticalSensor(Constants::DigitalIDs::middleOptical))
         || (GetOpticalSensor(Constants::DigitalIDs::topOptical)));
 }
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
 void Climber::CheckHeight(){
     if (heightCheckNeeded) {
         if(TooTall()) {
