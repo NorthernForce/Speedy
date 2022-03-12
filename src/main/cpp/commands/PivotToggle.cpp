@@ -4,13 +4,14 @@
 
 #include "commands/PivotToggle.h"
 #include "RobotContainer.h"
+#include "commands/ClimberHeightUnderLimit.h"
 
 // Called when the command is initially scheduled.
 void PivotToggle::Initialize() {
     if(RobotContainer::climber->GetPivot() == PivotState::Up) {
-        RobotContainer::climber->PivotUp();
-    } else if (RobotContainer::climber->GetPivot() == PivotState::Down) {
         RobotContainer::climber->PivotDown();
+    } else if (RobotContainer::climber->GetPivot() == PivotState::Down) {
+        RobotContainer::climber->PivotUp();
     } else {
         printf("Pivot not in range\n");
     }

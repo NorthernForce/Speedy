@@ -30,12 +30,12 @@ void Climber::ConfigureController(WPI_TalonFX& controller) {
 }
 
 void Climber::PivotUp() {
-    climber->Set(true);
+    climber->Set(false);
     pivotPosition = PivotState::Up;
 }
 
 void Climber::PivotDown() {
-    climber->Set(false);
+    climber->Set(true);
     pivotPosition = PivotState::Down;
 }
 
