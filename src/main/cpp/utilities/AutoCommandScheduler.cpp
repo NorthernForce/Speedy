@@ -13,10 +13,7 @@
 #include <iostream>
 #include <frc/Timer.h>
 
-int AutoCommandScheduler::currIndex;
-
 AutoCommandScheduler::AutoCommandScheduler(std::vector<frc2::Command*> &&commandQueue) {
-    //frc2::Command **commandQueue = (frc2::Command**) malloc(sizeof(frc2::Command*) * commandQueue.size());
     timer = std::make_unique<frc::Timer>();
     this->commandQueue = commandQueue;
     maxIndex = commandQueue.size() - 1;

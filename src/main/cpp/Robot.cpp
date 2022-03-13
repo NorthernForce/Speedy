@@ -39,9 +39,7 @@ void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
   RobotContainer::fmsComms->DisplayMatchTime();
   //frc::SmartDashboard::PutNumber("distance: ", RobotContainer::ultrasonic->getDistance());
-  //frc::SmartDashboard::PutString("Drive Speed", RobotContainer::fmsComms->GetAllianceString(RobotContainer::fmsComms->GetAlliance()));
-  RobotContainer::drivetrain->PrintEncoderValues();
-  
+  //frc::SmartDashboard::PutString("Drive Speed", RobotContainer::fmsComms->GetAllianceString(RobotContainer::fmsComms->GetAlliance()));  
   }
 /**
  * This function is called once each time the robot enters Disabled mode. You
