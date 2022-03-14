@@ -8,6 +8,8 @@
 #include <frc/SPI.h>
 #include "RobotContainer.h"
 
+#include "utilities/RecordedTalonFX.h"
+
 std::shared_ptr<WPI_TalonFX> Drivetrain::leftPrimary;
 std::shared_ptr<WPI_TalonFX> Drivetrain::rightPrimary;
 std::shared_ptr<frc::DifferentialDrive> Drivetrain::robotDrive;
