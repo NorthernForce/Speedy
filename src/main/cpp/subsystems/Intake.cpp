@@ -19,6 +19,18 @@ void Intake::Run(bool reverse) {
     intakeBottomSpark->Set(reverse ? 1.0 : -1.0);
 }
 
+void Intake::UltraShoot() {
+    ultraDist = RobotContainer::ultrasonic->getDistance();
+    if (ultraDist < 12) {
+        intakeTopSpark->Set(-0.8);
+        intakeBottomSpark->Set(0.9);
+    }
+    else if (ultraDist < 18) {
+        intakeTopSpark->Set(-1.0);
+        intakeBottomSpark->Set(1.0);
+    }
+}
+
 void Intake::Stop() {
     intakeTopSpark->Set(0);
     intakeBottomSpark->Set(0);
