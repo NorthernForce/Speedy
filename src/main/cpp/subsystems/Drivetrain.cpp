@@ -123,4 +123,8 @@ bool Drivetrain::IsTipping() {
 void Drivetrain::Periodic() {
     frc::SmartDashboard::PutNumber("left encoder", GetEncoderRotations().first);
     frc::SmartDashboard::PutNumber("right encoder", GetEncoderRotations().second);
+
+    if (IsTipping()) {
+        Drive(0, 0);
+    }
 }
