@@ -117,14 +117,15 @@ double Drivetrain::GetRightRPM() {
 }
 
 bool Drivetrain::IsTipping() {
-    return RobotContainer::imu->GetRollAngle() > abs(tipAngle.value());
+    // frc::SmartDashboard::PutNumber("left encoder", GetEncoderRotations().first);
+    if (RobotContainer::intake->armPosition == ArmState::Up) {
+        return RobotContainer::imu->GetRollAngle() > abs(armUpTipAngle.value());
+    }
+    else {
+        return RobotContainer::imu->GetRollAngle() > abs(armDownTipAngle.value());
+    }
 }
  
 void Drivetrain::Periodic() {
-    frc::SmartDashboard::PutNumber("left encoder", GetEncoderRotations().first);
     frc::SmartDashboard::PutNumber("right encoder", GetEncoderRotations().second);
-
-    if (IsTipping()) {
-        Drive(0, 0);
-    }
 }

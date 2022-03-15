@@ -37,5 +37,6 @@ class Drivetrain : public frc2::SubsystemBase {
   std::shared_ptr<WPI_TalonFX> leftFollower;
   std::shared_ptr<WPI_TalonFX> rightFollower;
   const int rampRate = 0.2;
-  units::degree_t tipAngle = 5_deg;
+  units::degree_t armUpTipAngle = 12_deg;
+  units::degree_t armDownTipAngle = 15_deg;
 };
