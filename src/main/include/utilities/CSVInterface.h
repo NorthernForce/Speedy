@@ -10,5 +10,8 @@ class CSVInterface {
     bool WriteLine(std::string line);
 
  private:
-    std::fstream file;
+    std::ifstream fileRead;
+    std::ofstream fileWrite;
+    std::string expectedColumns = "CAN ID,position,speed,time";
+    std::string actualColumns;
 };
