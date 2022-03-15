@@ -7,15 +7,7 @@
 
 std::shared_ptr<OI> RobotContainer::oi;
 std::shared_ptr<Drivetrain> RobotContainer::drivetrain;
-std::shared_ptr<IMU> RobotContainer::imu;
-std::shared_ptr<Intake> RobotContainer::intake;
-std::shared_ptr<Navigation> RobotContainer::navigation;
-std::shared_ptr<PCM> RobotContainer::pcm;
-std::shared_ptr<Coordinates> RobotContainer::coordinates;
-std::shared_ptr<Climber> RobotContainer::climber;
 std::shared_ptr<FMSComms> RobotContainer::fmsComms;
-std::shared_ptr<ShootThenCrossLine> RobotContainer::shootThenCrossLine;
-std::shared_ptr<Ultrasonic> RobotContainer::ultrasonic;
 
 RobotContainer::RobotContainer() {
     oi.reset(new OI());
@@ -26,14 +18,7 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::InitSubsystems() {
     drivetrain.reset(new Drivetrain);
-    imu.reset(new IMU);
-    intake.reset(new Intake);
-    navigation.reset(new Navigation);
-    pcm.reset(new PCM);
-    coordinates.reset(new Coordinates);
-    climber.reset(new Climber);
     fmsComms.reset(new FMSComms);
-    ultrasonic.reset(new Ultrasonic);
 }
 
 void RobotContainer::InitDefaultCommands() {

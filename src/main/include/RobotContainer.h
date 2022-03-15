@@ -10,15 +10,6 @@
 #include "Constants.h"
 
 #include "subsystems/Drivetrain.h"
-#include "subsystems/IMU.h"
-#include "subsystems/Intake.h"
-#include "subsystems/Navigation.h"
-#include "subsystems/PCM.h"
-#include "subsystems/Coordinates.h"
-#include "subsystems/Climber.h"
-#include "subsystems/Ultrasonic.h"
-
-#include "commands/autonomous/ShootThenCrossLine.h"
 
 #include "utilities/FMSComms.h"
 
@@ -34,15 +25,7 @@ class RobotContainer {
   RobotContainer();
   static std::shared_ptr<OI> oi;
   static std::shared_ptr<Drivetrain> drivetrain;
-  static std::shared_ptr<IMU> imu;
-  static std::shared_ptr<Intake> intake;
-  static std::shared_ptr<Navigation> navigation;
-  static std::shared_ptr<PCM> pcm;
-  static std::shared_ptr<Coordinates> coordinates;
-  static std::shared_ptr<Climber> climber;
   static std::shared_ptr<FMSComms> fmsComms;
-  static std::shared_ptr<ShootThenCrossLine> shootThenCrossLine;
-  static std::shared_ptr<Ultrasonic> ultrasonic;
 
  private:
   // The robot's subsystems and commands are defined here...

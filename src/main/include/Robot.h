@@ -9,7 +9,6 @@
 
 #include "RobotContainer.h"
 
-#include "utilities/AutoCommandScheduler.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -27,8 +26,6 @@ class Robot : public frc::TimedRobot {
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
   frc2::Command* m_autonomousCommand = nullptr;
-
-  std::unique_ptr<AutoCommandScheduler> autoCommandScheduler;
 
   RobotContainer m_container;
 };

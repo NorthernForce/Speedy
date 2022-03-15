@@ -1,18 +1,7 @@
 #include "Constants.h"
 #include "RobotContainer.h"
 #include "commands/DriveWithJoystick.h"
-#include "commands/IntakeBall.h"
-#include "commands/PushOutBall.h"
-#include "commands/ArmDown.h"
-#include "commands/ArmUp.h"
-#include "commands/ToggleArm.h"
-#include "commands/LowerClimber.h"
-#include "commands/RaiseClimber.h"
-#include "commands/PivotToggle.h"
-#include "commands/PushOutBallUltraSonic.h"
-#include "commands/autonomous/MoveToCoordinate.h"
-#include "commands/autonomous/SetCoordinates.h"
-#include "commands/autonomous/SetTheta.h"
+
 #include <frc/smartdashboard/SmartDashboard.h>
 
 std::shared_ptr<frc::XboxController> OI::driverController;
@@ -28,27 +17,7 @@ void OI::InitControllers() {
     manipulatorController = std::make_shared<frc::XboxController>(Constants::manipulatorController_id);
 }
 
-void OI::MapControllerButtons() {
-    //driver
-    SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new IntakeBall);
-    SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBallUltraSonic);
-    SimpleButton(driverController, Xbox::B_button).WhileHeld(new SetCoordinates(CPlane::Point(0_in, 0_in)));
-    SimpleButton(driverController, Xbox::B_button).WhileHeld(new SetTheta(0_deg));
-    SimpleButton(driverController, Xbox::X_button).WhenPressed(new MoveToCoordinate(CPlane::Point(24_in, 0_in)), 0.4);
-    SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
-
-    //manipulator
-
-    SimpleButton(manipulatorController, Xbox::X_button).WhileHeld(new LowerClimber);
-    SimpleButton(manipulatorController, Xbox::Y_button).WhileHeld(new RaiseClimber);
-
-
-    //SimpleButton(manipulatorController, Xbox::X_button).WhenPressed(new ToggleArm);
-    SimpleButton(manipulatorController, Xbox::A_button).WhenPressed(new PivotToggle);
-    SimpleButton(manipulatorController, Xbox::lt_bumper).WhenPressed(new ArmUp);
-    SimpleButton(manipulatorController, Xbox::rt_bumper).WhenPressed(new ArmDown);
-
-}   
+void OI::MapControllerButtons() {}   
 
 std::pair<double, double> OI::GetDriveControls() {
   double speed = driverController->GetLeftY();
