@@ -17,7 +17,8 @@ void DriveWithJoystick::Execute() {
     rotation = driveControls.second;
 
     if (RobotContainer::drivetrain->IsTipping()) {
-        speed = 0;
+        speed /= 3;
+        rotation /= 3;
     }
     RobotContainer::drivetrain->Drive(speed, rotation);
 }

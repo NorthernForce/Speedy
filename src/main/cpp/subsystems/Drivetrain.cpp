@@ -103,9 +103,9 @@ void Drivetrain::SetEncoderPositions(double lt, double rt) {
 }
 
 void Drivetrain::PrintEncoderValues() {
-  printf("Left Encoder : %lf\n", leftPrimary->GetSelectedSensorPosition());
-  printf("Right Encoder: %lf\n", rightPrimary->GetSelectedSensorPosition());
-  printf("Avg Encoder: %lf\n", GetAvgEncoderRotations(GetEncoderRotations()));
+//   printf("Left Encoder : %lf\n", leftPrimary->GetSelectedSensorPosition());
+//   printf("Right Encoder: %lf\n", rightPrimary->GetSelectedSensorPosition());
+//   printf("Avg Encoder: %lf\n", GetAvgEncoderRotations(GetEncoderRotations()));
 }
 
 double Drivetrain::GetLeftRPM() {
@@ -117,10 +117,15 @@ double Drivetrain::GetRightRPM() {
 }
 
 bool Drivetrain::IsTipping() {
-    return RobotContainer::imu->GetRollAngle() > abs(tipAngle.value());
+    // frc::SmartDashboard::PutNumber("left encoder", GetEncoderRotations().first);
+    if (RobotContainer::intake->armPosition == ArmState::Up) {
+        return RobotContainer::imu->GetRollAngle() > abs(armUpTipAngle.value());
+    }
+    else {
+        return RobotContainer::imu->GetRollAngle() > abs(armDownTipAngle.value());
+    }
 }
  
 void Drivetrain::Periodic() {
-    frc::SmartDashboard::PutNumber("left encoder", GetEncoderRotations().first);
     frc::SmartDashboard::PutNumber("right encoder", GetEncoderRotations().second);
 }

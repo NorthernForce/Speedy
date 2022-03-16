@@ -19,6 +19,7 @@ class Intake : public frc2::SubsystemBase {
   Intake();
   void ConfigureSpark(rev::CANSparkMax& spark);
   void Run(bool reverse=false);
+  void UltraShoot();
   void Stop();
   void SetSpeed(double speed);
 
@@ -34,4 +35,6 @@ class Intake : public frc2::SubsystemBase {
   std::unique_ptr<rev::CANSparkMax> intakeTopSpark;
   std::unique_ptr<rev::CANSparkMax> intakeBottomSpark;
   std::unique_ptr<frc::Solenoid> arm;
+
+  double ultraDist;
 };
