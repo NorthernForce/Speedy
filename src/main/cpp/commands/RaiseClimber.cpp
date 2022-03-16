@@ -12,7 +12,9 @@ RaiseClimber::RaiseClimber() {
 
 // Called repeatedly when this Command is scheduled to run
 void RaiseClimber::Execute() {
+  if (!RobotContainer::climber->TooTall()) {
     RobotContainer::climber->Raise();
+  }
 }
 
 void RaiseClimber::End(bool interrupted) {
@@ -20,5 +22,5 @@ void RaiseClimber::End(bool interrupted) {
 }
 // Returns true when the command should end.
 bool RaiseClimber::IsFinished() {
-  return false;
+  return RobotContainer::climber->TooTall();
 }
