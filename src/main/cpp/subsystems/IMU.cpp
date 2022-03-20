@@ -30,6 +30,14 @@ double IMU::GetTipAngle() {
     return ahrs->GetRoll();
 }
 
+double IMU::GetPitchAngle() {
+    return ahrs->GetPitch();
+}
+
+double IMU::GetPitchSpeed() {
+    return ahrs->GetRawGyroX();
+}
+
 void IMU::ZeroRotation() {
     ahrs->ZeroYaw();
 }
