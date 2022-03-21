@@ -14,6 +14,8 @@ class IMU : public frc2::SubsystemBase {
   double GetRollAngle();
   double GetRotation();
   double GetTipAngle();
+  double GetPitchAngle();
+  double GetPitchSpeed();
   void ZeroRotation();
   void Reset();
 

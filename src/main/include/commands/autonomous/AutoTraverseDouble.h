@@ -6,6 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "utilities/AutoCommandScheduler.h"
 
 /**
  * An example command.
@@ -14,20 +15,18 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class SmartBarGrab
-    : public frc2::CommandHelper<frc2::CommandBase, SmartBarGrab> {
+class AutoTraverseDouble
+    : public frc2::CommandHelper<frc2::CommandBase, AutoTraverseDouble> {
  public:
-  SmartBarGrab();
+  AutoTraverseDouble();
 
   void Initialize() override;
-
-  void ControlClimberPivot();
-
-  void TryGrab();
 
   void Execute() override;
 
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+ private:
+  std::shared_ptr<AutoCommandScheduler> scheduler;
 };

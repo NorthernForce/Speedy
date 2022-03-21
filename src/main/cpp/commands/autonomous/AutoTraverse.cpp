@@ -7,15 +7,18 @@
 #include "commands/PivotToggle.h"
 #include "commands/RaiseClimber.h"
 #include "commands/ArmUp.h"
+#include "commands/autonomous/SmartBarGrab.h"
+#include "commands/LowerClimber.h"
 
 AutoTraverse::AutoTraverse() {
   // Use addRequirements() here to declare subsystem dependencies.
   scheduler.reset(new AutoCommandScheduler({
     new RaiseClimberPartial(),
     new PivotToggle(),
-    new RaiseClimber(),
     new ArmUp(),
-    
+    new RaiseClimber(),
+    new SmartBarGrab(),
+    new LowerClimber()
   }));
 }
 
