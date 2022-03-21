@@ -101,7 +101,14 @@ bool Climber::GetOpticalSensor(int sensor) {
     }
 }
 
+void Climber::PrintOpticalSensors() {
+    frc::SmartDashboard::PutBoolean("Bottom Optical:", bottom->Get());
+    frc::SmartDashboard::PutBoolean("Middle Optical:", middle->Get());
+    frc::SmartDashboard::PutBoolean("Top Optical:", top->Get());
+}
+
 // This method will be called once per scheduler run
 void Climber::Periodic() {
     CheckHeight();
+    PrintOpticalSensors();
 }
