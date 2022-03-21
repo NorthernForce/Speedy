@@ -63,7 +63,8 @@
         "future": "cpp",
         "iomanip": "cpp",
         "mutex": "cpp",
-        "*.inc": "cpp"
+        "*.inc": "cpp",
+        "variant": "cpp"
     },
     "java.configuration.updateBuildConfiguration": "interactive",
     "wpilib.autoStartRioLog": true

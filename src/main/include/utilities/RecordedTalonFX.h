@@ -3,13 +3,15 @@
 #include <ctre/Phoenix.h>
 #include <memory>
 
-#include "utilities/AutoRecorder.h"
-
-class RecordedTalonFX : public WPI_TalonFX, AutoRecorder {
+class RecordedTalonFX : public WPI_TalonFX {
  public:
-    RecordedTalonFX() = delete;
+    RecordedTalonFX();
     RecordedTalonFX(int id);
     void Set(double value) override;
+
+    //void Set(double speed) override;
+    void Set(TalonFXControlMode mode, double value) override;
+    void LogData();
 
  private:
     const char* device = "Talon FX";

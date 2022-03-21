@@ -5,8 +5,8 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
-#include <rev/CANSparkMax.h>
-#include <frc/Solenoid.h>
+#include "utilities/RecordedSpark.h"
+#include "utilities/RecordedSolenoid.h"
 #include <memory>
 
 enum class ArmState{
@@ -17,7 +17,7 @@ enum class ArmState{
 class Intake : public frc2::SubsystemBase {
  public:
   Intake();
-  void ConfigureSpark(rev::CANSparkMax& spark);
+  void ConfigureSpark(RecordedSpark& spark);
   void Run(bool reverse=false);
   void Stop();
   void SetSpeed(double speed);
@@ -31,7 +31,7 @@ class Intake : public frc2::SubsystemBase {
   ArmState armPosition;
 
  private:
-  std::unique_ptr<rev::CANSparkMax> intakeTopSpark;
-  std::unique_ptr<rev::CANSparkMax> intakeBottomSpark;
-  std::unique_ptr<frc::Solenoid> arm;
+  std::unique_ptr<RecordedSpark> intakeTopSpark;
+  std::unique_ptr<RecordedSpark> intakeBottomSpark;
+  std::unique_ptr<RecordedSolenoid> arm;
 };

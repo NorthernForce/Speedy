@@ -5,13 +5,13 @@
 #include "RobotContainer.h"
 
 Intake::Intake() {
-    intakeTopSpark = std::make_unique<rev::CANSparkMax>(Constants::MotorIDs::intakeTop, rev::CANSparkMax::MotorType::kBrushless);
-    intakeBottomSpark = std::make_unique<rev::CANSparkMax>(Constants::MotorIDs::intakeBottom, rev::CANSparkMax::MotorType::kBrushless);
+    intakeTopSpark = std::make_unique<RecordedSpark>(Constants::MotorIDs::intakeTop, RecordedSpark::MotorType::kBrushless);
+    intakeBottomSpark = std::make_unique<RecordedSpark>(Constants::MotorIDs::intakeBottom, RecordedSpark::MotorType::kBrushless);
 
     ConfigureSpark(*intakeTopSpark);
     ConfigureSpark(*intakeBottomSpark);
 
-    arm = std::make_unique<frc::Solenoid>(Constants::PCMCanBusID, frc::PneumaticsModuleType::REVPH, Constants::arm);
+    arm = std::make_unique<RecordedSolenoid>(Constants::PCMCanBusID, frc::PneumaticsModuleType::REVPH, Constants::arm);
 }
 
 void Intake::Run(bool reverse) {
@@ -29,7 +29,7 @@ void Intake::SetSpeed(double speed) {
     intakeBottomSpark->Set(speed);
 }
 
-void Intake::ConfigureSpark(rev::CANSparkMax& spark) {
+void Intake::ConfigureSpark(RecordedSpark& spark) {
     // const uint16_t currentLimit = 60;
     // const uint16_t limitThreshold = 90;
     // intakeTopSpark->SetSmartCurrentLimit(currentLimit);

@@ -12,16 +12,10 @@ CSVInterface::CSVInterface(const std::string& filename) {
     }
 }
 
-// CAN ID, (encoder) position, timestamp, motor speed
+// CAN ID, device, (encoder) position, timestamp, motor speed
 bool CSVInterface::WriteLine(std::string line) {
     if (!fileWrite.is_open())
         return false;
     fileWrite << line << '\n';
     return fileWrite.good();
-}
-
-int main() {
-    CSVInterface interface("file.csv");
-    interface.WriteLine("15,-3.6,74974287927349274924,-0.45");
-    return 0;
 }

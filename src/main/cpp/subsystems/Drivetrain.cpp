@@ -10,15 +10,15 @@
 
 #include "utilities/RecordedTalonFX.h"
 
-std::shared_ptr<WPI_TalonFX> Drivetrain::leftPrimary;
-std::shared_ptr<WPI_TalonFX> Drivetrain::rightPrimary;
+std::shared_ptr<RecordedTalonFX> Drivetrain::leftPrimary;
+std::shared_ptr<RecordedTalonFX> Drivetrain::rightPrimary;
 std::shared_ptr<frc::DifferentialDrive> Drivetrain::robotDrive;
 
 Drivetrain::Drivetrain() {
-    leftPrimary = std::make_shared<WPI_TalonFX>(Constants::MotorIDs::leftPrimary);
-    rightPrimary = std::make_shared<WPI_TalonFX>(Constants::MotorIDs::rightPrimary);
-    leftFollower = std::make_shared<WPI_TalonFX>(Constants::MotorIDs::leftFollower);
-    rightFollower = std::make_shared<WPI_TalonFX>(Constants::MotorIDs::rightFollower);
+    leftPrimary = std::make_shared<RecordedTalonFX>(Constants::MotorIDs::leftPrimary);
+    rightPrimary = std::make_shared<RecordedTalonFX>(Constants::MotorIDs::rightPrimary);
+    leftFollower = std::make_shared<RecordedTalonFX>(Constants::MotorIDs::leftFollower);
+    rightFollower = std::make_shared<RecordedTalonFX>(Constants::MotorIDs::rightFollower);
 
     SetInvert();
     SetFollowers();
@@ -48,7 +48,7 @@ void Drivetrain::ConfigureAllControllers() {
     ConfigureController(*rightFollower, true);
 }
 
-void Drivetrain::ConfigureController(WPI_TalonFX& controller, bool isFollower) {
+void Drivetrain::ConfigureController(RecordedTalonFX& controller, bool isFollower) {
     const int currentLimit = 60;
     const int limitThreshold = 90;
     const int triggerThreshTimeInSec = 1;

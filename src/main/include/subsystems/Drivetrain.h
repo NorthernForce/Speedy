@@ -5,8 +5,8 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
-#include <ctre/Phoenix.h>
 #include <frc/drive/DifferentialDrive.h>
+#include "utilities/RecordedTalonFX.h"
 #include "Constants.h"
 
 class Drivetrain : public frc2::SubsystemBase {
@@ -15,7 +15,7 @@ class Drivetrain : public frc2::SubsystemBase {
   void SetFollowers();
   void SetInvert();
   void ConfigureAllControllers();
-  void ConfigureController(WPI_TalonFX& controller, bool isFollower=false);
+  void ConfigureController(RecordedTalonFX& controller, bool isFollower=false);
   void Drive(double speed, double rotation);
   void DriveUsingSpeeds(double leftSpeed, double rightSpeed);
   bool DriveToDistance(double desiredDistance, double speed);
@@ -29,13 +29,13 @@ class Drivetrain : public frc2::SubsystemBase {
   bool IsTipping();
   void Periodic() override;
 
-  static std::shared_ptr<WPI_TalonFX> leftPrimary;
-  static std::shared_ptr<WPI_TalonFX> rightPrimary;
+  static std::shared_ptr<RecordedTalonFX> leftPrimary;
+  static std::shared_ptr<RecordedTalonFX> rightPrimary;
   static std::shared_ptr<frc::DifferentialDrive> robotDrive;
   
  private:
-  std::shared_ptr<WPI_TalonFX> leftFollower;
-  std::shared_ptr<WPI_TalonFX> rightFollower;
+  std::shared_ptr<RecordedTalonFX> leftFollower;
+  std::shared_ptr<RecordedTalonFX> rightFollower;
   const int rampRate = 0.2;
   units::degree_t tipAngle = 15_deg;
 };

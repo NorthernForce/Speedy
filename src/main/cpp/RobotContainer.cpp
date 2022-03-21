@@ -5,6 +5,7 @@
 #include "RobotContainer.h"
 #include "commands/DriveWithJoystick.h"
 
+std::shared_ptr<AutoRecorder> RobotContainer::autoRecorder;
 std::shared_ptr<OI> RobotContainer::oi;
 std::shared_ptr<Drivetrain> RobotContainer::drivetrain;
 std::shared_ptr<IMU> RobotContainer::imu;
@@ -18,6 +19,7 @@ std::shared_ptr<ShootThenCrossLine> RobotContainer::shootThenCrossLine;
 std::shared_ptr<Ultrasonic> RobotContainer::ultrasonic;
 
 RobotContainer::RobotContainer() {
+    autoRecorder.reset(new AutoRecorder);
     oi.reset(new OI());
     InitSubsystems();
     oi->MapControllerButtons();

@@ -9,6 +9,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "Constants.h"
 
+#include "utilities/AutoRecorder.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/IMU.h"
 #include "subsystems/Intake.h"
@@ -32,6 +33,7 @@
 class RobotContainer {
  public:
   RobotContainer();
+  static std::shared_ptr<AutoRecorder> autoRecorder;
   static std::shared_ptr<OI> oi;
   static std::shared_ptr<Drivetrain> drivetrain;
   static std::shared_ptr<IMU> imu;
