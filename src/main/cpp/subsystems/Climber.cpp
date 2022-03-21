@@ -58,9 +58,18 @@ void Climber::Lower() {
     rightMotor->Set(-0.65);
 }
 
-void Climber::Stop(){
+void Climber::Stop() {
     leftMotor->Set(0);
     rightMotor->Set(0);
+}
+
+double Climber::SpoolRotations() {
+    return leftMotor->GetSensorCollection().GetIntegratedSensorPosition();
+}
+
+void Climber::ResetSpool() {
+    leftMotor->GetSensorCollection().SetIntegratedSensorPosition(0.0);
+    rightMotor->GetSensorCollection().SetIntegratedSensorPosition(0.0);
 }
 
 bool Climber::TooTall(){

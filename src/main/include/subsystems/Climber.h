@@ -32,6 +32,8 @@ class Climber : public frc2::SubsystemBase {
   void Raise();
   void Lower();
   void Stop();
+  double SpoolRotations();
+  void ResetSpool();
   bool TooTall();
   void CheckHeight();
   HookState GetHookState();
