@@ -11,6 +11,7 @@
 #include "Constants.h"
 #include <frc/RobotController.h>
 #include <memory>
+#include <frc/smartdashboard/SmartDashboard.h>
 
 //Constructor
 Ultrasonic::Ultrasonic() 
@@ -31,6 +32,7 @@ Ultrasonic::~Ultrasonic()
 void Ultrasonic::Periodic() 
 {
    m_dist = calcDistance();
+   frc::SmartDashboard::PutNumber("Ultrasonic: ", m_dist);
 }
 
 //Retuns the last Distance seen in Inches from m_dist

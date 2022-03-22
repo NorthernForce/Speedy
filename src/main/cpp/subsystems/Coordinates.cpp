@@ -49,7 +49,7 @@ void Coordinates::UpdateLocation() {
 
 // This method will be called once per scheduler run
 void Coordinates::Periodic() { 
-    UpdateLocation();
+    // UpdateLocation();
     
     frc::SmartDashboard::PutNumber("X Position:", location.x.value());
     frc::SmartDashboard::PutNumber("Y Position:", location.y.value());

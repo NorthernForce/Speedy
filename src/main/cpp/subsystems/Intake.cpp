@@ -21,13 +21,12 @@ void Intake::Run(bool reverse) {
 
 void Intake::UltraShoot() {
     ultraDist = RobotContainer::ultrasonic->getDistance();
-    if (ultraDist < 12) {
-        intakeTopSpark->Set(-0.8);
-        intakeBottomSpark->Set(0.9);
+    if (ultraDist < 20) {
+        intakeTopSpark->Set(0.7);
+        intakeBottomSpark->Set(-0.9);
     }
-    else if (ultraDist < 18) {
-        intakeTopSpark->Set(-1.0);
-        intakeBottomSpark->Set(1.0);
+    else {
+        Run();
     }
 }
 
@@ -58,11 +57,11 @@ void Intake::SetArmState(ArmState state) {
 }
 
 void Intake::ArmUp() {
-    arm->Set(true);
+    arm->Set(false);
     armPosition = ArmState::Up;
 }
 
 void Intake::ArmDown() {
-    arm->Set(false);
+    arm->Set(true);
     armPosition = ArmState::Down;
 }

@@ -12,10 +12,14 @@ PushOutBallUltraSonic::PushOutBallUltraSonic() {
 void PushOutBallUltraSonic::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void PushOutBallUltraSonic::Execute() {}
+void PushOutBallUltraSonic::Execute() {
+  RobotContainer::intake->UltraShoot();
+}
 
 // Called once the command ends or is interrupted.
-void PushOutBallUltraSonic::End(bool interrupted) {}
+void PushOutBallUltraSonic::End(bool interrupted) {
+  RobotContainer::intake->Stop();
+}
 
 // Returns true when the command should end.
 bool PushOutBallUltraSonic::IsFinished() {
