@@ -64,7 +64,7 @@ void Climber::Stop() {
 }
 
 double Climber::SpoolRotations() {
-    return leftMotor->GetSensorCollection().GetIntegratedSensorPosition();
+    return leftMotor->GetSensorCollection().GetIntegratedSensorPosition()/2048;
 }
 
 void Climber::ResetSpool() {

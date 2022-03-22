@@ -18,7 +18,8 @@ AutoTraverse::AutoTraverse() {
     new ArmUp(),
     new RaiseClimber(),
     new SmartBarGrab(),
-    new LowerClimber()
+    new LowerClimber(),
+    new PivotToggle()
   }));
 }
 
