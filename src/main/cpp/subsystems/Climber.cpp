@@ -64,8 +64,10 @@ void Climber::Stop(){
 }
 
 bool Climber::TooTall(){
-    return ((GetPivot() == PivotState::Up && GetOpticalSensor(Constants::DigitalIDs::middleOptical))
-        || (GetOpticalSensor(Constants::DigitalIDs::topOptical)));
+    return (
+    //(GetPivot() == PivotState::Up && GetOpticalSensor(Constants::DigitalIDs::middleOptical)) // this has been commented out bc it causes a problem
+    /*||*/ (GetOpticalSensor(Constants::DigitalIDs::topOptical)));                             // when climbing, when pivoted up to grab bar it retracts climber
+                                                                                               // too low
 }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 void Climber::CheckHeight(){
