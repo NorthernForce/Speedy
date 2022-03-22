@@ -47,8 +47,8 @@ void OI::MapControllerButtons()
 
   // SimpleButton(manipulatorController, Xbox::X_button).WhenPressed(new ToggleArm);
   SimpleButton(manipulatorController, Xbox::A_button).WhenPressed(new PivotToggle);
-  SimpleButton(manipulatorController, Xbox::lt_bumper).WhenPressed(new ArmUp);
-  SimpleButton(manipulatorController, Xbox::rt_bumper).WhenPressed(new ArmDown);
+  SimpleButton(manipulatorController, Xbox::lt_bumper).WhenPressed(new ArmDown);
+  SimpleButton(manipulatorController, Xbox::rt_bumper).WhenPressed(new ArmUp);
 }
 
 std::pair<double, double> OI::GetDriveControls()
