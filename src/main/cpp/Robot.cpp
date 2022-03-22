@@ -24,7 +24,7 @@ void Robot::RobotInit() {
     //RobotContainer::intake->SetArmState(ArmState::Down);
     RobotContainer::drivetrain->SetEncoderPositions(0, 0);
     RobotContainer::intake->ArmUp();
-    frc::CameraServer::StartAutomaticCapture();
+    //frc::CameraServer::StartAutomaticCapture();
 }
 
 /**
