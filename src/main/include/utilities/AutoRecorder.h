@@ -21,11 +21,12 @@ class AutoRecorder : public frc2::SubsystemBase {
     void AddDevice(RecordedTalonFX* device);
     void AddDevice(RecordedSpark* device);
     void AddDevice(RecordedSolenoid* device);
+    std::vector<size_t> GetNumberOfRecordedDevices();
     void Periodic() override;
     
  private:
-    static std::shared_ptr<CSVInterface> csvInterface;
-    static bool isRecording;
+    std::shared_ptr<CSVInterface> csvInterface;
+    bool isRecording;
 
     std::vector<RecordedTalonFX*> recordedTalons;
     std::vector<RecordedSpark*> recordedSparks;

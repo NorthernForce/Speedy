@@ -1,4 +1,4 @@
-#include "/home/hunter/git/Speedy-RapidReact2022/src/main/include/utilities/CSVInterface.h"
+#include "utilities/CSVInterface.h"
 
 CSVInterface::CSVInterface(const std::string& filename) {
     fileRead.open(filename.c_str(), std::ios::in);

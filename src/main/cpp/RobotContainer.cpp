@@ -21,6 +21,7 @@ std::shared_ptr<Ultrasonic> RobotContainer::ultrasonic;
 RobotContainer::RobotContainer() {
     autoRecorder.reset(new AutoRecorder);
     oi.reset(new OI());
+    //autoRecorder->Start();
     InitSubsystems();
     oi->MapControllerButtons();
     InitDefaultCommands();

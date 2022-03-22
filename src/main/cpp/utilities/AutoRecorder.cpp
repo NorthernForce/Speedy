@@ -4,12 +4,8 @@
 
 #include <utility>
 
-std::shared_ptr<CSVInterface> AutoRecorder::csvInterface;
-bool AutoRecorder::isRecording;
-
 AutoRecorder::AutoRecorder() {
-    csvInterface = std::make_shared<CSVInterface>("auto.csv");
-    isRecording = false;
+    csvInterface = std::make_shared<CSVInterface>("/home/lvuser/auto1.csv");
 }
 
 void AutoRecorder::Start() {
@@ -52,15 +48,27 @@ void AutoRecorder::Write(std::vector<std::string> data) {
 }
 
 void AutoRecorder::Periodic() {
+    printf("periodic recording\n");
+
     if (isRecording) {
-        for (auto device : recordedTalons) {
-            device->LogData();
+        printf("runnnnnnn\n");
+        if (recordedTalons.size() > 0) {
+            for (auto device : recordedTalons) {
+                if (device != nullptr)
+                    device->LogData();
+            }
         }
-        for (auto device : recordedSparks) {
-            device->LogData();
+        if (recordedSparks.size() > 0) {
+            for (auto device : recordedSparks) {
+                if (device != nullptr)
+                    device->LogData();
+            }
         }
-        for (auto device : recordedSolenoids) {
-            device->LogData();
+        if (recordedSolenoids.size() > 0) {
+            for (auto device : recordedSolenoids) {
+                if (device != nullptr)
+                    device->LogData();
+            }
         }
     }
 }
