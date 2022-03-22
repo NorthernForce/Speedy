@@ -9,7 +9,7 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "Constants.h"
 
-#include "utilities/AutoRecorder.h"
+#include "subsystems/AutoRecorder.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/IMU.h"
 #include "subsystems/Intake.h"

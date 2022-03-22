@@ -1,3 +1,7 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
@@ -13,7 +17,7 @@
 
 class AutoRecorder : public frc2::SubsystemBase {
  public:
-    AutoRecorder();
+  AutoRecorder();
     void Start();
     void Stop();
     bool GetIsRecording();
@@ -23,7 +27,7 @@ class AutoRecorder : public frc2::SubsystemBase {
     void AddDevice(RecordedSolenoid* device);
     std::vector<size_t> GetNumberOfRecordedDevices();
     void Periodic() override;
-    
+
  private:
     std::shared_ptr<CSVInterface> csvInterface;
     bool isRecording;

@@ -1,6 +1,7 @@
 #include "utilities/CSVInterface.h"
 
 CSVInterface::CSVInterface(const std::string& filename) {
+    isInitialized = false;
     fileRead.open(filename.c_str(), std::ios::in);
     fileRead.seekg(0);
     std::getline(fileRead, actualColumns);
@@ -10,6 +11,11 @@ CSVInterface::CSVInterface(const std::string& filename) {
     if (actualColumns != expectedColumns) {
         WriteLine(expectedColumns);
     }
+    isInitialized = true;
+}
+
+bool CSVInterface::IsInitialized() {
+    return isInitialized;
 }
 
 // CAN ID, device, (encoder) position, timestamp, motor speed

@@ -1,4 +1,8 @@
-#include "utilities/AutoRecorder.h"
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
+#include "subsystems/AutoRecorder.h"
 #include "utilities/CSVInterface.h"
 #include "frc2/command/Subsystem.h"
 
@@ -50,7 +54,7 @@ void AutoRecorder::Write(std::vector<std::string> data) {
 void AutoRecorder::Periodic() {
     printf("periodic recording\n");
 
-    if (isRecording) {
+    if (isRecording && csvInterface->IsInitialized()) {
         printf("runnnnnnn\n");
         if (recordedTalons.size() > 0) {
             for (auto device : recordedTalons) {
