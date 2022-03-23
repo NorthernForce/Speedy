@@ -10,13 +10,13 @@ IntakeBall::IntakeBall() {
 }
 
 void IntakeBall::Execute() {
-    RobotContainer::intake->Run();
+    RobotContainer::intake->Run(reverse);
 }
 
 void IntakeBall::End(bool interrupted) {
     RobotContainer::intake->Stop();
 }
-\
+
 bool IntakeBall::IsFinished() {
     return false;
 }

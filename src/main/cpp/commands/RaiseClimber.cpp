@@ -12,7 +12,9 @@ RaiseClimber::RaiseClimber() {
 
 // Called repeatedly when this Command is scheduled to run
 void RaiseClimber::Execute() {
+  if (!RobotContainer::climber->TooTall()) {
     RobotContainer::climber->Raise();
+  }
 }
 
 void RaiseClimber::End(bool interrupted) {
@@ -20,13 +22,5 @@ void RaiseClimber::End(bool interrupted) {
 }
 // Returns true when the command should end.
 bool RaiseClimber::IsFinished() {
-  return (
-    (
-      RobotContainer::climber->GetPivot() == PivotState::Down && 
-      RobotContainer::climber->GetOpticalSensor(Constants::DigitalIDs::topOptical)
-    ) || (
-      RobotContainer::climber->GetPivot() == PivotState::Up &&
-      RobotContainer::climber->GetOpticalSensor(Constants::DigitalIDs::middleOptical)
-    )
-  );
+  return RobotContainer::climber->TooTall();
 }
