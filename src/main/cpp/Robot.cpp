@@ -50,6 +50,8 @@ void Robot::RobotPeriodic() {
  */
 void Robot::DisabledInit() {
     RobotContainer::intake->ArmUp();
+    //RobotContainer::drivetrain->WriteLeftMotorPos("LeftTest");
+    //RobotContainer::drivetrain->WriteRightMotorPos("RightTest");
 }
 
 void Robot::DisabledPeriodic() {}
@@ -88,7 +90,9 @@ void Robot::TeleopInit() {
 /**
  * This function is called periodically during operator control.
  */
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic() {
+    RobotContainer::drivetrain->RecordMotorPos();
+}
 
 /**
  * This function is called periodically during test mode.

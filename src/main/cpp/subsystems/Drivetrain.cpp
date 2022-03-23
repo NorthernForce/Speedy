@@ -108,6 +108,11 @@ void Drivetrain::PrintEncoderValues() {
 //   printf("Avg Encoder: %lf\n", GetAvgEncoderRotations(GetEncoderRotations()));
 }
 
+void Drivetrain::RecordMotorPos(){
+    leftMotorPos.push_back(GetEncoderRotations().first);
+    rightMotorPos.push_back(GetEncoderRotations().second);
+}
+
 double Drivetrain::GetLeftRPM() {
     return leftPrimary->GetSensorCollection().GetIntegratedSensorVelocity();
 }
