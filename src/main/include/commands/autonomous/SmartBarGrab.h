@@ -30,4 +30,8 @@ class SmartBarGrab
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+ private:
+  double prevTip;
+  uint8_t stableCycles;
+
 };

@@ -5,7 +5,8 @@
 #include "commands/RaiseClimberPartial.h"
 #include "commands/RaiseClimber.h"
 
-RaiseClimberPartial::RaiseClimberPartial() {
+RaiseClimberPartial::
+RaiseClimberPartial() {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(RobotContainer::climber.get());
 }
@@ -18,14 +19,17 @@ void RaiseClimberPartial::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void RaiseClimberPartial::Execute() {
   RobotContainer::climber->Raise();
+  frc::SmartDashboard::PutBoolean("RaisePrtl: ", true);
 }
 
 // Called once the command ends or is interrupted.
 void RaiseClimberPartial::End(bool interrupted) {
   RobotContainer::climber->Stop();
+  frc::SmartDashboard::PutBoolean("RaisePrtl: ", false);
+
 }
 
 // Returns true when the command should end.
 bool RaiseClimberPartial::IsFinished() {
-  return (abs(RobotContainer::climber->SpoolRotations()) > 1);
+  return (abs(RobotContainer::climber->SpoolRotations()) > 1.5);
 }

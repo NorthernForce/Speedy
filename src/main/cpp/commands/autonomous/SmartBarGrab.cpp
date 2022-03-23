@@ -11,7 +11,9 @@ SmartBarGrab::SmartBarGrab() {
 }
 
 // Called when the command is initially scheduled.
-void SmartBarGrab::Initialize() {}
+void SmartBarGrab::Initialize() {
+  prevTip=0;
+}
 
 void SmartBarGrab::ControlClimberPivot() {
   if (RobotContainer::imu->GetPitchAngle() < -35) {
@@ -26,12 +28,20 @@ void SmartBarGrab::TryGrab() {
 }
 
 // Called repeatedly when this Command is scheduled to run
-void SmartBarGrab::Execute() {}
+void SmartBarGrab::Execute() {
+  if (abs(prevTip - RobotContainer::imu->GetTipAngle()) < 1) {
+    stableCycles++;
+  }
+  else {
+    stableCycles=0;
+  }
+  prevTip = RobotContainer::imu->GetTipAngle();
+}
 
 // Called once the command ends or is interrupted.
 void SmartBarGrab::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool SmartBarGrab::IsFinished() {
-  return false;
+  return (stableCycles > 30);
 }

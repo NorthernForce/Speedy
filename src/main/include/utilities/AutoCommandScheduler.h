@@ -17,6 +17,7 @@ class AutoCommandScheduler {
  public:
   AutoCommandScheduler(std::vector<frc2::Command*> &&commandQueue);
   AutoCommandScheduler();
+  void ResetIndex();
   void RunSequential();
   void RunParallel();
   units::time::second_t GetTimeSinceRan();
@@ -37,7 +38,7 @@ class AutoCommandScheduler {
     void CleanUpArray(std::vector<frc2::Command*> array);
 
     std::unique_ptr<frc::Timer> timer;
-    int currIndex;
+    int currIndex=0;
     int maxIndex;
     bool isFinished = false;
     bool doCommandsHaveSharedSubsystems = false;

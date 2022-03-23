@@ -26,6 +26,11 @@ AutoCommandScheduler::AutoCommandScheduler() {
     isUsingAuto = true;
 }
 
+void AutoCommandScheduler::ResetIndex() {
+    currIndex = 0;
+
+}
+
 void AutoCommandScheduler::RunSequential() {
     if (isFinished)
         EndIfGoneThroughAllIndexes();
@@ -36,6 +41,7 @@ void AutoCommandScheduler::RunSequential() {
 void AutoCommandScheduler::ScheduleInSequence() {
     int prevInd = GetPrevIndex();
     if (!commandQueue[prevInd]->IsScheduled() && currIndex <= maxIndex) {
+        frc::SmartDashboard::PutNumber("Scheduler index: ", currIndex);
         timer->Start();
         commandQueue[currIndex]->Schedule();
         currIndex++;

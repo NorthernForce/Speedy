@@ -14,6 +14,7 @@ AutoTraverse::AutoTraverse() {
   // Use addRequirements() here to declare subsystem dependencies.
   scheduler.reset(new AutoCommandScheduler({
     new RaiseClimberPartial(),
+    new RaiseClimberPartial(),
     new PivotToggle(),
     new ArmUp(),
     new RaiseClimber(),
@@ -22,17 +23,23 @@ AutoTraverse::AutoTraverse() {
     new PivotToggle()
   }));
 }
-
 // Called when the command is initially scheduled.
-void AutoTraverse::Initialize() {}
+void AutoTraverse::Initialize() {
+  RobotContainer::climber->ResetSpool();
+  scheduler->ResetIndex();
+}
 
 // Called repeatedly when this Command is scheduled to run
 void AutoTraverse::Execute() {
   scheduler->RunSequential();
+  frc::SmartDashboard::PutBoolean("AutoTraverse: ", true);
 }
 
+
 // Called once the command ends or is interrupted.
-void AutoTraverse::End(bool interrupted) {}
+void AutoTraverse::End(bool interrupted) {
+  frc::SmartDashboard::PutBoolean("AutoTraverse: ", false);
+}
 
 // Returns true when the command should end.
 bool AutoTraverse::IsFinished() {

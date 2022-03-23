@@ -120,4 +120,5 @@ void Climber::PrintOpticalSensors() {
 void Climber::Periodic() {
     CheckHeight();
     PrintOpticalSensors();
+    frc::SmartDashboard::PutNumber("Spool Rots: ", SpoolRotations());
 }
