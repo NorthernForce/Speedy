@@ -27,5 +27,5 @@ void RaiseClimberPartial::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool RaiseClimberPartial::IsFinished() {
-  return (RobotContainer::climber->SpoolRotations() > 5);
+  return (abs(RobotContainer::climber->SpoolRotations()) > 1);
 }
