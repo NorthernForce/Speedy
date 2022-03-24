@@ -16,13 +16,13 @@ void SmartBarGrab::Initialize() {
 }
 
 void SmartBarGrab::ControlClimberPivot() {
-  if (RobotContainer::imu->GetPitchAngle() < -35) {
+  if (RobotContainer::imu->GetPitchAngle() < -18) {
     RobotContainer::climber->PivotDown();
   }
 }
 
 void SmartBarGrab::TryGrab() {
-  if (RobotContainer::imu->GetPitchAngle() > -10) {
+  if (RobotContainer::imu->GetPitchAngle() > -12) {
     RobotContainer::climber->PivotUp();
   }
 }

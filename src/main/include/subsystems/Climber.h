@@ -54,6 +54,7 @@ class Climber : public frc2::SubsystemBase {
 
   std::unique_ptr<frc::DigitalInput> bottom;
   std::unique_ptr<frc::DigitalInput> middle;
-  std::unique_ptr<frc::DigitalInput> top; 
+  std::unique_ptr<frc::DigitalInput> top;
 
+  uint8_t heightWaitCycles;
 };

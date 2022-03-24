@@ -80,11 +80,15 @@ bool Climber::TooTall(){
 void Climber::CheckHeight(){
     if (heightCheckNeeded) {
         if(TooTall()) {
-            Lower();
+            heightWaitCycles++;
+            if(heightWaitCycles > 50) {
+                Lower();
+            }
         }
         else {
             Stop();
             heightCheckNeeded = false;
+            heightWaitCycles = 0;
         }
     }
 }

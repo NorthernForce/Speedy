@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "commands/autonomous/AutoTraverse.h"
+#include "commands/ResetSpool.h"
 #include "commands/RaiseClimberPartial.h"
 #include "commands/PivotToggle.h"
 #include "commands/RaiseClimber.h"
@@ -13,14 +14,14 @@
 AutoTraverse::AutoTraverse() {
   // Use addRequirements() here to declare subsystem dependencies.
   scheduler.reset(new AutoCommandScheduler({
-    new RaiseClimberPartial(),
+    new ResetSpool(),
     new RaiseClimberPartial(),
     new PivotToggle(),
     new ArmUp(),
     new RaiseClimber(),
     new SmartBarGrab(),
-    new LowerClimber(),
-    new PivotToggle()
+    new PivotToggle(),
+    new LowerClimber()
   }));
 }
 // Called when the command is initially scheduled.
