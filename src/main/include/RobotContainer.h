@@ -10,6 +10,7 @@
 #include "Constants.h"
 
 #include "subsystems/Drivetrain.h"
+#include "subsystems/PCM.h"
 
 #include "utilities/FMSComms.h"
 
@@ -26,6 +27,7 @@ class RobotContainer {
   static std::shared_ptr<OI> oi;
   static std::shared_ptr<Drivetrain> drivetrain;
   static std::shared_ptr<FMSComms> fmsComms;
+  static std::shared_ptr<PCM> pcm;
 
  private:
   // The robot's subsystems and commands are defined here...
