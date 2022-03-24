@@ -2,16 +2,19 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <sstream>
+#include <stdlib.h>
+
 
 CSVInterface::CSVInterface() {}
 
 void CSVInterface::WriteTextFile(std::vector<double> doubleList, std::string fileName) {
 
-	std::ofstream myfile(fileName);
+	std::ofstream myfile("/home/lvuser/" + fileName + ".txt", std::ios::out);
 	if (myfile.is_open())
 	{
 		for (int count = 0; count < doubleList.size(); count++) {
-			myfile << doubleList[count] << " ";
+			myfile << doubleList[count] << ",";
 		}
 		myfile.close();
 	}
@@ -20,25 +23,41 @@ void CSVInterface::WriteTextFile(std::vector<double> doubleList, std::string fil
 
 std::vector<double> CSVInterface::ReadTextFile(std::string fileName){
 	
+    std::ifstream input_file("/home/lvuser/" + fileName + ".txt", std::ios::in);
+
     std::vector<double> doubleList;
 
-	int number;
+    std::string line{};
 
-	std::ifstream input_file(fileName);
-	if (!input_file.is_open()) {
-		std::cout << "Could not open the file - '" << fileName << "'" << '\n';
+    //input_file.open();
+	if (input_file.is_open()) {
 
-        while (input_file >> number) {
-            doubleList.push_back(number);
+    while(std::getline(input_file, line)) {
+        std::istringstream iss(line);
+
+        std::string substring{};
+        
+        while (std::getline(iss, substring, ',')) {
+
+            // Add the substring to the std::vector
+            doubleList.push_back(strtod(substring.c_str(), NULL));
         }
+    }
+    }
+	//if (input_file.is_open()) {
+		
+    // } else {
+    //            while (input_file >> number) {
+    //         doubleList.push_back(number);
+    //     }
 
-        for (int i = 0; i < doubleList.size(); i++) {
-            std::cout << doubleList.at(i) << '\n';
-        }
+    //     for (int i = 0; i < doubleList.size(); i++) {
+    //         std::cout << doubleList.at(i) << '\n';
+    //     }
 	
-        std::cout << "\n";
-        input_file.close();
-    }   
+    //     std::cout << "\n";
+    //     input_file.close();
+    // }
 
     return doubleList;
     

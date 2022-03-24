@@ -113,6 +113,14 @@ void Drivetrain::RecordMotorPos(){
     rightMotorPos.push_back(GetEncoderRotations().second);
 }
 
+void Drivetrain::WriteLeftMotorPos(std::string fileName) {
+    RobotContainer::csvInterface->WriteTextFile(leftMotorPos, fileName);
+}
+
+void Drivetrain::WriteRightMotorPos(std::string fileName) {
+    RobotContainer::csvInterface->WriteTextFile(rightMotorPos, fileName);
+}
+
 double Drivetrain::GetLeftRPM() {
     return leftPrimary->GetSensorCollection().GetIntegratedSensorVelocity();
 }

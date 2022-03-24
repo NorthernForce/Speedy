@@ -14,6 +14,7 @@
 #include "commands/autonomous/DriveToDistance.h"
 #include "commands/autonomous/DriveToDistanceIntake.h"
 #include "commands/TurnToAngle.h"
+#include "commands/autonomous/AutoTurnToAngle.h"
 #include "commands/ArmDown.h"
 #include "commands/ArmUp.h"
 
@@ -24,7 +25,7 @@ void Robot::RobotInit() {
     //RobotContainer::intake->SetArmState(ArmState::Down);
     RobotContainer::drivetrain->SetEncoderPositions(0, 0);
     RobotContainer::intake->ArmUp();
-    frc::CameraServer::StartAutomaticCapture();
+    //leftSide = RobotContainer::csvInterface->ReadTextFile("LeftTest");
 }
 
 /**
@@ -40,11 +41,12 @@ void Robot::RobotPeriodic() {
   RobotContainer::fmsComms->DisplayMatchTime();
   //frc::SmartDashboard::PutNumber("distance: ", RobotContainer::ultrasonic->getDistance());
   //frc::SmartDashboard::PutString("Drive Speed", RobotContainer::fmsComms->GetAllianceString(RobotContainer::fmsComms->GetAlliance()));
-  RobotContainer::drivetrain->PrintEncoderValues();
+  //RobotContainer::drivetrain->PrintEncoderValues();
+  //printf("Please work %f: \n", leftSide[4]);
   
   }
 /**
- * This function is called once each time the robot enters Disabled mode. You
+ * This function is called once each time the robot enters Disabled mode. You`
  * can use it to reset any subsystem information you want to clear when the
  * robot is disabled.
  */
@@ -62,25 +64,29 @@ void Robot::DisabledPeriodic() {}
  */
 void Robot::AutonomousInit() {
     //RobotContainer::climber->PivotDown();
-     autoCommandScheduler.reset(new AutoCommandScheduler({
-        //  new ShootThenCrossLine()
-         //new ShootThenCrossLine()
-        //new ArmDown(),
-        new DriveToDistanceIntake(.2, -50, false),
-        // new TurnToAngle(-220),
-        //new ArmUp(),
-        // new DriveToDistanceIntake(-.3, 39, true),
-        //new TurnToAngle(-300),
-        //*new DriveToDistanceIntake(.3, 48, true),
-        // new DriveToDistance(.3, -20),
-        //*new TurnToAngle(-105),
-        // //new ArmDown(),
-        //*new DriveToDistanceIntake(-.3, 40, true),
-    }));
+    autoTurnToAngle.reset(new AutoTurnToAngle(60, true));
+    autoTurnToAngle->Schedule();
+    // autoCommandScheduler.reset(new AutoCommandScheduler({
+    // //     //  new ShootThenCrossLine()
+    // //      //new ShootThenCrossLine()
+    // //     //new ArmDown(),
+    // //new DriveToDistanceIntake(.2, -25, false),
+    // new AutoTurnToAngle(60, true),
+    // //     //new ArmUp(),
+    // //     new DriveToDistanceIntake(-.3, 39, true),
+    // //     new TurnToAngle(-60),
+    // //     //new TurnToAngle(-300),
+    // //     //*new DriveToDistanceIntake(.3, 48, true),
+    // //     // new DriveToDistance(.3, -20),
+    // //     //*new TurnToAngle(-105),
+    // //     // //new ArmDown(),
+    // //     //*new DriveToDistanceIntake(-.3, 40, true),
+    // }));
 }
 
 void Robot::AutonomousPeriodic() {
-    autoCommandScheduler->RunSequential();
+    //autoCommandScheduler->RunSequential();
+    //RobotContainer::drivetrain->Drive(.6, .3);
 }
 
 void Robot::TeleopInit() {
@@ -91,7 +97,7 @@ void Robot::TeleopInit() {
  * This function is called periodically during operator control.
  */
 void Robot::TeleopPeriodic() {
-    RobotContainer::drivetrain->RecordMotorPos();
+    //RobotContainer::drivetrain->RecordMotorPos();
 }
 
 /**

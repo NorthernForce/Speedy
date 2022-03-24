@@ -25,6 +25,8 @@ class Drivetrain : public frc2::SubsystemBase {
   void SetEncoderPositions(double lt, double rt);
   void PrintEncoderValues();
   void RecordMotorPos();
+  void WriteLeftMotorPos(std::string fileName);
+  void WriteRightMotorPos(std::string fileName);
   double GetLeftRPM();
   double GetRightRPM();
   bool IsTipping();

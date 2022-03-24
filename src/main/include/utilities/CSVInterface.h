@@ -11,4 +11,5 @@ class CSVInterface {
   CSVInterface();
   void WriteTextFile(std::vector<double>, std::string);
   std::vector<double> ReadTextFile(std::string fileName);
+  private:
 };
