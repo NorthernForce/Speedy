@@ -35,5 +35,6 @@ class AutoTurnToAngle
   bool desiredSide;
   double desiredAngle;
   double error;
+  bool isDone = false;
 
 };

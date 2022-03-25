@@ -16,38 +16,47 @@ AutoTurnToAngle::AutoTurnToAngle(double targetAngle, bool side) {
 void AutoTurnToAngle::Initialize() {
 
 }
-
+//pos is right
 // Called repeatedly when this Command is scheduled to run
 void AutoTurnToAngle::Execute() {
     currentAngle = RobotContainer::imu->GetRotation();
-    error = currentAngle-desiredAngle;
+    error = (currentAngle-desiredAngle)/100;
     if(desiredSide && currentAngle < desiredAngle) {
-        //RobotContainer::drivetrain->Drive(0, GetDriveMultiplier());
+        RobotContainer::drivetrain->Drive(0, -GetDriveMultiplier());
         //RobotContainer::drivetrain->DriveUsingSpeeds(GetDriveMultiplier(), -GetDriveMultiplier());
     } else if(!desiredSide && currentAngle > desiredAngle) {
-        //RobotContainer::drivetrain->Drive(0, GetDriveMultiplier());
+        RobotContainer::drivetrain->Drive(0, GetDriveMultiplier());
         //RobotContainer::drivetrain->DriveUsingSpeeds(-GetDriveMultiplier(), GetDriveMultiplier());
     } else {
-        //RobotContainer::drivetrain->DriveUsingSpeeds(0,0)
+        RobotContainer::drivetrain->DriveUsingSpeeds(0,0);
+        //isDone = true;
+    }
+
+    if(error <= .03) {
+        isDone = true;
+        printf("I'm DONNNNENNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
     }
 }
 
 double AutoTurnToAngle::GetDriveMultiplier() {
     double driveMultiplier;
     if (error < 0)
-        driveMultiplier = (1.2 * pow(7.7, -error)) - .83;
+        driveMultiplier = (1.2 * pow(1.2, -error)) - .83;
     else
-        driveMultiplier = (1.2 * pow(7.7, error)) - .83;
+        driveMultiplier = (1.2 * pow(1.2, error)) - .83;
         
     return driveMultiplier;
 }
 // Called once the command ends or is interrupted.
-void AutoTurnToAngle::End(bool interrupted) {}
+void AutoTurnToAngle::End(bool interrupted) {
+    RobotContainer::drivetrain->DriveUsingSpeeds(0,0);
+}
 
 // Returns true when the command should end.
 bool AutoTurnToAngle::IsFinished() {
-    // if (abs(error) <= 5)
-    //     return true;
-    // else 
+    if(isDone == true) {
+        return true;
+    } else {
         return false;
+    }
 }

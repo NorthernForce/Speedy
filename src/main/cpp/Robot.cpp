@@ -63,16 +63,16 @@ void Robot::DisabledPeriodic() {}
  * RobotContainer} class.
  */
 void Robot::AutonomousInit() {
+    RobotContainer::imu->ZeroRotation();
     //RobotContainer::climber->PivotDown();
-    autoTurnToAngle.reset(new AutoTurnToAngle(60, true));
-    autoTurnToAngle->Schedule();
-    // autoCommandScheduler.reset(new AutoCommandScheduler({
+    autoCommandScheduler.reset(new AutoCommandScheduler({
     // //     //  new ShootThenCrossLine()
     // //      //new ShootThenCrossLine()
     // //     //new ArmDown(),
-    // //new DriveToDistanceIntake(.2, -25, false),
-    // new AutoTurnToAngle(60, true),
-    // //     //new ArmUp(),
+    new DriveToDistanceIntake(.2, -50, true),
+    new AutoTurnToAngle(-97.5, false),
+    new ArmUp(),
+    new DriveToDistanceIntake(.2, -50, true),
     // //     new DriveToDistanceIntake(-.3, 39, true),
     // //     new TurnToAngle(-60),
     // //     //new TurnToAngle(-300),
@@ -81,12 +81,11 @@ void Robot::AutonomousInit() {
     // //     //*new TurnToAngle(-105),
     // //     // //new ArmDown(),
     // //     //*new DriveToDistanceIntake(-.3, 40, true),
-    // }));
+    }));
 }
 
 void Robot::AutonomousPeriodic() {
-    //autoCommandScheduler->RunSequential();
-    //RobotContainer::drivetrain->Drive(.6, .3);
+    autoCommandScheduler->RunSequential();
 }
 
 void Robot::TeleopInit() {
