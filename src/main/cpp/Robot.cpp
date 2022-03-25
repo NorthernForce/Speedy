@@ -26,7 +26,7 @@ void Robot::RobotInit() {
     RobotContainer::drivetrain->SetEncoderPositions(0, 0);
     RobotContainer::intake->ArmUp();
     //frc::CameraServer::StartAutomaticCapture();
-    //leftSide = RobotContainer::csvInterface->ReadTextFile("LeftTest");
+    //leftSide = RobotContainer::TXTInterface->ReadTextFile("LeftTest");
 }
 
 /**

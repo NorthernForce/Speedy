@@ -114,11 +114,11 @@ void Drivetrain::RecordMotorPos(){
 }
 
 void Drivetrain::WriteLeftMotorPos(std::string fileName) {
-    RobotContainer::csvInterface->WriteTextFile(leftMotorPos, fileName);
+    RobotContainer::txtInterface->WriteTextFile(leftMotorPos, fileName);
 }
 
 void Drivetrain::WriteRightMotorPos(std::string fileName) {
-    RobotContainer::csvInterface->WriteTextFile(rightMotorPos, fileName);
+    RobotContainer::txtInterface->WriteTextFile(rightMotorPos, fileName);
 }
 
 double Drivetrain::GetLeftRPM() {

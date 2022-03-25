@@ -6,9 +6,9 @@
 #include <vector>
 #include <string>
 
-class CSVInterface {
+class TXTInterface {
  public:
-  CSVInterface();
+  TXTInterface();
   void WriteTextFile(std::vector<double>, std::string);
   std::vector<double> ReadTextFile(std::string fileName);
   private:

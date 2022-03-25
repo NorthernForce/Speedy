@@ -1,4 +1,4 @@
-#include "utilities/CSVInterface.h"
+#include "utilities/TXTInterface.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -6,9 +6,9 @@
 #include <stdlib.h>
 
 
-CSVInterface::CSVInterface() {}
+TXTInterface::TXTInterface() {}
 
-void CSVInterface::WriteTextFile(std::vector<double> doubleList, std::string fileName) {
+void TXTInterface::WriteTextFile(std::vector<double> doubleList, std::string fileName) {
 
 	std::ofstream myfile("/home/lvuser/" + fileName + ".txt", std::ios::out);
 	if (myfile.is_open())
@@ -21,7 +21,7 @@ void CSVInterface::WriteTextFile(std::vector<double> doubleList, std::string fil
 	else std::cout << "Unable to open file";
 }
 
-std::vector<double> CSVInterface::ReadTextFile(std::string fileName){
+std::vector<double> TXTInterface::ReadTextFile(std::string fileName){
 	
     std::ifstream input_file("/home/lvuser/" + fileName + ".txt", std::ios::in);
 
