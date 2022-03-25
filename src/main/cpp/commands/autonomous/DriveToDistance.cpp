@@ -34,5 +34,5 @@ void DriveToDistance::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool DriveToDistance::IsFinished() {
-  return (desiredDistance == RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) +- 3);
+  return (abs(desiredDistance) < abs(RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations())));
 }

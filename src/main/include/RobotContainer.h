@@ -18,8 +18,6 @@
 #include "subsystems/Climber.h"
 #include "subsystems/Ultrasonic.h"
 
-#include "commands/autonomous/ShootThenCrossLine.h"
-
 #include "utilities/FMSComms.h"
 #include "utilities/TXTInterface.h"
 
@@ -42,7 +40,6 @@ class RobotContainer {
   static std::shared_ptr<Coordinates> coordinates;
   static std::shared_ptr<Climber> climber;
   static std::shared_ptr<FMSComms> fmsComms;
-  static std::shared_ptr<ShootThenCrossLine> shootThenCrossLine;
   static std::shared_ptr<Ultrasonic> ultrasonic;
   static std::shared_ptr<TXTInterface> txtInterface;
 

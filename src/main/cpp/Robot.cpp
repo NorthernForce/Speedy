@@ -10,7 +10,6 @@
 #include <frc2/command/CommandScheduler.h>
 
 #include "subsystems/Climber.h"
-#include "commands/autonomous/ShootThenCrossLine.h"
 #include "commands/autonomous/DriveToDistance.h"
 #include "commands/autonomous/DriveToDistanceIntake.h"
 #include "commands/TurnToAngle.h"
