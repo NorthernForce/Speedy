@@ -24,10 +24,16 @@ class Drivetrain : public frc2::SubsystemBase {
   double GetAvgEncoderRotations(std::pair<double, double>);
   void SetEncoderPositions(double lt, double rt);
   void PrintEncoderValues();
+  void RecordMotorPos();
+  void WriteLeftMotorPos(std::string fileName);
+  void WriteRightMotorPos(std::string fileName);
   double GetLeftRPM();
   double GetRightRPM();
   bool IsTipping();
   void Periodic() override;
+
+  std::vector<double> leftMotorPos;
+  std::vector<double> rightMotorPos;
 
   static std::shared_ptr<WPI_TalonFX> leftPrimary;
   static std::shared_ptr<WPI_TalonFX> rightPrimary;
