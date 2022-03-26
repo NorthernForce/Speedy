@@ -7,9 +7,23 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
-class ArmDown
-    : public frc2::CommandHelper<frc2::CommandBase, ArmDown> {
+/**
+ * An example command.
+ *
+ * <p>Note that this extends CommandHelper, rather extending CommandBase
+ * directly; this is crucially important, or else the decorator functions in
+ * Command will *not* work!
+ */
+class MoveArm
+    : public frc2::CommandHelper<frc2::CommandBase, MoveArm> {
  public:
+  MoveArm(bool up);
+
   void Initialize() override;
+
   bool IsFinished() override;
+
+  private:
+
+  bool desiredUp;
 };

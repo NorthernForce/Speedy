@@ -13,9 +13,8 @@
 #include "commands/autonomous/DriveToDistance.h"
 #include "commands/autonomous/DriveToDistanceIntake.h"
 #include "commands/TurnToAngle.h"
+#include "commands/MoveArm.h"
 #include "commands/autonomous/AutoTurnToAngle.h"
-#include "commands/ArmDown.h"
-#include "commands/ArmUp.h"
 
 #include <frc/Timer.h>
 
@@ -68,10 +67,8 @@ void Robot::AutonomousInit() {
     autoCommandScheduler.reset(new AutoCommandScheduler({
     // //     //  new ShootThenCrossLine()
     // //      //new ShootThenCrossLine()
-    // //     //new ArmDown(),
     new DriveToDistanceIntake(.2, -50, true),
     new AutoTurnToAngle(-97.5, false),
-    new ArmUp(),
     new DriveToDistanceIntake(.2, -50, true),
     // //     new DriveToDistanceIntake(-.3, 39, true),
     // //     new TurnToAngle(-60),
@@ -79,7 +76,6 @@ void Robot::AutonomousInit() {
     // //     //*new DriveToDistanceIntake(.3, 48, true),
     // //     // new DriveToDistance(.3, -20),
     // //     //*new TurnToAngle(-105),
-    // //     // //new ArmDown(),
     // //     //*new DriveToDistanceIntake(-.3, 40, true),
     }));
 }

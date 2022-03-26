@@ -34,7 +34,7 @@ void AutoTurnToAngle::Execute() {
 
     if(error <= .03) {
         isDone = true;
-        printf("I'm DONNNNENNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN");
+        printf("I'm DONNNNENNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN \n");
     }
 }
 

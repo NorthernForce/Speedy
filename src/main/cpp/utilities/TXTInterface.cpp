@@ -13,7 +13,7 @@ void TXTInterface::WriteTextFile(std::vector<double> doubleList, std::string fil
 	std::ofstream myfile("/home/lvuser/" + fileName + ".txt", std::ios::out);
 	if (myfile.is_open())
 	{
-		for (int count = 0; count < doubleList.size(); count++) {
+		for (size_t count = 0; count < doubleList.size(); count++) {
 			myfile << doubleList[count] << ",";
 		}
 		myfile.close();
@@ -44,20 +44,6 @@ std::vector<double> TXTInterface::ReadTextFile(std::string fileName){
         }
     }
     }
-	//if (input_file.is_open()) {
-		
-    // } else {
-    //            while (input_file >> number) {
-    //         doubleList.push_back(number);
-    //     }
-
-    //     for (int i = 0; i < doubleList.size(); i++) {
-    //         std::cout << doubleList.at(i) << '\n';
-    //     }
-	
-    //     std::cout << "\n";
-    //     input_file.close();
-    // }
 
     return doubleList;
     
