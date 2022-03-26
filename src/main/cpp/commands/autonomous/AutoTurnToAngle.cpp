@@ -14,18 +14,19 @@ AutoTurnToAngle::AutoTurnToAngle(double targetAngle, bool side) {
 }
 
 // Called when the command is initially scheduled.
-void AutoTurnToAngle::Initialize() {
+void AutoTurnToAngle::Initialize() {}
 
-}
 //pos is right
 // Called repeatedly when this Command is scheduled to run
 void AutoTurnToAngle::Execute() {
     currentAngle = RobotContainer::imu->GetRotation();
     error = (currentAngle-desiredAngle)/100;
     if(desiredSide && currentAngle < desiredAngle) {
-        RobotContainer::drivetrain->Drive(0, -GetDriveMultiplier());
+        printf("TURRNNNNNNNNNNNNNNNNNNNNNNNINGNGNGNGIGNIGNIGN \n");
+        RobotContainer::drivetrain->Drive(0, GetDriveMultiplier());
         //RobotContainer::drivetrain->DriveUsingSpeeds(GetDriveMultiplier(), -GetDriveMultiplier());
     } else if(!desiredSide && currentAngle > desiredAngle) {
+        printf("TURRNNNNNNNNNNNNNNNNNNNNNNNINGNGNGNGIGNIGNIGN \n");
         RobotContainer::drivetrain->Drive(0, GetDriveMultiplier());
         //RobotContainer::drivetrain->DriveUsingSpeeds(-GetDriveMultiplier(), GetDriveMultiplier());
     } else {
@@ -35,16 +36,15 @@ void AutoTurnToAngle::Execute() {
 
     if(error <= Constants::attaError) {
         isDone = true;
-        printf("I'm DONNNNENNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN \n");
     }
 }
 
 double AutoTurnToAngle::GetDriveMultiplier() {
     double driveMultiplier;
     if (error < 0)
-        driveMultiplier = (1.2 * pow(1.2, -error)) - .83;
+        driveMultiplier = (1.2 * pow(2.6, -error)) - .83;
     else
-        driveMultiplier = (1.2 * pow(1.2, error)) - .83;
+        driveMultiplier = (1.2 * pow(2.6, error)) - .83;
         
     return driveMultiplier;
 }
@@ -56,6 +56,7 @@ void AutoTurnToAngle::End(bool interrupted) {
 // Returns true when the command should end.
 bool AutoTurnToAngle::IsFinished() {
     if(isDone == true) {
+        printf("I'm DONNNNENNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN \n");
         return true;
     } else {
         return false;

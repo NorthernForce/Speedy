@@ -14,19 +14,12 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class DriveToDistanceIntake
-    : public frc2::CommandHelper<frc2::CommandBase, DriveToDistanceIntake> {
+class ResetEncoders
+    : public frc2::CommandHelper<frc2::CommandBase, ResetEncoders> {
  public:
-  DriveToDistanceIntake(double speed, double distance, bool reverse);
+  ResetEncoders();
 
-  void Execute() override;
-
-  void End(bool interrupted) override;
+  void Initialize() override;
 
   bool IsFinished() override;
-
-  double desiredDistance;
-  double desiredSpeed;
-  bool desiredReverse;
-  bool isFinished;
 };
