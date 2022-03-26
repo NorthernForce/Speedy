@@ -31,6 +31,7 @@ class Climber : public frc2::SubsystemBase {
   void SetPivot(PivotState state);
   void Raise();
   void Lower();
+  void LowerSlow();
   void Stop();
   bool TooTall();
   void CheckHeight();
@@ -38,6 +39,7 @@ class Climber : public frc2::SubsystemBase {
   void SetHookState(HookState state);
   void SetPivot(HookState state);
   bool GetOpticalSensor(int sensor);
+  void PrintOpticalSensors();
   void Periodic() override;
 
  private:

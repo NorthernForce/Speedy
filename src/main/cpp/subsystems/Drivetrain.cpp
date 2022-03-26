@@ -108,6 +108,19 @@ void Drivetrain::PrintEncoderValues() {
 //   printf("Avg Encoder: %lf\n", GetAvgEncoderRotations(GetEncoderRotations()));
 }
 
+void Drivetrain::RecordMotorPos(){
+    leftMotorPos.push_back(GetEncoderRotations().first);
+    rightMotorPos.push_back(GetEncoderRotations().second);
+}
+
+void Drivetrain::WriteLeftMotorPos(std::string fileName) {
+    RobotContainer::txtInterface->WriteTextFile(leftMotorPos, fileName);
+}
+
+void Drivetrain::WriteRightMotorPos(std::string fileName) {
+    RobotContainer::txtInterface->WriteTextFile(rightMotorPos, fileName);
+}
+
 double Drivetrain::GetLeftRPM() {
     return leftPrimary->GetSensorCollection().GetIntegratedSensorVelocity();
 }

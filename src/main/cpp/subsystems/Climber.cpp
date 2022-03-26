@@ -19,6 +19,8 @@ Climber::Climber() {
 
     ConfigureController(*leftMotor);
     ConfigureController(*rightMotor);
+
+    pivotPosition = PivotState::Up;
 }
 
 void Climber::ConfigureController(WPI_TalonFX& controller) {
@@ -58,20 +60,27 @@ void Climber::Lower() {
     rightMotor->Set(-1);
 }
 
+void Climber::LowerSlow() {
+    leftMotor->Set(0.1);
+    rightMotor->Set(-0.1);
+}
+
 void Climber::Stop(){
     leftMotor->Set(0);
     rightMotor->Set(0);
 }
 
-bool Climber::TooTall(){
-    return ((GetPivot() == PivotState::Up && GetOpticalSensor(Constants::DigitalIDs::middleOptical))
-        || (GetOpticalSensor(Constants::DigitalIDs::topOptical)));
+bool Climber::TooTall() {
+    return (
+        (GetPivot() == PivotState::Up && GetOpticalSensor(Constants::DigitalIDs::middleOptical)) ||
+        (GetOpticalSensor(Constants::DigitalIDs::topOptical))
+    );
 }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 void Climber::CheckHeight(){
     if (heightCheckNeeded) {
-        if(TooTall()) {
-            Lower();
+        if (TooTall()) {
+            LowerSlow();
         }
         else {
             Stop();
@@ -101,7 +110,14 @@ bool Climber::GetOpticalSensor(int sensor) {
     }
 }
 
+void Climber::PrintOpticalSensors() {
+    frc::SmartDashboard::PutBoolean("Bottom Optical:", bottom->Get());
+    frc::SmartDashboard::PutBoolean("Middle Optical:", middle->Get());
+    frc::SmartDashboard::PutBoolean("Top Optical:", top->Get());
+}
+
 // This method will be called once per scheduler run
 void Climber::Periodic() {
     CheckHeight();
+    PrintOpticalSensors();
 }

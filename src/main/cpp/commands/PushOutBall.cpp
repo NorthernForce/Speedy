@@ -10,7 +10,7 @@ PushOutBall::PushOutBall() {
 }
 
 void PushOutBall::Execute() {
-    RobotContainer::intake->Run(reverse);
+    RobotContainer::intake->Run();
 }
 
 void PushOutBall::End(bool interrupted) {

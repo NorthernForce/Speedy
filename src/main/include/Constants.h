@@ -22,8 +22,8 @@ namespace Constants {
     }
 
     namespace DigitalIDs {
-        const uint8_t bottomOptical = 2;
-        const uint8_t middleOptical = 0;
+        const uint8_t bottomOptical = 0;
+        const uint8_t middleOptical = 2 ;
         const uint8_t topOptical = 1;
     }
 

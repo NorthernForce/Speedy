@@ -18,33 +18,11 @@ bool TurnToAngle::isTurnFinished;
 TurnToAngle::TurnToAngle(double target) {
     SetName("TurnToAngle");
 
-    try {
-        frc2::Command* cmd = frc2::CommandScheduler::GetInstance().Requiring(RobotContainer::drivetrain.get());
-        if (cmd == nullptr)
-            AddRequirements(RobotContainer::drivetrain.get());
-        else if (!(cmd->GetName() == "MoveToCoordinate"))
-            AddRequirements(RobotContainer::drivetrain.get());
-        //delete cmd;
-    }
-    catch (...) {}
+    AddRequirements(RobotContainer::drivetrain.get());
 
-    SetDashboardDefaultPIDs();
     if (target != 0)
         SetAngle(target);
     isTurnFinished = false;
-}
-
-void TurnToAngle::SetDashboardDefaultPIDs() {
-    int i = 0;
-    for (char c : {'P', 'I', 'D'}) {
-        std::string dashboardKey = (std::string)"TurnToAngle: " += c;
-        if (frc::SmartDashboard::GetNumber(dashboardKey, 0) == 0)
-            frc::SmartDashboard::PutNumber(dashboardKey, defaultPIDs[i]);
-        i++;
-    }
-    p = defaultPIDs[0];
-    i = defaultPIDs[1];
-    d = defaultPIDs[2];
 }
 
 void TurnToAngle::SetAngle(double angle) {
@@ -55,56 +33,36 @@ void TurnToAngle::SetAngle(double angle) {
 void TurnToAngle::Initialize() {
     currentAngle = RobotContainer::imu->GetRotation();
     startingAngle = currentAngle;
-    rawTargetAngle = currentAngle + distanceToTargetAngle;
-    integral = 0;
+    //rawTargetAngle = currentAngle + distanceToTargetAngle;
+    //integral = 0;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void TurnToAngle::Execute() {
     currentAngle = RobotContainer::imu->GetRotation();
+    error = (currentAngle - startingAngle);
 
-    rotRaw = GetRotationFromPID(p,i,d);
     rotMult = GetRotationMultiplier();
-    rotLim = LimitMaxTurnSpeed(rotRaw * rotMult);
-    frc::SmartDashboard::PutNumber("final rot:", (rotLim));
+    rotLim = error * rotMult;
+    frc::SmartDashboard::PutNumber("final rot:", GetRotationMultiplier());
     
-    RobotContainer::drivetrain->Drive(0, rotLim);
-}
+    RobotContainer::drivetrain->DriveUsingSpeeds(-GetRotationMultiplier(), GetRotationMultiplier());
 
-double TurnToAngle::GetRotationFromPID(double p, double i, double d) {
-    error = (currentAngle - rawTargetAngle) / 180;
-    if (error == 0)
-        integral = 0;
-
-    integral += error * defaultPeriodInMs;
-    derivative = (error - errorPrior) / defaultPeriodInMs;
-    double rotation = p*error + i*integral + d*derivative;
-    errorPrior = error;
-    return rotation;
 }
 
 double TurnToAngle::GetRotationMultiplier() {
     double rotMultiplier;
     if (error < 0)
-        rotMultiplier = 6 * pow(3.2, -error);
+        rotMultiplier = (1.2 * pow(7.7, -error)) - .83;
     else
-        rotMultiplier = 6 * pow(3.2, error);
+        rotMultiplier = (1.2 * pow(7.7, error)) - .83;
     frc::SmartDashboard::PutNumber("tta: error", error);
     frc::SmartDashboard::PutNumber("rotation multiplier:", rotMultiplier);
     return rotMultiplier;
 }
 
-double TurnToAngle::LimitMaxTurnSpeed(double currentSpeed) {
-    double speed = currentSpeed;
-    if (currentSpeed < maxTurnSpeed * -1)
-        speed = maxTurnSpeed * -1;
-    else if (currentSpeed > maxTurnSpeed)
-        speed = maxTurnSpeed;
-    return speed;
-}
-
 void TurnToAngle::End(bool interrupted) {
-    RobotContainer::drivetrain->DriveUsingSpeeds(0, 0);
+    //RobotContainer::drivetrain->DriveUsingSpeeds(0, 0);
 }
 
 double TurnToAngle::GetAbsoluteAngleFromStartAndDistance(double start, double distance) {

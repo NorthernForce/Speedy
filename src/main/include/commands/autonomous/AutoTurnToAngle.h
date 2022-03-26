@@ -14,10 +14,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ShootThenCrossLine
-    : public frc2::CommandHelper<frc2::CommandBase, ShootThenCrossLine> {
+class AutoTurnToAngle
+    : public frc2::CommandHelper<frc2::CommandBase, AutoTurnToAngle> {
  public:
-  ShootThenCrossLine();
+  AutoTurnToAngle(double targetAngle, bool side);
 
   void Initialize() override;
 
@@ -27,6 +27,14 @@ class ShootThenCrossLine
 
   bool IsFinished() override;
 
+  double GetDriveMultiplier();
+
   private:
-    bool reverse = true;
+
+  double currentAngle;
+  bool desiredSide;
+  double desiredAngle;
+  double error;
+  bool isDone = false;
+
 };
