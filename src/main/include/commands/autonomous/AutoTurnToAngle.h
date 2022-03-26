@@ -27,14 +27,12 @@ class AutoTurnToAngle
 
   bool IsFinished() override;
 
-  double GetDriveMultiplier();
+  double GetDriveMultiplier(double error);
 
   private:
 
-  double currentAngle;
-  bool desiredSide;
+  bool desiredSide; // side=true is turn right
   double desiredAngle;
-  double error;
   bool isDone = false;
 
 };

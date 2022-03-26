@@ -8,7 +8,7 @@
 
 AutoTurnToAngle::AutoTurnToAngle(double targetAngle, bool side) {
   // Use addRequirements() here to declare subsystem dependencies.
-  //AddRequirements(RobotContainer::drivetrain.get());
+  AddRequirements(RobotContainer::drivetrain.get());
   desiredAngle = targetAngle;
   desiredSide = side;
 }
@@ -16,30 +16,26 @@ AutoTurnToAngle::AutoTurnToAngle(double targetAngle, bool side) {
 // Called when the command is initially scheduled.
 void AutoTurnToAngle::Initialize() {}
 
-//pos is right
+}
 // Called repeatedly when this Command is scheduled to run
 void AutoTurnToAngle::Execute() {
-    currentAngle = RobotContainer::imu->GetRotation();
-    error = (currentAngle-desiredAngle)/100;
-    if(desiredSide && currentAngle < desiredAngle) {
-        printf("TURRNNNNNNNNNNNNNNNNNNNNNNNINGNGNGNGIGNIGNIGN \n");
-        RobotContainer::drivetrain->Drive(0, GetDriveMultiplier());
-        //RobotContainer::drivetrain->DriveUsingSpeeds(GetDriveMultiplier(), -GetDriveMultiplier());
-    } else if(!desiredSide && currentAngle > desiredAngle) {
-        printf("TURRNNNNNNNNNNNNNNNNNNNNNNNINGNGNGNGIGNIGNIGN \n");
-        RobotContainer::drivetrain->Drive(0, GetDriveMultiplier());
-        //RobotContainer::drivetrain->DriveUsingSpeeds(-GetDriveMultiplier(), GetDriveMultiplier());
+    auto currentAngle = RobotContainer::imu->GetRotation();
+    auto error = (currentAngle-desiredAngle)/100;
+
+    if (desiredSide && currentAngle < desiredAngle) {
+        RobotContainer::drivetrain->Drive(0, -GetDriveMultiplier(error));
+    } else if (!desiredSide && currentAngle > desiredAngle) {
+        RobotContainer::drivetrain->Drive(0, GetDriveMultiplier(error));
     } else {
         RobotContainer::drivetrain->DriveUsingSpeeds(0,0);
-        //isDone = true;
     }
 
-    if(error <= Constants::attaError) {
+    if (error <= Constants::attaError) {
         isDone = true;
     }
 }
 
-double AutoTurnToAngle::GetDriveMultiplier() {
+double AutoTurnToAngle::GetDriveMultiplier(double error) {
     double driveMultiplier;
     if (error < 0)
         driveMultiplier = (1.2 * pow(2.6, -error)) - .83;
@@ -55,10 +51,5 @@ void AutoTurnToAngle::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool AutoTurnToAngle::IsFinished() {
-    if(isDone == true) {
-        printf("I'm DONNNNENNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN \n");
-        return true;
-    } else {
-        return false;
-    }
+    return isDone;
 }

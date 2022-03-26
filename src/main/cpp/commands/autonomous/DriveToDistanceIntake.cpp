@@ -21,7 +21,7 @@ void DriveToDistanceIntake::Execute() {
     printf("I'm STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTIIIIIIIIIIIIIING \n");
     RobotContainer::drivetrain->DriveUsingSpeeds(desiredSpeed, desiredSpeed);
     RobotContainer::intake->Run(desiredReverse);
-    isFinished = abs(desiredDistance) < abs(RobotContainer::drivetrain->GetEncoderRotations().first);
+    isFinished = std::abs(desiredDistance) < std::abs(RobotContainer::drivetrain->GetEncoderRotations().first);
 }
 
 // Called once the command ends or is interrupted.
