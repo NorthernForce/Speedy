@@ -4,6 +4,7 @@
 
 #include "commands/autonomous/AutoTurnToAngle.h"
 #include "RobotContainer.h"
+#include "Constants.h"
 
 AutoTurnToAngle::AutoTurnToAngle(double targetAngle, bool side) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -32,7 +33,7 @@ void AutoTurnToAngle::Execute() {
         //isDone = true;
     }
 
-    if(error <= .03) {
+    if(error <= Constants::attaError) {
         isDone = true;
         printf("I'm DONNNNENNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN \n");
     }
