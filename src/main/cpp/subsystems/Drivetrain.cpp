@@ -68,7 +68,7 @@ void Drivetrain::DriveUsingSpeeds(double leftSpeed, double rightSpeed) {
 }
 
 bool Drivetrain::DriveToDistance(double desiredDistance, double speed) {
-    if(desiredDistance < GetAvgEncoderRotations(GetEncoderRotations()) * Constants::encoderToInch) {
+    if(desiredDistance < GetAvgEncoderRotations(GetEncoderRotations()) * Constants::encoderPerInch) {
         leftPrimary->Set(speed);
         rightPrimary->Set(speed);
         return false;
@@ -87,8 +87,8 @@ std::pair<double, double> Drivetrain::GetEncoderRotations() {
 
 std::pair<units::inch_t, units::inch_t> Drivetrain::GetInchesTravelled() {
     std::pair<double, double> rotations = GetEncoderRotations();
-    units::inch_t leftInches = units::inch_t(rotations.first * Constants::encoderToInch);
-    units::inch_t rightInches = units::inch_t(rotations.second * Constants::encoderToInch);
+    units::inch_t leftInches = units::inch_t(rotations.first * Constants::encoderPerInch);
+    units::inch_t rightInches = units::inch_t(rotations.second * Constants::encoderPerInch);
     return std::make_pair(leftInches, rightInches);
 }
 
