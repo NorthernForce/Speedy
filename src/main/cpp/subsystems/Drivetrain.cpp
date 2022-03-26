@@ -27,7 +27,7 @@ Drivetrain::Drivetrain() {
     SetEncoderPositions(0, 0);
 }
 
-void Drivetrain::SetFollowers() {
+    void Drivetrain::SetFollowers() {
     leftFollower->Follow(*leftPrimary);
     rightFollower->Follow(*rightPrimary);
 }
@@ -106,6 +106,19 @@ void Drivetrain::PrintEncoderValues() {
 //   printf("Left Encoder : %lf\n", leftPrimary->GetSelectedSensorPosition());
 //   printf("Right Encoder: %lf\n", rightPrimary->GetSelectedSensorPosition());
 //   printf("Avg Encoder: %lf\n", GetAvgEncoderRotations(GetEncoderRotations()));
+}
+
+void Drivetrain::RecordMotorPos(){
+    leftMotorPos.push_back(GetEncoderRotations().first);
+    rightMotorPos.push_back(GetEncoderRotations().second);
+}
+
+void Drivetrain::WriteLeftMotorPos(std::string fileName) {
+    RobotContainer::txtInterface->WriteTextFile(leftMotorPos, fileName);
+}
+
+void Drivetrain::WriteRightMotorPos(std::string fileName) {
+    RobotContainer::txtInterface->WriteTextFile(rightMotorPos, fileName);
 }
 
 double Drivetrain::GetLeftRPM() {

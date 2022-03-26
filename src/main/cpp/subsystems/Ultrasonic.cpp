@@ -47,11 +47,11 @@ double Ultrasonic::calcDistance()
     m_rawVal = m_ultrasonic->GetValue();                            //Raw Value (0 - 4095)
 
     //Detemine the Scale Factor for 5V Voltage Variation
-    double scaleFactor = 5 / frc::RobotController::GetVoltage5V();  
+    double scaleFactor = k_Cvv / frc::RobotController::GetVoltage5V();  
 
     //Mtuliplies the Raw Value by the 5v Variable Facotr and the SCaling Factor for Volts to Inches
     //This returns the Distance in Inches
-    return (m_rawVal * scaleFactor * 0.0492) ;          
+    return (m_rawVal * scaleFactor * k_VperInch) ;          
 
 }
 
