@@ -1,6 +1,11 @@
 #include "Constants.h"
 #include "RobotContainer.h"
+
 #include "commands/DriveWithJoystick.h"
+#include "commands/IntakeBall.h"
+#include "commands/PushOutBall.h"
+#include "commands/ArmDown.h"
+#include "commands/ArmUp.h"
 
 #include <frc/smartdashboard/SmartDashboard.h>
 
@@ -17,7 +22,13 @@ void OI::InitControllers() {
     manipulatorController = std::make_shared<frc::XboxController>(Constants::manipulatorController_id);
 }
 
-void OI::MapControllerButtons() {}   
+void OI::MapControllerButtons() {
+    SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new IntakeBall);
+    SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBall);
+
+    SimpleButton(manipulatorController, Xbox::lt_bumper).WhenPressed(new ArmUp);
+    SimpleButton(manipulatorController, Xbox::rt_bumper).WhenPressed(new ArmDown);
+}   
 
 std::pair<double, double> OI::GetDriveControls() {
   double speed = driverController->GetLeftY();

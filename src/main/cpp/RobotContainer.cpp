@@ -9,6 +9,7 @@ std::shared_ptr<OI> RobotContainer::oi;
 std::shared_ptr<Drivetrain> RobotContainer::drivetrain;
 std::shared_ptr<FMSComms> RobotContainer::fmsComms;
 std::shared_ptr<PCM> RobotContainer::pcm;
+std::shared_ptr<Intake> RobotContainer::intake;
 
 RobotContainer::RobotContainer() {
     oi.reset(new OI());
@@ -21,6 +22,7 @@ void RobotContainer::InitSubsystems() {
     drivetrain.reset(new Drivetrain);
     fmsComms.reset(new FMSComms);
     pcm.reset(new PCM);
+    intake.reset(new Intake);
 }
 
 void RobotContainer::InitDefaultCommands() {
