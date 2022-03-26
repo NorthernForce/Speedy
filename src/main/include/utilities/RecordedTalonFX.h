@@ -16,6 +16,7 @@ class RecordedTalonFX : public WPI_TalonFX {
     std::string GetDeviceType();
 
  private:
+    double position = -2;
     const char* device = "Talon FX";
     std::string deviceType = "TalonFX";
     int id;

@@ -23,7 +23,7 @@ RobotContainer::RobotContainer() {
     oi.reset(new OI());
     InitSubsystems();
     oi->MapControllerButtons();
-    //InitDefaultCommands();
+    InitDefaultCommands();
 }
 
 void RobotContainer::InitSubsystems() {
@@ -38,6 +38,6 @@ void RobotContainer::InitSubsystems() {
     ultrasonic.reset(new Ultrasonic);
 }
 
-// void RobotContainer::InitDefaultCommands() {
-//     drivetrain->SetDefaultCommand(DriveWithJoystick());
-// }
+void RobotContainer::InitDefaultCommands() {
+    drivetrain->SetDefaultCommand(DriveWithJoystick());
+}

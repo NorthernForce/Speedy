@@ -12,11 +12,13 @@ class CSVInterface {
     bool WriteLine(std::string line);
     std::vector<std::string> ReadLine();
     bool IsInitialized();
+    bool IsAtEndOfFile();
     std::vector<std::string> StringTokenizer(std::string stringOfStrings, std::string delim);
     std::string RemoveWhiteSpace(std::string str);
 
  private:
     bool isInitialized;
+    bool endOfFile;
     std::string filename;
     std::ifstream fileRead;
     std::ofstream fileWrite;

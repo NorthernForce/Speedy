@@ -15,6 +15,7 @@ CSVInterface::CSVInterface(const std::string& filename)
         WriteLine(expectedColumns);
     }
     isInitialized = true;
+    endOfFile = false;
 }
 
 CSVInterface::~CSVInterface() {
@@ -48,9 +49,15 @@ std::vector<std::string> CSVInterface::ReadLine() {
     }
     std::string line;
     std::getline(fileRead, line);
+    frc::SmartDashboard::PutString("autoautoauto", line);
     printf("%s\n", line.c_str());
+
     std::vector<std::string> listOfStrings = StringTokenizer(line, ",");
     return listOfStrings;
+}
+
+bool CSVInterface::IsAtEndOfFile() {
+    return endOfFile;
 }
 
 std::vector<std::string> CSVInterface::StringTokenizer(std::string stringOfstrings, std::string delim) {

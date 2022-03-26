@@ -9,6 +9,7 @@ RecordedTalonFX::RecordedTalonFX(int id)
     WPI_TalonFX(id),
     id(id)
 {
+    WPI_TalonFX::SetSelectedSensorPosition(0);
     auto p = this;
     RobotContainer::autoRecorder->AddTalon(&p);
 }
@@ -28,6 +29,7 @@ void RecordedTalonFX::LogData() {
 }
 
 void RecordedTalonFX::Set(double value) {
+    position = value;
     WPI_TalonFX::Set(value);
 }
 
@@ -35,6 +37,11 @@ void RecordedTalonFX::PlaybackSet(double speed, double targetEncoder) {
     double currentEncoder = GetSensorCollection().GetIntegratedSensorPosition();
     if (abs(currentEncoder) < abs(targetEncoder)*1.02)
         WPI_TalonFX::Set(speed);
+}
+
+void RecordedTalonFX::SetPeriodic() {
+    if (position != -2)
+        Set(position);
 }
 
 void RecordedTalonFX::Set(TalonFXControlMode mode, double value) {

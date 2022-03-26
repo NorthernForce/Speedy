@@ -113,6 +113,8 @@ bool AutoRecorder::GetIsPlayingBack() {
 
 void AutoRecorder::UpdatePlaybackData() {
     std::vector<std::string> data = csvInterface->ReadLine();
+    // if (csvInterface->IsAtEndOfFile())
+    //     StopPlayback();
     PlaybackData::id = std::stoi(data[0]);
     PlaybackData::device = data[1];
     if (data[2] != "N/A")
@@ -126,15 +128,15 @@ void AutoRecorder::UpdatePlaybackData() {
 // CAN/PCM IDs gives faster runtime results when playing back a routine
 void AutoRecorder::MapDevicesWithIDs() {
     for (size_t i=0; i<recordedTalons.size(); i++) {
-        int id = recordedTalons[0]->GetDeviceID();
+        int id = recordedTalons[i]->GetDeviceID();
         recordedTalonIDs.insert(std::pair{id, i});
     }
     for (size_t i=0; i<recordedSparks.size(); i++) {
-        int id = recordedSparks[0]->GetDeviceId();
+        int id = recordedSparks[i]->GetDeviceId();
         recordedSparkIDs.insert(std::pair{id, i});
     }
     for (size_t i=0; i<recordedSolenoids.size(); i++) {
-        int id = recordedSolenoids[0]->GetChannel();
+        int id = recordedSolenoids[i]->GetChannel();
         recordedSolenoidIDs.insert(std::pair{id, i});
     }
 }
@@ -163,23 +165,29 @@ void AutoRecorder::RecordPeriodic() {
 }
 
 void AutoRecorder::ProcessReadDataChunk() {
-    size_t numOfRecordedDevices = recordedTalons.size() + recordedSparks.size() + recordedSolenoids.size();
+    size_t numOfRecordedDevices = 5; //recordedTalons.size() + recordedSparks.size() + recordedSolenoids.size();
     for (size_t i=0; i<numOfRecordedDevices; i++) {
-            UpdatePlaybackData();
-            printf("device: %s speed: %f\n", PlaybackData::device.c_str(), PlaybackData::speed);
-            if (PlaybackData::device == "TalonFX") {
-                int talonIdx = recordedTalonIDs[PlaybackData::id];
-                recordedTalons[talonIdx]->PlaybackSet(PlaybackData::speed, PlaybackData::pos);
-            }
-            else if (PlaybackData::device == "Spark") {
-                int sparkIdx = recordedSparkIDs[PlaybackData::id];
-                recordedSparks[sparkIdx]->Set(PlaybackData::speed);
-            }
-            else if (PlaybackData::device == "Solenoid") {
-                int solenoidIdx = recordedSolenoidIDs[PlaybackData::id];
-                recordedSolenoids[solenoidIdx]->Set(PlaybackData::pos);
-            }
+        UpdatePlaybackData();
+        // for (auto talon : recordedTalons)
+        //     talon->SetPeriodic();
+        frc::SmartDashboard::PutString("playback device", PlaybackData::device);
+        frc::SmartDashboard::PutNumber("playback dev id", PlaybackData::id);
+        frc::SmartDashboard::PutNumber("playback dev speed", PlaybackData::speed);
+        frc::SmartDashboard::PutNumber("playback dev pos", PlaybackData::pos);
+
+        if (PlaybackData::device == "TalonFX") {
+            int talonIdx = recordedTalonIDs[PlaybackData::id];
+            recordedTalons[talonIdx]->Set(PlaybackData::speed);
         }
+        else if (PlaybackData::device == "Spark") {
+            int sparkIdx = recordedSparkIDs[PlaybackData::id];
+            recordedSparks[sparkIdx]->Set(PlaybackData::speed);
+        }
+        else if (PlaybackData::device == "Solenoid") {
+            int solenoidIdx = recordedSolenoidIDs[PlaybackData::id];
+            recordedSolenoids[solenoidIdx]->Set(bool(PlaybackData::pos));
+        }
+    }
 }
 
 void AutoRecorder::PlaybackPeriodic() {
