@@ -50,7 +50,7 @@ std::vector<std::string> CSVInterface::ReadLine() {
     std::string line;
     std::getline(fileRead, line);
     frc::SmartDashboard::PutString("autoautoauto", line);
-    printf("%s\n", line.c_str());
+    // printf("%s\n", line.c_str());
 
     std::vector<std::string> listOfStrings = StringTokenizer(line, ",");
     return listOfStrings;
@@ -62,8 +62,6 @@ bool CSVInterface::IsAtEndOfFile() {
 
 std::vector<std::string> CSVInterface::StringTokenizer(std::string stringOfstrings, std::string delim) {
     std::vector<std::string> tokens;
-    stringOfstrings = RemoveWhiteSpace(stringOfstrings);
-
     size_t pos = 0;
     while ((pos = stringOfstrings.find(delim)) != std::string::npos) {
         tokens.push_back(stringOfstrings.substr(0, pos));

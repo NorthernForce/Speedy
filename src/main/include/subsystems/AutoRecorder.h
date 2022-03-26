@@ -20,10 +20,10 @@ class AutoRecorder : public frc2::SubsystemBase {
     void StartRecording();
     void StopRecording();
     bool GetIsRecording();
-    void Write(std::vector<std::string> data);
-    void AddTalon(RecordedTalonFX** device);
-    void AddSpark(RecordedSpark** device);
-    void AddSolenoid(RecordedSolenoid** device);
+    void Write(const std::vector<std::string>& data);
+    void AddTalon(RecordedTalonFX* device);
+    void AddSpark(RecordedSpark* device);
+    void AddSolenoid(RecordedSolenoid* device);
     units::millisecond_t GetCurrentTime();
     units::millisecond_t GetStartTime();
     std::vector<size_t> GetNumberOfRecordedDevices();
@@ -33,16 +33,28 @@ class AutoRecorder : public frc2::SubsystemBase {
     bool GetIsPlayingBack();
 
  private:
-    void UpdatePlaybackData();
+    //Data read during Playback Mode is stored here
+    // Note: these values will change frequently
+    struct PlaybackData {
+        int id;
+        std::string device;
+        double pos;
+        units::millisecond_t time;
+        double speed;
+    };
+
+    PlaybackData UpdatePlaybackData();
     void MapDevicesWithIDs();
     void RecordPeriodic();
     void ProcessReadDataChunk();
+    void ProcessPlaybackData(const PlaybackData& data);
     void PlaybackPeriodic();
-    bool IsPlaybackTooSlow();
+    bool IsPlaybackTooSlow(units::millisecond_t time);
     void CorrectPlaybackTooSlow();
     std::shared_ptr<CSVInterface> csvInterface;
     bool isRecording;
     bool isPlayingBack;
+    int playbackTooSlowCount;
     units::millisecond_t startTime;
     std::string sequenceName;
 
@@ -57,6 +69,7 @@ class AutoRecorder : public frc2::SubsystemBase {
     std::map<int, int> recordedSolenoidIDs = {};
 
     // Both used for playback to verify it is running at the correct speed
-    units::millisecond_t playbackTime;
     units::millisecond_t recordTime;
+
+    
 };

@@ -1,17 +1,17 @@
 #include "utilities/RecordedTalonFX.h"
 #include "RobotContainer.h"
     
+const std::string RecordedTalonFX::deviceType = "Talon FX";
+
 RecordedTalonFX::RecordedTalonFX(int id) 
- :  BaseMotorController(id, device),
-    BaseTalon(id, device),
+ :  BaseMotorController(id, deviceType.c_str()),
+    BaseTalon(id, deviceType.c_str()),
     TalonFX(id),
-    WPI_BaseMotorController(id, device),
-    WPI_TalonFX(id),
-    id(id)
+    WPI_BaseMotorController(id, deviceType.c_str()),
+    WPI_TalonFX(id)
 {
     WPI_TalonFX::SetSelectedSensorPosition(0);
-    auto p = this;
-    RobotContainer::autoRecorder->AddTalon(&p);
+    RobotContainer::autoRecorder->AddTalon(this);
 }
 
 void RecordedTalonFX::LogData() {
@@ -20,7 +20,7 @@ void RecordedTalonFX::LogData() {
     units::millisecond_t deltaTime = time - startTime;
 
     RobotContainer::autoRecorder->Write({
-        std::to_string(id),
+        std::to_string(WPI_TalonFX::GetDeviceID()),
         deviceType,
         std::to_string(WPI_TalonFX::GetSensorCollection().GetIntegratedSensorPosition()),
         std::to_string(deltaTime.value()),
@@ -28,24 +28,20 @@ void RecordedTalonFX::LogData() {
     });
 }
 
-void RecordedTalonFX::Set(double value) {
-    position = value;
-    WPI_TalonFX::Set(value);
-}
-
 void RecordedTalonFX::PlaybackSet(double speed, double targetEncoder) {
     double currentEncoder = GetSensorCollection().GetIntegratedSensorPosition();
-    if (abs(currentEncoder) < abs(targetEncoder)*1.02)
+    int direction = WPI_TalonFX::GetInverted() ? -1 : 1;
+
+    // If the direction of travel is the same direction as the error
+    // in the encoders, then proceed with the direction of travel
+    if (speed * direction * (targetEncoder - currentEncoder) > 0) {
         WPI_TalonFX::Set(speed);
-}
-
-void RecordedTalonFX::SetPeriodic() {
-    if (position != -2)
-        Set(position);
-}
-
-void RecordedTalonFX::Set(TalonFXControlMode mode, double value) {
-    WPI_TalonFX::Set(mode, value);
+    }
+    else {
+        // We overshot going forwards/backwards so we're going to stop
+        // an alternative would be to correct if needed later
+        WPI_TalonFX::Set(0);
+    }
 }
 
 std::string RecordedTalonFX::GetDeviceType() {

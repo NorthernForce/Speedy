@@ -9,16 +9,6 @@
 
 #include <utility>
 
-//Data read during Playback Mode is stored here
-// Note: these values will change frequently
-namespace PlaybackData {
-    int id;
-    std::string device;
-    double pos;
-    units::millisecond_t time;
-    double speed;
-}
-
 AutoRecorder::AutoRecorder() {
     isRecording = false;
     isPlayingBack = false;
@@ -45,20 +35,20 @@ bool AutoRecorder::GetIsRecording() {
 
 // This function is called automatically by 'Recorded' devices to add themselves
 // to their corresponding std::vector for logging
-void AutoRecorder::AddTalon(RecordedTalonFX** device) {
-    recordedTalons.push_back((*device));
+void AutoRecorder::AddTalon(RecordedTalonFX* device) {
+    recordedTalons.push_back(device);
 }
 
 // This function is called automatically by 'Recorded' devices to add themselves
 // to their corresponding std::vector for logging
-void AutoRecorder::AddSpark(RecordedSpark** device) {
-    recordedSparks.push_back((*device));
+void AutoRecorder::AddSpark(RecordedSpark* device) {
+    recordedSparks.push_back(device);
 }
 
 // This function is called automatically by 'Recorded' devices to add themselves
 // to their corresponding std::vector for logging
-void AutoRecorder::AddSolenoid(RecordedSolenoid** device) {
-    recordedSolenoids.push_back((*device));
+void AutoRecorder::AddSolenoid(RecordedSolenoid* device) {
+    recordedSolenoids.push_back(device);
 }
 
 // milliseconds since epoch
@@ -77,7 +67,7 @@ units::millisecond_t AutoRecorder::GetStartTime() {
 }
 
 // Format: ID, device, (encoder) position, timestamp, motor speed
-void AutoRecorder::Write(std::vector<std::string> data) {
+void AutoRecorder::Write(const std::vector<std::string>& data) {
     std::string buffer = "";
     std::string separator = ",";
     for (auto dataPoint : data) {
@@ -92,8 +82,8 @@ void AutoRecorder::Periodic() {
 }
 
 void AutoRecorder::StartPlayback() {
+    playbackTooSlowCount = 0;
     printf("start playback\n");
-    startTime = GetCurrentTime();
     sequenceName = frc::SmartDashboard::GetString("AutoRecorder Name: ", "NULL");
     csvInterface = std::make_shared<CSVInterface>("/home/lvuser/" + sequenceName + ".csv");
     MapDevicesWithIDs();
@@ -101,6 +91,7 @@ void AutoRecorder::StartPlayback() {
         isRecording = false;
     if (sequenceName != "NULL")
         isPlayingBack = true;
+    startTime = GetCurrentTime();
 }
 
 void AutoRecorder::StopPlayback() {
@@ -111,17 +102,19 @@ bool AutoRecorder::GetIsPlayingBack() {
     return isPlayingBack;
 }
 
-void AutoRecorder::UpdatePlaybackData() {
-    std::vector<std::string> data = csvInterface->ReadLine();
+AutoRecorder::PlaybackData AutoRecorder::UpdatePlaybackData() {
+    PlaybackData data;
+    std::vector<std::string> line = csvInterface->ReadLine();
     // if (csvInterface->IsAtEndOfFile())
     //     StopPlayback();
-    PlaybackData::id = std::stoi(data[0]);
-    PlaybackData::device = data[1];
-    if (data[2] != "N/A")
-        PlaybackData::pos = std::stod(data[2]);
-    PlaybackData::time = units::millisecond_t(std::stol(data[3]));
-    if (data[4] != "N/A")
-        PlaybackData::speed = std::stod(data[4]);
+    data.id = std::stoi(line[0]);
+    data.device = std::move(line[1]);
+    if (line[2] != "N/A")
+        data.pos = std::stod(line[2]);
+    data.time = units::millisecond_t(std::stol(line[3]));
+    if (line[4] != "N/A")
+        data.speed = std::stod(line[4]);
+    return data;
 }
 
 //Mapping indexes of recorded devices in their respective arrays to their
@@ -142,75 +135,70 @@ void AutoRecorder::MapDevicesWithIDs() {
 }
 
 void AutoRecorder::RecordPeriodic() {
-    if (isRecording && csvInterface->IsInitialized()) {
-        if (recordedTalons.size() > 0) {
-            for (auto device : recordedTalons) {
-                if (device != nullptr)
-                    device->LogData();
-            }
+    if (isRecording) {
+        for (auto device : recordedTalons) {
+            device->LogData();
         }
-        if (recordedSparks.size() > 0) {
-            for (auto device : recordedSparks) {
-                if (device != nullptr)
-                    device->LogData();
-            }
+        for (auto device : recordedSparks) {
+            device->LogData();
         }
-        if (recordedSolenoids.size() > 0) {
-            for (auto device : recordedSolenoids) {
-                if (device != nullptr)
-                    device->LogData();
-            }
+        for (auto device : recordedSolenoids) {
+            device->LogData();
         }
     }
 }
 
 void AutoRecorder::ProcessReadDataChunk() {
-    size_t numOfRecordedDevices = 5; //recordedTalons.size() + recordedSparks.size() + recordedSolenoids.size();
-    for (size_t i=0; i<numOfRecordedDevices; i++) {
-        UpdatePlaybackData();
-        // for (auto talon : recordedTalons)
-        //     talon->SetPeriodic();
-        frc::SmartDashboard::PutString("playback device", PlaybackData::device);
-        frc::SmartDashboard::PutNumber("playback dev id", PlaybackData::id);
-        frc::SmartDashboard::PutNumber("playback dev speed", PlaybackData::speed);
-        frc::SmartDashboard::PutNumber("playback dev pos", PlaybackData::pos);
-
-        if (PlaybackData::device == "TalonFX") {
-            int talonIdx = recordedTalonIDs[PlaybackData::id];
-            recordedTalons[talonIdx]->Set(PlaybackData::speed);
+    size_t numOfRecordedDevices = recordedTalons.size() + recordedSparks.size() + recordedSolenoids.size();
+    for (size_t j=0; j<2; j++) {
+        units::millisecond_t time;
+        for (size_t i=0; i<numOfRecordedDevices; i++) {
+            PlaybackData data = UpdatePlaybackData();
+            time = data.time;
+            ProcessPlaybackData(data);
         }
-        else if (PlaybackData::device == "Spark") {
-            int sparkIdx = recordedSparkIDs[PlaybackData::id];
-            recordedSparks[sparkIdx]->Set(PlaybackData::speed);
-        }
-        else if (PlaybackData::device == "Solenoid") {
-            int solenoidIdx = recordedSolenoidIDs[PlaybackData::id];
-            recordedSolenoids[solenoidIdx]->Set(bool(PlaybackData::pos));
-        }
+        // if (!IsPlaybackTooSlow(time)) {
+        //     break;
+        // }
+        break;
+        // playbackTooSlowCount++;
+        // frc::SmartDashboard::PutNumber("Playback Too Slow Count:", playbackTooSlowCount);    
     }
+}
+
+void AutoRecorder::ProcessPlaybackData(const PlaybackData& data) {
+    if (data.device == RecordedTalonFX::deviceType) {
+        int talonIdx = recordedTalonIDs[data.id];
+        // printf("talon index: %i\n", talonIdx);
+        recordedTalons[talonIdx]->PlaybackSet(data.speed, data.pos);
+    }
+    else if (data.device == RecordedSpark::deviceType) {
+        int sparkIdx = recordedSparkIDs[data.id];
+        //printf("spark index: %i\n", sparkIdx);
+        recordedSparks[sparkIdx]->Set(data.speed);
+    }
+    else if (data.device == RecordedSolenoid::deviceType) {
+        int solenoidIdx = recordedSolenoidIDs[data.id];
+        //printf("solenoid index: %i\n", solenoidIdx);
+        recordedSolenoids[solenoidIdx]->Set(bool(data.pos));
+    }
+    // std::cout << "recorded device:" << PlaybackData::device << '\n';
+    // std::cout << "recorded id:" << PlaybackData::id << '\n';
+    // std::cout << "recorded position:" << PlaybackData::pos << '\n';
+    // frc::SmartDashboard::PutString("recorded device:", PlaybackData::device);
+    // frc::SmartDashboard::PutNumber("recorded id:", PlaybackData::id);
+    // frc::SmartDashboard::PutNumber("recorded position:", PlaybackData::pos);
+
+
 }
 
 void AutoRecorder::PlaybackPeriodic() {
     if (isPlayingBack && csvInterface->IsInitialized()) {
         ProcessReadDataChunk();
-
-        if (IsPlaybackTooSlow())
-            CorrectPlaybackTooSlow();
     }
 }
 
-bool AutoRecorder::IsPlaybackTooSlow() {
-    playbackTime = GetCurrentTime() - startTime;
-    recordTime = PlaybackData::time;
-    return (playbackTime < (recordTime - 19_ms));
-}
-
-void AutoRecorder::CorrectPlaybackTooSlow() {
-    playbackTime = GetCurrentTime() - startTime;
-    recordTime = PlaybackData::time;
-    while (playbackTime < (recordTime - 19_ms)) {
-        ProcessReadDataChunk();
-        playbackTime = GetCurrentTime() - startTime;
-        recordTime = PlaybackData::time;
-    }
+bool AutoRecorder::IsPlaybackTooSlow(units::millisecond_t time) {
+    auto playbackTime = GetCurrentTime() - startTime;
+    return (playbackTime < (time + 19_ms));
 }

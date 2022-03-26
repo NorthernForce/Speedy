@@ -1,15 +1,11 @@
 #include "utilities/RecordedSpark.h"
 #include "RobotContainer.h"
 
+const std::string RecordedSpark::deviceType = "Spark";
+
 RecordedSpark::RecordedSpark(int id, rev::CANSparkMaxLowLevel::MotorType type) 
  : CANSparkMax(id, type) {
-    auto p = this;
-    RobotContainer::autoRecorder->AddSpark(&p);
- }
-
-void RecordedSpark::Set(double value) {
-    printf("setting a sparko to %f\n", value);
-    CANSparkMax::Set(value);
+    RobotContainer::autoRecorder->AddSpark(this);
 }
 
 void RecordedSpark::LogData() {

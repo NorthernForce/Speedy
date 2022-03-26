@@ -1,16 +1,11 @@
 #include "utilities/RecordedSolenoid.h"
 #include "RobotContainer.h"
 
+const std::string RecordedSolenoid::deviceType = "Solenoid";
+
 RecordedSolenoid::RecordedSolenoid(int pcmModuleID, frc::PneumaticsModuleType moduleType, int solenoidID)
  : frc::Solenoid(pcmModuleID, moduleType, solenoidID) {
-    auto p = this;
-    RobotContainer::autoRecorder->AddSolenoid(&p);
- }
-
-void RecordedSolenoid::Set(bool on) {
-    isSolenoidOn = on;
-    printf("setting a solenoid to %i\n", on);
-    frc::Solenoid::Set(isSolenoidOn);
+    RobotContainer::autoRecorder->AddSolenoid(this);
 }
 
 void RecordedSolenoid::LogData() {
