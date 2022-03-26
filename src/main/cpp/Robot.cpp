@@ -14,6 +14,7 @@
 #include "commands/autonomous/DriveToDistanceIntake.h"
 #include "commands/TurnToAngle.h"
 #include "commands/MoveArm.h"
+#include "commands/ResetEncoders.h"
 #include "commands/autonomous/AutoTurnToAngle.h"
 
 #include <frc/Timer.h>
@@ -38,9 +39,9 @@ void Robot::RobotInit() {
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
   RobotContainer::fmsComms->DisplayMatchTime();
+  //RobotContainer::drivetrain->PrintEncoderValues();
   //frc::SmartDashboard::PutNumber("distance: ", RobotContainer::ultrasonic->getDistance());
   //frc::SmartDashboard::PutString("Drive Speed", RobotContainer::fmsComms->GetAllianceString(RobotContainer::fmsComms->GetAlliance()));
-  //RobotContainer::drivetrain->PrintEncoderValues();
   //printf("Please work %f: \n", leftSide[4]);
   
   }
@@ -65,18 +66,26 @@ void Robot::AutonomousInit() {
     RobotContainer::imu->ZeroRotation();
     //RobotContainer::climber->PivotDown();
     autoCommandScheduler.reset(new AutoCommandScheduler({
-    // //     //  new ShootThenCrossLine()
-    // //      //new ShootThenCrossLine()
-    new DriveToDistanceIntake(.2, -50, true),
-    new AutoTurnToAngle(-97.5, false),
+    new ResetEncoders(),
     new DriveToDistanceIntake(.2, -20, true),
-    // //     new DriveToDistanceIntake(-.3, 39, true),
-    // //     new TurnToAngle(-60),
-    // //     //new TurnToAngle(-300),
-    // //     //*new DriveToDistanceIntake(.3, 48, true),
-    // //     // new DriveToDistance(.3, -20),
-    // //     //*new TurnToAngle(-105),
-    // //     //*new DriveToDistanceIntake(-.3, 40, true),
+    new MoveArm(false),
+    new ResetEncoders(),
+    new AutoTurnToAngle(-105, false),
+    new ResetEncoders(),
+    new AutoTurnToAngle(-20, false),
+    new ResetEncoders(),
+    new DriveToDistanceIntake(-.4, 40, false),
+    new ResetEncoders(),
+    new AutoTurnToAngle(-160, false),
+    new ResetEncoders(),
+    new DriveToDistanceIntake(-.4, 20, false),
+    //new ResetEncoders(),
+    //new AutoTurnToAngle(-35, false),
+    //new ResetEncoders(),
+    //new DriveToDistanceIntake(-.4, 80, false),
+
+
+
     }));
 }
 

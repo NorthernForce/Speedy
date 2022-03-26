@@ -16,28 +16,24 @@ DriveToDistanceIntake::DriveToDistanceIntake(double speed, double distance, bool
   desiredSpeed = speed;
 }
 
-// Called when the command is initially scheduled.
-void DriveToDistanceIntake::Initialize() {
-    RobotContainer::drivetrain->SetEncoderPositions(0, 0);
-}
-
 // Called repeatedly when this Command is scheduled to run
 void DriveToDistanceIntake::Execute() {
-    //if(desiredDistance != RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) +- 3) {
-        RobotContainer::drivetrain->DriveUsingSpeeds(desiredSpeed, desiredSpeed);
-        RobotContainer::intake->Run(desiredReverse);
-    //}
+    printf("I'm STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTIIIIIIIIIIIIIING \n");
+    RobotContainer::drivetrain->DriveUsingSpeeds(desiredSpeed, desiredSpeed);
+    RobotContainer::intake->Run(desiredReverse);
+    isFinished = std::abs(desiredDistance) < std::abs(RobotContainer::drivetrain->GetEncoderRotations().first);
 }
 
 // Called once the command ends or is interrupted.
 void DriveToDistanceIntake::End(bool interrupted) {
-    RobotContainer::drivetrain->DriveUsingSpeeds(0, 0);
     printf("Drive To Distance Intake Complete \n");
     RobotContainer::intake->Stop();
 }
 
 // Returns true when the command should end.
 bool DriveToDistanceIntake::IsFinished() {
-  return (std::abs(desiredDistance) <= std::abs(RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations())));
+  return isFinished;
+
+  //RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations())
 }
 

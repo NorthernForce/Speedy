@@ -14,7 +14,7 @@ AutoTurnToAngle::AutoTurnToAngle(double targetAngle, bool side) {
 }
 
 // Called when the command is initially scheduled.
-void AutoTurnToAngle::Initialize() {
+void AutoTurnToAngle::Initialize() {}
 
 }
 // Called repeatedly when this Command is scheduled to run
@@ -32,16 +32,15 @@ void AutoTurnToAngle::Execute() {
 
     if (error <= Constants::attaError) {
         isDone = true;
-        printf("I'm DONNNNENNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN \n");
     }
 }
 
 double AutoTurnToAngle::GetDriveMultiplier(double error) {
     double driveMultiplier;
     if (error < 0)
-        driveMultiplier = (1.2 * pow(1.2, -error)) - .83;
+        driveMultiplier = (1.2 * pow(2.6, -error)) - .83;
     else
-        driveMultiplier = (1.2 * pow(1.2, error)) - .83;
+        driveMultiplier = (1.2 * pow(2.6, error)) - .83;
         
     return driveMultiplier;
 }

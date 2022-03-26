@@ -15,11 +15,6 @@ DriveToDistance::DriveToDistance(double speed, double distance) {
    desiredDistance = distance;
 }
 
-// Called when the command is initially scheduled.
-void DriveToDistance::Initialize() {
-    RobotContainer::drivetrain->SetEncoderPositions(0, 0);
-}
-
 // Called repeatedly when this Command is scheduled to run
 void DriveToDistance::Execute() {
     //if(desiredDistance != RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) +- 3) {
