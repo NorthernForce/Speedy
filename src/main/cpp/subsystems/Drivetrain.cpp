@@ -119,10 +119,10 @@ double Drivetrain::GetRightRPM() {
 bool Drivetrain::IsTipping() {
     // frc::SmartDashboard::PutNumber("left encoder", GetEncoderRotations().first);
     if (RobotContainer::intake->armPosition == ArmState::Up) {
-        return RobotContainer::imu->GetRollAngle() > abs(armUpTipAngle.value());
+        return RobotContainer::imu->GetRollAngle() > std::abs(armUpTipAngle.value());
     }
     else {
-        return RobotContainer::imu->GetRollAngle() > abs(armDownTipAngle.value());
+        return RobotContainer::imu->GetRollAngle() > std::abs(armDownTipAngle.value());
     }
 }
  

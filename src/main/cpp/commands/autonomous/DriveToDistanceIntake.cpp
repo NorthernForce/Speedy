@@ -38,6 +38,6 @@ void DriveToDistanceIntake::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool DriveToDistanceIntake::IsFinished() {
-  return (abs(desiredDistance) < abs(RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations())));
+  return (std::abs(desiredDistance) <= std::abs(RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations())));
 }
 
