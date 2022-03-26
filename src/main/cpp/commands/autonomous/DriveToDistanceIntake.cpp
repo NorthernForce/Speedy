@@ -22,7 +22,7 @@ void DriveToDistanceIntake::Execute() {
     RobotContainer::drivetrain->DriveUsingSpeeds(desiredSpeed, desiredSpeed);
     RobotContainer::intake->Run(desiredReverse);
     isFinished = std::abs(desiredDistance) < std::abs(RobotContainer::drivetrain->GetEncoderRotations().first);
-}
+    }    
 
 // Called once the command ends or is interrupted.
 void DriveToDistanceIntake::End(bool interrupted) {

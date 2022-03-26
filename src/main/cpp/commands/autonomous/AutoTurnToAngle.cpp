@@ -16,7 +16,6 @@ AutoTurnToAngle::AutoTurnToAngle(double targetAngle, bool side) {
 // Called when the command is initially scheduled.
 void AutoTurnToAngle::Initialize() {}
 
-}
 // Called repeatedly when this Command is scheduled to run
 void AutoTurnToAngle::Execute() {
     auto currentAngle = RobotContainer::imu->GetRotation();
@@ -37,13 +36,16 @@ void AutoTurnToAngle::Execute() {
 
 double AutoTurnToAngle::GetDriveMultiplier(double error) {
     double driveMultiplier;
-    if (error < 0)
-        driveMultiplier = (1.2 * pow(2.6, -error)) - .83;
-    else
-        driveMultiplier = (1.2 * pow(2.6, error)) - .83;
-        
+    if (error < 0 && error < 1)
+        driveMultiplier = (1.2 * pow(2.2, -error)) - .83;
+    else if (error > 0 && error < 1)
+        driveMultiplier = (1.2 * pow(2.2, error)) - .83;
+    else 
+        driveMultiplier = .85;
+
     return driveMultiplier;
 }
+
 // Called once the command ends or is interrupted.
 void AutoTurnToAngle::End(bool interrupted) {
     RobotContainer::drivetrain->DriveUsingSpeeds(0,0);

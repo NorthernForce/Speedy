@@ -10,16 +10,14 @@
 DriveToDistance::DriveToDistance(double speed, double distance) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements(RobotContainer::drivetrain.get());
-  AddRequirements(RobotContainer::intake.get());
    desiredSpeed = speed;
    desiredDistance = distance;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void DriveToDistance::Execute() {
-    //if(desiredDistance != RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations()) +- 3) {
-        RobotContainer::drivetrain->DriveUsingSpeeds(desiredSpeed, desiredSpeed);
-    //}
+    RobotContainer::drivetrain->DriveUsingSpeeds(desiredSpeed, desiredSpeed);
+    isFinished = std::abs(desiredDistance) < std::abs(RobotContainer::drivetrain->GetEncoderRotations().first);
 }
 
 // Called once the command ends or is interrupted.
@@ -29,5 +27,5 @@ void DriveToDistance::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool DriveToDistance::IsFinished() {
-  return (abs(desiredDistance) < abs(RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations())));
+  return isFinished;
 }

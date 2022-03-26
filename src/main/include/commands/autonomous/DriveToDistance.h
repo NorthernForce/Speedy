@@ -28,6 +28,7 @@ class DriveToDistance
  private:
   double desiredDistance;
   double desiredSpeed;
+  bool isFinished;
 
 
 };

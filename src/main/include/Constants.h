@@ -34,7 +34,7 @@ namespace Constants {
     const uint8_t manipulatorController_id = 1;
     const uint8_t PCMCanBusID = 15;
 
-    const double attaError = .05; //atta = AutoTurnToAngle
+    const double attaError = .01; //atta = AutoTurnToAngle
 
     const double degreesToRadians = M_PI/180.0;
     const double XResetMultiplier = 0.996194698092;
