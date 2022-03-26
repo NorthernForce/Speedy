@@ -9,7 +9,6 @@
 #include "utilities/CSVInterface.h"
 #include <memory>
 #include <vector>
-#include <variant>
 
 #include "utilities/RecordedTalonFX.h"
 #include "utilities/RecordedSpark.h"
@@ -18,21 +17,46 @@
 class AutoRecorder : public frc2::SubsystemBase {
  public:
   AutoRecorder();
-    void Start();
-    void Stop();
+    void StartRecording();
+    void StopRecording();
     bool GetIsRecording();
     void Write(std::vector<std::string> data);
-    void AddDevice(RecordedTalonFX* device);
-    void AddDevice(RecordedSpark* device);
-    void AddDevice(RecordedSolenoid* device);
+    void AddTalon(RecordedTalonFX** device);
+    void AddSpark(RecordedSpark** device);
+    void AddSolenoid(RecordedSolenoid** device);
+    units::millisecond_t GetCurrentTime();
+    units::millisecond_t GetStartTime();
     std::vector<size_t> GetNumberOfRecordedDevices();
     void Periodic() override;
+    void StartPlayback();
+    void StopPlayback();
+    bool GetIsPlayingBack();
 
  private:
+    void UpdatePlaybackData();
+    void MapDevicesWithIDs();
+    void RecordPeriodic();
+    void ProcessReadDataChunk();
+    void PlaybackPeriodic();
+    bool IsPlaybackTooSlow();
+    void CorrectPlaybackTooSlow();
     std::shared_ptr<CSVInterface> csvInterface;
     bool isRecording;
+    bool isPlayingBack;
+    units::millisecond_t startTime;
+    std::string sequenceName;
 
     std::vector<RecordedTalonFX*> recordedTalons;
     std::vector<RecordedSpark*> recordedSparks;
     std::vector<RecordedSolenoid*> recordedSolenoids;
+
+    //Mapping indexes of recorded devices in their respective arrays to their
+    // CAN/PCM IDs gives faster runtime results when playing back a routine
+    std::map<int, int> recordedTalonIDs = {};
+    std::map<int, int> recordedSparkIDs = {};
+    std::map<int, int> recordedSolenoidIDs = {};
+
+    // Both used for playback to verify it is running at the correct speed
+    units::millisecond_t playbackTime;
+    units::millisecond_t recordTime;
 };

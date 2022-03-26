@@ -3,25 +3,30 @@
 
 RecordedSolenoid::RecordedSolenoid(int pcmModuleID, frc::PneumaticsModuleType moduleType, int solenoidID)
  : frc::Solenoid(pcmModuleID, moduleType, solenoidID) {
-    RobotContainer::autoRecorder->AddDevice(this);
+    auto p = this;
+    RobotContainer::autoRecorder->AddSolenoid(&p);
  }
 
 void RecordedSolenoid::Set(bool on) {
-    frc::Solenoid::Set(on);
-    //LogData();
+    isSolenoidOn = on;
+    printf("setting a solenoid to %i\n", on);
+    frc::Solenoid::Set(isSolenoidOn);
 }
 
 void RecordedSolenoid::LogData() {
-    auto now = std::chrono::system_clock::now();
-    auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
-    auto epoch = now_ms.time_since_epoch();
-    auto val = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
-    long time = val.count();
+    units::millisecond_t startTime = RobotContainer::autoRecorder->GetStartTime();
+    units::millisecond_t time = RobotContainer::autoRecorder->GetCurrentTime();
+    units::millisecond_t deltaTime = time - startTime;
 
     RobotContainer::autoRecorder->Write({
-        std::to_string(id),
-        "Solenoid",
+        std::to_string(frc::Solenoid::GetChannel()),
+        deviceType,
         std::to_string(frc::Solenoid::Get()),
-        std::to_string(time),
+        std::to_string(deltaTime.value()),
+        "N/A"
     });
+}
+
+std::string RecordedSolenoid::GetDeviceType() {
+    return deviceType;
 }

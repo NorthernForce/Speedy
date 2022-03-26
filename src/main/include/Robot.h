@@ -31,4 +31,6 @@ class Robot : public frc::TimedRobot {
   std::unique_ptr<AutoCommandScheduler> autoCommandScheduler;
 
   RobotContainer m_container;
+  bool wannaRecord = false;
+  bool wannaPlayback = false;
 };

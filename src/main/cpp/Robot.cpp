@@ -24,7 +24,6 @@ void Robot::RobotInit() {
     //RobotContainer::intake->SetArmState(ArmState::Down);
     RobotContainer::drivetrain->SetEncoderPositions(0, 0);
     RobotContainer::intake->ArmUp();
-    frc::CameraServer::StartAutomaticCapture();
 }
 
 /**
@@ -48,6 +47,12 @@ void Robot::RobotPeriodic() {
  */
 void Robot::DisabledInit() {
     RobotContainer::intake->ArmUp();
+    wannaRecord = false;
+    wannaPlayback = false;
+    frc::SmartDashboard::PutBoolean("Recording Mode: ", wannaRecord);
+    frc::SmartDashboard::PutBoolean("Playback Mode: ", wannaPlayback);
+    RobotContainer::autoRecorder->StopRecording();
+    RobotContainer::autoRecorder->StopPlayback();
 }
 
 void Robot::DisabledPeriodic() {}
@@ -81,14 +86,18 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {
     RobotContainer::intake->ArmUp();
+    wannaRecord = frc::SmartDashboard::GetBoolean("Recording Mode: ", false);
+    if (wannaRecord)
+        RobotContainer::autoRecorder->StartRecording();
+    wannaPlayback = frc::SmartDashboard::GetBoolean("Playback Mode: ", false);
+    if (wannaPlayback)
+        RobotContainer::autoRecorder->StartPlayback();
 }
 
 /**
  * This function is called periodically during operator control.
  */
-void Robot::TeleopPeriodic() {
-    
-}
+void Robot::TeleopPeriodic() {}
 
 /**
  * This function is called periodically during test mode.

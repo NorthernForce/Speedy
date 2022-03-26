@@ -13,8 +13,14 @@ Climber::Climber() {
     leftMotor = std::make_unique<WPI_TalonFX>(Constants::MotorIDs::leftClimber);
     rightMotor = std::make_unique<WPI_TalonFX>(Constants::MotorIDs::rightClimber);
 
+    bottom = std::make_unique<frc::DigitalInput>(Constants::DigitalIDs::bottomOptical);
+    middle = std::make_unique<frc::DigitalInput>(Constants::DigitalIDs::middleOptical);
+    top = std::make_unique<frc::DigitalInput>(Constants::DigitalIDs::topOptical);
+
     ConfigureController(*leftMotor);
     ConfigureController(*rightMotor);
+
+    pivotPosition = PivotState::Up;
 }
 
 void Climber::ConfigureController(WPI_TalonFX& controller) {
@@ -26,12 +32,13 @@ void Climber::ConfigureController(WPI_TalonFX& controller) {
 }
 
 void Climber::PivotUp() {
-    climber->Set(true);
+    climber->Set(false);
     pivotPosition = PivotState::Up;
+    heightCheckNeeded = true;
 }
 
 void Climber::PivotDown() {
-    climber->Set(false);
+    climber->Set(true);
     pivotPosition = PivotState::Down;
 }
 
@@ -44,18 +51,42 @@ void Climber::SetPivot(PivotState state) {
 }
 
 void Climber::Raise() {
-    leftMotor->Set(-0.85);
-    rightMotor->Set(0.85);
+    leftMotor->Set(-1);
+    rightMotor->Set(1);
 }
 
 void Climber::Lower() {
-    leftMotor->Set(0.65);
-    rightMotor->Set(-0.65);
+    leftMotor->Set(1);
+    rightMotor->Set(-1);
+}
+
+void Climber::LowerSlow() {
+    leftMotor->Set(0.1);
+    rightMotor->Set(-0.1);
 }
 
 void Climber::Stop(){
     leftMotor->Set(0);
     rightMotor->Set(0);
+}
+
+bool Climber::TooTall() {
+    return (
+        (GetPivot() == PivotState::Up && GetOpticalSensor(Constants::DigitalIDs::middleOptical)) ||
+        (GetOpticalSensor(Constants::DigitalIDs::topOptical))
+    );
+}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+void Climber::CheckHeight(){
+    if (heightCheckNeeded) {
+        if (TooTall()) {
+            LowerSlow();
+        }
+        else {
+            Stop();
+            heightCheckNeeded = false;
+        }
+    }
 }
 
 HookState Climber::GetHookState() {
@@ -66,21 +97,27 @@ void Climber::SetHookState(HookState state) {
     hookPosition = state;
 }
 
-void Climber::Initialize() {
-    // states = {
-    //     frc::DigitalInput dio0{0},
-    //     frc::Digitalnput dio1{1},
-    //     frc::DigitalInput dio2{2}
-    // };
+bool Climber::GetOpticalSensor(int sensor) {
+    switch (sensor) {
+        case Constants::DigitalIDs::bottomOptical:
+            return bottom->Get();
+        case Constants::DigitalIDs::middleOptical:
+            return middle->Get();
+        case Constants::DigitalIDs::topOptical:
+            return top->Get();
+        default:
+            return false;
+    }
+}
+
+void Climber::PrintOpticalSensors() {
+    frc::SmartDashboard::PutBoolean("Bottom Optical:", bottom->Get());
+    frc::SmartDashboard::PutBoolean("Middle Optical:", middle->Get());
+    frc::SmartDashboard::PutBoolean("Top Optical:", top->Get());
 }
 
 // This method will be called once per scheduler run
 void Climber::Periodic() {
-    frc::SmartDashboard::PutBoolean("Digital 0: ", dio0.Get());
-    frc::SmartDashboard::PutBoolean("Digital 1: ", dio1.Get());
-    frc::SmartDashboard::PutBoolean("Digital 2: ", dio2.Get());
-    //TRUE IS WHEN THE SHAFT IS ABOVE
-    //DIGITAL 2 IS BOTTOM
-    //DIGITAL 0 IS MID SENSOR
-    //DIGITAL 1 IS TOP SENSOR
+    CheckHeight();
+    PrintOpticalSensors();
 }

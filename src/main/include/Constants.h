@@ -21,6 +21,12 @@ namespace Constants {
         const uint8_t leftClimber = 8;
     }
 
+    namespace DigitalIDs {
+        const uint8_t bottomOptical = 0;
+        const uint8_t middleOptical = 2 ;
+        const uint8_t topOptical = 1;
+    }
+
     const uint8_t climber = 4;
     const uint8_t arm = 9;
 

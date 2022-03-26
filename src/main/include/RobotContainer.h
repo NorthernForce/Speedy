@@ -9,7 +9,6 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include "Constants.h"
 
-#include "subsystems/AutoRecorder.h"
 #include "subsystems/Drivetrain.h"
 #include "subsystems/IMU.h"
 #include "subsystems/Intake.h"
@@ -18,6 +17,7 @@
 #include "subsystems/Coordinates.h"
 #include "subsystems/Climber.h"
 #include "subsystems/Ultrasonic.h"
+#include "subsystems/AutoRecorder.h"
 
 #include "commands/autonomous/ShootThenCrossLine.h"
 

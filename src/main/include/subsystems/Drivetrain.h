@@ -34,8 +34,8 @@ class Drivetrain : public frc2::SubsystemBase {
   static std::shared_ptr<frc::DifferentialDrive> robotDrive;
   
  private:
-  std::shared_ptr<RecordedTalonFX> leftFollower;
-  std::shared_ptr<RecordedTalonFX> rightFollower;
+  std::shared_ptr<WPI_TalonFX> leftFollower;
+  std::shared_ptr<WPI_TalonFX> rightFollower;
   const int rampRate = 0.2;
   units::degree_t tipAngle = 15_deg;
 };

@@ -1,32 +1,32 @@
 #include "utilities/RecordedSpark.h"
 #include "RobotContainer.h"
 
-#include <chrono>
-#include <sys/time.h>
-#include <ctime>
-
 RecordedSpark::RecordedSpark(int id, rev::CANSparkMaxLowLevel::MotorType type) 
  : CANSparkMax(id, type) {
-    RobotContainer::autoRecorder->AddDevice(this);
+    auto p = this;
+    RobotContainer::autoRecorder->AddSpark(&p);
  }
 
 void RecordedSpark::Set(double value) {
+    printf("setting a sparko to %f\n", value);
     CANSparkMax::Set(value);
-    //LogData();
 }
 
 void RecordedSpark::LogData() {
-    auto now = std::chrono::system_clock::now();
-    auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
-    auto epoch = now_ms.time_since_epoch();
-    auto val = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
-    long time = val.count();
+    units::millisecond_t startTime = RobotContainer::autoRecorder->GetStartTime();
+    units::millisecond_t time = RobotContainer::autoRecorder->GetCurrentTime();
+    units::millisecond_t deltaTime = time - startTime;
 
+    double speed = CANSparkMax::Get();
     RobotContainer::autoRecorder->Write({
-        std::to_string(id),
-        "SparkMax",
-        std::to_string(CANSparkMax::GetEncoder().GetPosition()),
-        std::to_string(time),
-        std::to_string(CANSparkMax::Get())
+        std::to_string(CANSparkMax::GetDeviceId()),
+        deviceType,
+        "N/A",
+        std::to_string(deltaTime.value()),
+        std::to_string(speed)
     });
+}
+
+std::string RecordedSpark::GetDeviceType() {
+    return deviceType;
 }

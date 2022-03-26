@@ -1,7 +1,4 @@
 #include "utilities/RecordedTalonFX.h"
-#include <chrono>
-#include <sys/time.h>
-#include <ctime>
 #include "RobotContainer.h"
     
 RecordedTalonFX::RecordedTalonFX(int id) 
@@ -12,36 +9,38 @@ RecordedTalonFX::RecordedTalonFX(int id)
     WPI_TalonFX(id),
     id(id)
 {
-    RobotContainer::autoRecorder->AddDevice(this);
+    auto p = this;
+    RobotContainer::autoRecorder->AddTalon(&p);
 }
 
 void RecordedTalonFX::LogData() {
-    auto now = std::chrono::system_clock::now();
-    auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
-    auto epoch = now_ms.time_since_epoch();
-    auto val = std::chrono::duration_cast<std::chrono::milliseconds>(epoch);
-    long time = val.count();
+    units::millisecond_t startTime = RobotContainer::autoRecorder->GetStartTime();
+    units::millisecond_t time = RobotContainer::autoRecorder->GetCurrentTime();
+    units::millisecond_t deltaTime = time - startTime;
 
     RobotContainer::autoRecorder->Write({
         std::to_string(id),
-        "TalonFX",
+        deviceType,
         std::to_string(WPI_TalonFX::GetSensorCollection().GetIntegratedSensorPosition()),
-        std::to_string(time),
+        std::to_string(deltaTime.value()),
         std::to_string(WPI_TalonFX::Get())
     });
 }
 
 void RecordedTalonFX::Set(double value) {
     WPI_TalonFX::Set(value);
-    //LogData();
 }
 
-// void RecordedTalonFX::Set(double speed) {
-//     SpeedController::Set(speed);
-//     LogData();
-// }
+void RecordedTalonFX::PlaybackSet(double speed, double targetEncoder) {
+    double currentEncoder = GetSensorCollection().GetIntegratedSensorPosition();
+    if (abs(currentEncoder) < abs(targetEncoder)*1.02)
+        WPI_TalonFX::Set(speed);
+}
 
 void RecordedTalonFX::Set(TalonFXControlMode mode, double value) {
     WPI_TalonFX::Set(mode, value);
-    LogData();
+}
+
+std::string RecordedTalonFX::GetDeviceType() {
+    return deviceType;
 }

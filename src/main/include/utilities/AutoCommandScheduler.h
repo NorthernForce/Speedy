@@ -19,7 +19,7 @@ class AutoCommandScheduler {
   AutoCommandScheduler();
   void RunSequential();
   void RunParallel();
-  units::time::second_t GetTimeSinceRan();
+  units::time::second_t GetCurrentTimeSinceRan();
   void DashboardAuto(std::vector<std::string> &&driverInput, std::vector<std::string> &&dashboardParams);
   bool IsFinished();
   std::vector<frc2::Command*> commandQueue;

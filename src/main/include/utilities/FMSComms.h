@@ -5,6 +5,8 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#pragma once
+
 #include <iostream>
 #include <frc/DriverStation.h>
 

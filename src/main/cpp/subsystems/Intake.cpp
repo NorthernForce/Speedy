@@ -5,8 +5,8 @@
 #include "RobotContainer.h"
 
 Intake::Intake() {
-    intakeTopSpark = std::make_unique<RecordedSpark>(Constants::MotorIDs::intakeTop, RecordedSpark::MotorType::kBrushless);
-    intakeBottomSpark = std::make_unique<RecordedSpark>(Constants::MotorIDs::intakeBottom, RecordedSpark::MotorType::kBrushless);
+    intakeTopSpark = std::make_unique<RecordedSpark>(Constants::MotorIDs::intakeTop, rev::CANSparkMax::MotorType::kBrushless);
+    intakeBottomSpark = std::make_unique<RecordedSpark>(Constants::MotorIDs::intakeBottom, rev::CANSparkMax::MotorType::kBrushless);
 
     ConfigureSpark(*intakeTopSpark);
     ConfigureSpark(*intakeBottomSpark);

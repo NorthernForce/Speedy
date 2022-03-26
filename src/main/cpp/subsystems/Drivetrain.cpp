@@ -15,10 +15,11 @@ std::shared_ptr<RecordedTalonFX> Drivetrain::rightPrimary;
 std::shared_ptr<frc::DifferentialDrive> Drivetrain::robotDrive;
 
 Drivetrain::Drivetrain() {
-    leftPrimary = std::make_shared<RecordedTalonFX>(Constants::MotorIDs::leftPrimary);
-    rightPrimary = std::make_shared<RecordedTalonFX>(Constants::MotorIDs::rightPrimary);
-    leftFollower = std::make_shared<RecordedTalonFX>(Constants::MotorIDs::leftFollower);
-    rightFollower = std::make_shared<RecordedTalonFX>(Constants::MotorIDs::rightFollower);
+    printf("initializing drive motor controllers...\n");
+    leftPrimary.reset(new RecordedTalonFX(Constants::MotorIDs::leftPrimary));
+    rightPrimary.reset(new RecordedTalonFX(Constants::MotorIDs::rightPrimary));
+    leftFollower.reset(new WPI_TalonFX(Constants::MotorIDs::leftFollower));
+    rightFollower.reset(new WPI_TalonFX(Constants::MotorIDs::rightFollower));
 
     SetInvert();
     SetFollowers();
@@ -44,8 +45,6 @@ void Drivetrain::SetInvert(){
 void Drivetrain::ConfigureAllControllers() {
     ConfigureController(*leftPrimary);
     ConfigureController(*rightPrimary);
-    ConfigureController(*leftFollower, true);
-    ConfigureController(*rightFollower, true);
 }
 
 void Drivetrain::ConfigureController(RecordedTalonFX& controller, bool isFollower) {

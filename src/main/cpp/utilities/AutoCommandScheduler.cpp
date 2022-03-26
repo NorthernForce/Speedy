@@ -65,7 +65,7 @@ void AutoCommandScheduler::ScheduleInParallel() {
         std::cerr << CommandConflictError().what() << '\n';
 }
 
-units::time::second_t AutoCommandScheduler::GetTimeSinceRan() {
+units::time::second_t AutoCommandScheduler::GetCurrentTimeSinceRan() {
     return timer->Get();
 }
 
