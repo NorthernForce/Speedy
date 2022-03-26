@@ -27,7 +27,7 @@ Drivetrain::Drivetrain() {
     SetEncoderPositions(0, 0);
 }
 
-void Drivetrain::SetFollowers() {
+    void Drivetrain::SetFollowers() {
     leftFollower->Follow(*leftPrimary);
     rightFollower->Follow(*rightPrimary);
 }

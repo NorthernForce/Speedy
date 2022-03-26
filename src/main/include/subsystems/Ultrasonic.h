@@ -31,5 +31,8 @@ class Ultrasonic : public frc2::SubsystemBase {
 
     double calcDistance();                            //Applies Scaling and Conversion to return Distance 
 
+    const double k_Cvv = 5.0;
+    const double k_VperInch = 0.0492; 
+
     
 };
