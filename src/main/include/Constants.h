@@ -34,19 +34,17 @@ namespace Constants {
     const uint8_t manipulatorController_id = 1;
     const uint8_t PCMCanBusID = 15;
 
-    const double attaError = .05;
+    const double attaError = .05; //atta = AutoTurnToAngle
 
-    const double degreesToRadians = M_PI/180;
+    const double degreesToRadians = M_PI/180.0;
     const double XResetMultiplier = 0.996194698092;
 
-    const double gearRatio = (9/62) * (30/18);
-                          // (9/62) * (18/30)
+    const double gearRatio = (62.0/9.0) * (30.0/18.0);
     const int cpr = 2048;
 
     const units::unit_t<units::length::inch> wheelCircum = 6_in;
 
-    // const double encoderToInch = 2 * gearRatio * wheelCircum.value();
-    const double encoderToInch = 1.10988 * 0.24 * wheelCircum.value();
+    const double encoderToInch = cpr * gearRatio * wheelCircum.value();
 
 
     //Analog Port for the Ultrasonic Sensor
