@@ -6,9 +6,10 @@
 #include "commands/ResetSpool.h"
 #include "commands/RaiseClimberPartial.h"
 #include "commands/PivotToggle.h"
-#include "commands/RaiseClimber.h"
 #include "commands/MoveArm.h"
-#include "commands/autonomous/SmartBarGrab.h"
+#include "commands/autonomous/TraverseRaiseClimber.h"
+#include "commands/autonomous/TraverseBarGrab.h"
+#include "commands/Wait.h" 
 #include "commands/LowerClimber.h"
 
 AutoTraverse::AutoTraverse() {
@@ -18,12 +19,15 @@ AutoTraverse::AutoTraverse() {
     new RaiseClimberPartial(),
     new PivotToggle(),
     new MoveArm(true),
-    new RaiseClimber(),
-    new SmartBarGrab(),
-    new PivotToggle(),
+    new TraverseRaiseClimber(),
+    new Wait(10),
+    new TraverseBarGrab(),
+    new Wait(25),
     new LowerClimber()
   }));
 }
+
+
 // Called when the command is initially scheduled.
 void AutoTraverse::Initialize() {
   RobotContainer::climber->ResetSpool();

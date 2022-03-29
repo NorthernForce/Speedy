@@ -14,24 +14,16 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class SmartBarGrab
-    : public frc2::CommandHelper<frc2::CommandBase, SmartBarGrab> {
+class SmartArmRaise
+    : public frc2::CommandHelper<frc2::CommandBase, SmartArmRaise> {
  public:
-  SmartBarGrab();
+  SmartArmRaise();
 
   void Initialize() override;
-
-  void ControlClimberPivot();
-
-  void TryGrab();
 
   void Execute() override;
 
   void End(bool interrupted) override;
 
   bool IsFinished() override;
- private:
-  double prevTip;
-  uint8_t stableCycles;
-
 };
