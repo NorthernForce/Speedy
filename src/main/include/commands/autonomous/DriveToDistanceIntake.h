@@ -19,8 +19,6 @@ class DriveToDistanceIntake
  public:
   DriveToDistanceIntake(double speed, double distance, bool reverse);
 
-  void Initialize() override;
-
   void Execute() override;
 
   void End(bool interrupted) override;
@@ -30,4 +28,5 @@ class DriveToDistanceIntake
   double desiredDistance;
   double desiredSpeed;
   bool desiredReverse;
+  bool isFinished;
 };

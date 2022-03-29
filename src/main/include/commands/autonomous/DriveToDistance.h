@@ -19,8 +19,6 @@ class DriveToDistance
  public:
   DriveToDistance(double speed , double distance);
 
-  void Initialize() override;
-
   void Execute() override;
 
   void End(bool interrupted) override;
@@ -30,6 +28,7 @@ class DriveToDistance
  private:
   double desiredDistance;
   double desiredSpeed;
+  bool isFinished;
 
 
 };

@@ -10,6 +10,7 @@
 #include <frc/Solenoid.h>
 #include <ctre/Phoenix.h>
 #include <frc/DigitalInput.h>
+#include "Constants.h"
 
 enum class PivotState {
     Down,
@@ -31,26 +32,21 @@ class Climber : public frc2::SubsystemBase {
   void SetPivot(PivotState state);
   void Raise();
   void Lower();
+  void LowerSlow();
   void Stop();
   double SpoolRotations();
   void ResetSpool();
   bool TooTall();
   void CheckHeight();
-  HookState GetHookState();
-  void SetHookState(HookState state);
-  void SetPivot(HookState state);
-  bool GetOpticalSensor(int sensor);
+  bool GetOpticalSensor(Constants::DigitalIDs sensor);
   void PrintOpticalSensors();
   void Periodic() override;
 
  private:
   std::unique_ptr<frc::Solenoid> climber;
   PivotState pivotPosition;
-  HookState hookPosition;
   std::unique_ptr<WPI_TalonFX> leftMotor;
   std::unique_ptr<WPI_TalonFX> rightMotor;
-
-  bool heightCheckNeeded = true;
 
   std::unique_ptr<frc::DigitalInput> bottom;
   std::unique_ptr<frc::DigitalInput> middle;

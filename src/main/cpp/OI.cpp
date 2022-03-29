@@ -3,8 +3,7 @@
 #include "commands/DriveWithJoystick.h"
 #include "commands/IntakeBall.h"
 #include "commands/PushOutBall.h"
-#include "commands/ArmDown.h"
-#include "commands/ArmUp.h"
+#include "commands/MoveArm.h"
 #include "commands/ToggleArm.h"
 #include "commands/LowerClimber.h"
 #include "commands/RaiseClimber.h"
@@ -32,13 +31,15 @@ void OI::InitControllers()
   manipulatorController = std::make_shared<frc::XboxController>(Constants::manipulatorController_id);
 }
 
-void OI::MapControllerButtons()
-{
-  // driver
-  SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new PushOutBall);
-  SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new IntakeBall);
-  SimpleButton(driverController, Xbox::A_button).WhileHeld(new AutoTraverse);
+void OI::MapControllerButtons() {
+  //driver
+  SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new IntakeBall);
+  SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBall);
   SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
+  SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
+  SimpleButton(driverController, Xbox::B_button).WhenPressed(new MoveArm(false));
+
+
 
   // manipulator
 
@@ -47,8 +48,8 @@ void OI::MapControllerButtons()
 
   // SimpleButton(manipulatorController, Xbox::X_button).WhenPressed(new ToggleArm);
   SimpleButton(manipulatorController, Xbox::A_button).WhenPressed(new PivotToggle);
-  SimpleButton(manipulatorController, Xbox::lt_bumper).WhenPressed(new ArmUp);
-  SimpleButton(manipulatorController, Xbox::rt_bumper).WhenPressed(new ArmDown);
+  SimpleButton(manipulatorController, Xbox::lt_bumper).WhenPressed(new MoveArm(false));
+  SimpleButton(manipulatorController, Xbox::rt_bumper).WhenPressed(new MoveArm(true));
 }
 
 std::pair<double, double> OI::GetDriveControls()

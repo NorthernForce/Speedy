@@ -7,7 +7,7 @@
 #include "commands/RaiseClimberPartial.h"
 #include "commands/PivotToggle.h"
 #include "commands/RaiseClimber.h"
-#include "commands/ArmUp.h"
+#include "commands/MoveArm.h"
 #include "commands/autonomous/SmartBarGrab.h"
 #include "commands/LowerClimber.h"
 
@@ -17,7 +17,7 @@ AutoTraverse::AutoTraverse() {
     new ResetSpool(),
     new RaiseClimberPartial(),
     new PivotToggle(),
-    new ArmUp(),
+    new MoveArm(true),
     new RaiseClimber(),
     new SmartBarGrab(),
     new PivotToggle(),

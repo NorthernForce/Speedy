@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/Climber.h"
-#include "Constants.h"
 #include "RobotContainer.h"
 
 
@@ -19,6 +18,9 @@ Climber::Climber() {
 
     ConfigureController(*leftMotor);
     ConfigureController(*rightMotor);
+
+    pivotPosition = PivotState::Up;
+    frc::SmartDashboard::PutBoolean("Optical Sensor Get Error", false);
 }
 
 void Climber::ConfigureController(WPI_TalonFX& controller) {
@@ -32,7 +34,6 @@ void Climber::ConfigureController(WPI_TalonFX& controller) {
 void Climber::PivotUp() {
     climber->Set(false);
     pivotPosition = PivotState::Up;
-    heightCheckNeeded = true;
 }
 
 void Climber::PivotDown() {
@@ -58,7 +59,12 @@ void Climber::Lower() {
     rightMotor->Set(-1);
 }
 
-void Climber::Stop() {
+void Climber::LowerSlow() {
+    leftMotor->Set(0.1);
+    rightMotor->Set(-0.1);
+}
+
+void Climber::Stop(){
     leftMotor->Set(0);
     rightMotor->Set(0);
 }
@@ -72,36 +78,23 @@ void Climber::ResetSpool() {
     rightMotor->GetSensorCollection().SetIntegratedSensorPosition(0.0);
 }
 
-bool Climber::TooTall(){
-    return ((GetPivot() == PivotState::Up && GetOpticalSensor(Constants::DigitalIDs::middleOptical))
-        || (GetOpticalSensor(Constants::DigitalIDs::topOptical)));
+bool Climber::TooTall() {
+    return (
+        (GetPivot() == PivotState::Up && GetOpticalSensor(Constants::DigitalIDs::middleOptical)) ||
+        (GetOpticalSensor(Constants::DigitalIDs::topOptical))
+    );
 }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 void Climber::CheckHeight(){
-    if (heightCheckNeeded) {
-        if(TooTall()) {
-            heightWaitCycles++;
-            if(heightWaitCycles > 50) {
-                Lower();
-            }
-        }
-        else {
-            Stop();
-            heightCheckNeeded = false;
-            heightWaitCycles = 0;
-        }
+    if (TooTall()) {
+        LowerSlow();
+    }
+    else {
+        Stop();
     }
 }
 
-HookState Climber::GetHookState() {
-    return hookPosition;
-}
-
-void Climber::SetHookState(HookState state) {
-    hookPosition = state;
-}
-
-bool Climber::GetOpticalSensor(int sensor) {
+bool Climber::GetOpticalSensor(Constants::DigitalIDs sensor) {
     switch (sensor) {
         case Constants::DigitalIDs::bottomOptical:
             return bottom->Get();
@@ -110,6 +103,7 @@ bool Climber::GetOpticalSensor(int sensor) {
         case Constants::DigitalIDs::topOptical:
             return top->Get();
         default:
+            frc::SmartDashboard::PutBoolean("Optical Sensor Get Error", true);
             return false;
     }
 }

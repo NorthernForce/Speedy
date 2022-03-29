@@ -14,10 +14,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ShootTwoBalls
-    : public frc2::CommandHelper<frc2::CommandBase, ShootTwoBalls> {
+class AutoTurnToAngle
+    : public frc2::CommandHelper<frc2::CommandBase, AutoTurnToAngle> {
  public:
-  ShootTwoBalls();
+  AutoTurnToAngle(double targetAngle, bool side);
 
   void Initialize() override;
 
@@ -27,11 +27,12 @@ class ShootTwoBalls
 
   bool IsFinished() override;
 
-private:
+  double GetDriveMultiplier(double error);
 
-bool stepOne = false;
-bool stepTwo = false;
-bool stepThree = false;
-bool stepFour = false;
-bool stepFive = false;
+  private:
+
+  bool desiredSide; // side=true is turn right
+  double desiredAngle;
+  bool isDone = false;
+
 };
