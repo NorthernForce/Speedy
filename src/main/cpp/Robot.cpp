@@ -39,7 +39,8 @@ void Robot::RobotInit() {
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
   RobotContainer::fmsComms->DisplayMatchTime();
-  //RobotContainer::drivetrain->PrintEncoderValues();
+  RobotContainer::drivetrain->PrintEncoderValues();
+  printf("Rotation: %lf\n", RobotContainer::imu->GetRotation());
   //frc::SmartDashboard::PutNumber("distance: ", RobotContainer::ultrasonic->getDistance());
   //frc::SmartDashboard::PutString("Drive Speed", RobotContainer::fmsComms->GetAllianceString(RobotContainer::fmsComms->GetAlliance()));
   //printf("Please work %f: \n", leftSide[4]);
@@ -66,41 +67,61 @@ void Robot::AutonomousInit() {
     RobotContainer::imu->ZeroRotation();
     //RobotContainer::climber->PivotDown();
     autoCommandScheduler.reset(new AutoCommandScheduler({
-    
-    new ResetEncoders(),
-    new DriveToDistanceIntake(.2, -10, true),
-    new AutoTurnToAngle(-180, false),
-    new DriveToDistanceIntake(-.4, 20, false),
-    new AutoTurnToAngle(-180, false),
 
-    // 3 BALL
+    //1 Ball
+    //new DriveToDistanceIntake(.2, -40, true),
+    
+    //2 BALL
     // new ResetEncoders(),
-    // new DriveToDistanceIntake(.2, -20, true),
+    // new DriveToDistanceIntake(.2, -10, true),
+    // new ResetEncoders(),
+    // new AutoTurnToAngle(-170, false),
+    // new ResetEncoders(),
     // new MoveArm(false),
+    // new AutoTurnToAngle(-15, false),
     // new ResetEncoders(),
-    // new AutoTurnToAngle(-92.7, false),
+    // new DriveToDistanceIntake(-.4, 28, false),
     // new ResetEncoders(),
-    // new DriveToDistanceIntake(-.4, 38, false),
+    // new AutoTurnToAngle(-180, false),
     // new ResetEncoders(),
-    // new AutoTurnToAngle(-113.8, false),
+    // new DriveToDistance(-.4, 35),
     // new ResetEncoders(),
-    // new DriveToDistanceIntake(-.4, 55, false),
-    // new ResetEncoders(),
-    // new AutoTurnToAngle(-79, false),
-    // new ResetEncoders(),
-    // new DriveToDistance(-.4, 18),
     // new MoveArm(true),
     // new ResetEncoders(),
-    // new AutoTurnToAngle(-20, false),
+    // new AutoTurnToAngle(-5, false),
     // new ResetEncoders(),
-    // new DriveToDistanceIntake(-.4, 15, true),
-
-    //new ResetEncoders(),
-    //new AutoTurnToAngle(-35, false),
-    //new ResetEncoders(),
-    //new DriveToDistanceIntake(-.4, 80, false),
+    // new DriveToDistanceIntake(-.4, 10, true),
 
 
+    //3 BALL
+    new ResetEncoders(),
+    new DriveToDistanceIntake(.2, -20, true),
+    new MoveArm(false),
+    new ResetEncoders(),
+    new AutoTurnToAngle(-117, false),
+    new ResetEncoders(),
+    new DriveToDistanceIntake(-.4, 37.5, false),
+    new ResetEncoders(),
+    new AutoTurnToAngle(-135, false),
+    new ResetEncoders(),
+    new DriveToDistanceIntake(-.4, 16, false),
+    new ResetEncoders(),
+    new AutoTurnToAngle(-14, false),
+    new ResetEncoders(),
+    new DriveToDistanceIntake(-.4, 50, false),
+    new ResetEncoders(),
+    new DriveToDistance(.2, -15),
+    new ResetEncoders(),
+    new AutoTurnToAngle(-90, false),
+    new ResetEncoders(),
+    new DriveToDistance(-.4, 25),
+    new MoveArm(true),
+    new ResetEncoders(),
+    new AutoTurnToAngle(-36, false),
+    new ResetEncoders(),
+    new DriveToDistance(-.4, 12),
+    new ResetEncoders(),
+    new DriveToDistanceIntake(-.4, 18, true),
 
     }));
 }

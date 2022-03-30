@@ -9,6 +9,7 @@
 #include "commands/RaiseClimber.h"
 #include "commands/PivotToggle.h"
 #include "commands/PushOutBallUltraSonic.h"
+#include "commands/ResetEncoders.h"
 #include "commands/autonomous/MoveToCoordinate.h"
 #include "commands/autonomous/SetCoordinates.h"
 #include "commands/autonomous/SetTheta.h"
@@ -38,6 +39,7 @@ void OI::MapControllerButtons() {
     SimpleButton(driverController, Xbox::X_button).WhenPressed(new MoveToCoordinate(CPlane::Point(24_in, 0_in)), 0.4);
     SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
     SimpleButton(driverController, Xbox::B_button).WhenPressed(new MoveArm(false));
+    SimpleButton(driverController, Xbox::Y_button).WhenPressed(new ResetEncoders());
 
 
 

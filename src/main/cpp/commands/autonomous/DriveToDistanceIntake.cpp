@@ -20,7 +20,7 @@ DriveToDistanceIntake::DriveToDistanceIntake(double speed, double distance, bool
 void DriveToDistanceIntake::Execute() {
     printf("I'm STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTIIIIIIIIIIIIIING \n");
     RobotContainer::drivetrain->DriveUsingSpeeds(desiredSpeed, desiredSpeed);
-    RobotContainer::intake->Run(desiredReverse);
+    RobotContainer::intake->Run(!desiredReverse);
     isFinished = std::abs(desiredDistance) < std::abs(RobotContainer::drivetrain->GetEncoderRotations().first);
     }    
 

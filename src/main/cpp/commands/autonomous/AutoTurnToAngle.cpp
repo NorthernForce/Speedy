@@ -37,9 +37,9 @@ void AutoTurnToAngle::Execute() {
 double AutoTurnToAngle::GetDriveMultiplier(double error) {
     double driveMultiplier;
     if (error < 0 && error < 1)
-        driveMultiplier = (1.2 * pow(2.2, -error)) - .83;
+        driveMultiplier = (1.2 * pow(1.5, -error)) - .83;
     else if (error > 0 && error < 1)
-        driveMultiplier = (1.2 * pow(2.2, error)) - .83;
+        driveMultiplier = (1.2 * pow(1.5, error)) - .83;
     else 
         driveMultiplier = .85;
 
