@@ -40,7 +40,7 @@ void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
   RobotContainer::fmsComms->DisplayMatchTime();
   RobotContainer::drivetrain->PrintEncoderValues();
-  printf("Rotation: %lf\n", RobotContainer::imu->GetRotation());
+  //printf("Rotation: %lf\n", RobotContainer::imu->GetRotation());
   //frc::SmartDashboard::PutNumber("distance: ", RobotContainer::ultrasonic->getDistance());
   //frc::SmartDashboard::PutString("Drive Speed", RobotContainer::fmsComms->GetAllianceString(RobotContainer::fmsComms->GetAlliance()));
   //printf("Please work %f: \n", leftSide[4]);

@@ -36,7 +36,7 @@ void ThreeBall::Initialize() {
     new ResetEncoders(),
     new DriveToDistance(.2, -15),
     new ResetEncoders(),
-    new AutoTurnToAngle(-93, false),
+    new AutoTurnToAngle(-89, false),
     new ResetEncoders(),
     new MoveArm(true),
     new ResetEncoders(),

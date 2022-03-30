@@ -18,7 +18,7 @@ DriveToDistanceIntake::DriveToDistanceIntake(double speed, double distance, bool
 
 // Called repeatedly when this Command is scheduled to run
 void DriveToDistanceIntake::Execute() {
-    printf("I'm STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTIIIIIIIIIIIIIING \n");
+    //printf("I'm STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTIIIIIIIIIIIIIING \n");
     RobotContainer::drivetrain->DriveUsingSpeeds(desiredSpeed, desiredSpeed);
     RobotContainer::intake->Run(!desiredReverse);
     isFinished = std::abs(desiredDistance) < std::abs(RobotContainer::drivetrain->GetEncoderRotations().first);
@@ -26,7 +26,7 @@ void DriveToDistanceIntake::Execute() {
 
 // Called once the command ends or is interrupted.
 void DriveToDistanceIntake::End(bool interrupted) {
-    printf("Drive To Distance Intake Complete \n");
+    //printf("Drive To Distance Intake Complete \n");
     RobotContainer::intake->Stop();
 }
 

@@ -12,9 +12,9 @@ LowerClimber::LowerClimber() {
 
 // Called repeatedly when this Command is scheduled to run
 void LowerClimber::Execute() {
-  if (RobotContainer::climber->GetOpticalSensor(Constants::DigitalIDs::bottomOptical)) {
+  //if (RobotContainer::climber->GetOpticalSensor(Constants::DigitalIDs::bottomOptical)) {
     RobotContainer::climber->Lower();
-  }
+  //}
 }
 
 void LowerClimber::End(bool interrupted) {
@@ -23,5 +23,5 @@ void LowerClimber::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool LowerClimber::IsFinished() {
-  return (!RobotContainer::climber->GetOpticalSensor(Constants::DigitalIDs::bottomOptical));
+  return false;
 }
