@@ -108,7 +108,7 @@ bool TurnToAngle::GetIsAngleBetweenBoundingAngles(double input, double bound_a, 
 bool TurnToAngle::HasPassedTargetAngle() {
     targetAngle = GetAbsoluteAngleFromStartAndDistance(startingAngle, distanceToTargetAngle);
     bool isAngleInArea = GetIsAngleBetweenBoundingAngles(currentAngle, startingAngle, targetAngle);
-    bool isNearTarget = abs(currentAngle) >= abs(targetAngle)-1 && abs(currentAngle) <= abs(targetAngle)+1;
+    bool isNearTarget = std::abs(currentAngle) >= std::abs(targetAngle)-1 && std::abs(currentAngle) <= std::abs(targetAngle)+1;
 
     return isAngleInArea && isNearTarget;
 }
