@@ -83,6 +83,7 @@ void AutoRecorder::Periodic() {
 
 void AutoRecorder::StartPlayback() {
     playbackTooSlowCount = 0;
+    playbackTooFastCount = 0;
     printf("start playback\n");
     sequenceName = frc::SmartDashboard::GetString("AutoRecorder Name: ", "NULL");
     csvInterface = std::make_shared<CSVInterface>("/home/lvuser/" + sequenceName + ".csv");
@@ -100,21 +101,6 @@ void AutoRecorder::StopPlayback() {
 
 bool AutoRecorder::GetIsPlayingBack() {
     return isPlayingBack;
-}
-
-AutoRecorder::PlaybackData AutoRecorder::UpdatePlaybackData() {
-    PlaybackData data;
-    std::vector<std::string> line = csvInterface->ReadLine();
-    // if (csvInterface->IsAtEndOfFile())
-    //     StopPlayback();
-    data.id = std::stoi(line[0]);
-    data.device = std::move(line[1]);
-    if (line[2] != "N/A")
-        data.pos = std::stod(line[2]);
-    data.time = units::millisecond_t(std::stol(line[3]));
-    if (line[4] != "N/A")
-        data.speed = std::stod(line[4]);
-    return data;
 }
 
 //Mapping indexes of recorded devices in their respective arrays to their
@@ -150,20 +136,56 @@ void AutoRecorder::RecordPeriodic() {
 
 void AutoRecorder::ProcessReadDataChunk() {
     size_t numOfRecordedDevices = recordedTalons.size() + recordedSparks.size() + recordedSolenoids.size();
-    for (size_t j=0; j<2; j++) {
-        units::millisecond_t time;
-        for (size_t i=0; i<numOfRecordedDevices; i++) {
+    for (size_t i=0; i<numOfRecordedDevices; i++) {
+        AutoAdjustPlaybackSpeed();
+    }
+    frc::SmartDashboard::PutNumber("Playback Too Slow Count:", playbackTooSlowCount);   
+    frc::SmartDashboard::PutNumber("Playback Too Fast Count:", playbackTooFastCount); 
+}
+
+void AutoRecorder::AutoAdjustPlaybackSpeed() {
+    units::millisecond_t time = csvInterface->GetLastTime();
+    if (IsPlaybackTooFast(time) && time != -1_ms) {
+        //skip reading, but consider writing previous values to make motors happy
+        ProcessPlaybackData(prevData);
+        playbackTooFastCount++;
+    }
+    else if (IsPlaybackTooSlow(time) && time != -1_ms) {
+        for (size_t j=0; j<2; j++) {
             PlaybackData data = UpdatePlaybackData();
-            time = data.time;
+            prevData = data;
             ProcessPlaybackData(data);
         }
-        // if (!IsPlaybackTooSlow(time)) {
-        //     break;
-        // }
-        break;
-        // playbackTooSlowCount++;
-        // frc::SmartDashboard::PutNumber("Playback Too Slow Count:", playbackTooSlowCount);    
+        playbackTooSlowCount++;
     }
+    else {
+        PlaybackData data = UpdatePlaybackData();
+        prevData = data;
+        ProcessPlaybackData(data);
+    }
+}
+
+bool AutoRecorder::IsPlaybackTooSlow(units::millisecond_t time) {
+    auto playbackTime = GetCurrentTime() - startTime;
+    return (playbackTime > time + 20.05_ms); //consider adding a couple miliseconds to time for slight margin of error
+}
+
+bool AutoRecorder::IsPlaybackTooFast(units::millisecond_t time) {
+    auto playbackTime = GetCurrentTime() - startTime;
+    return (playbackTime < time + 19.95_ms); //consider subtracting a couple miliseconds from time for slight margin of error
+}
+
+AutoRecorder::PlaybackData AutoRecorder::UpdatePlaybackData() {
+    PlaybackData data;
+    std::vector<std::string> line = csvInterface->ReadLine();
+    data.id = std::stoi(line[0]);
+    data.device = std::move(line[1]);
+    if (line[2] != "N/A")
+        data.pos = std::stod(line[2]);
+    data.time = units::millisecond_t(std::stol(line[3]));
+    if (line[4] != "N/A")
+        data.speed = std::stod(line[4]);
+    return data;
 }
 
 void AutoRecorder::ProcessPlaybackData(const PlaybackData& data) {
@@ -193,12 +215,7 @@ void AutoRecorder::ProcessPlaybackData(const PlaybackData& data) {
 }
 
 void AutoRecorder::PlaybackPeriodic() {
-    if (isPlayingBack && csvInterface->IsInitialized()) {
+    if (isPlayingBack) {
         ProcessReadDataChunk();
     }
-}
-
-bool AutoRecorder::IsPlaybackTooSlow(units::millisecond_t time) {
-    auto playbackTime = GetCurrentTime() - startTime;
-    return (playbackTime < (time + 19_ms));
 }

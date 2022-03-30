@@ -21,4 +21,5 @@ class IntakeBall
   bool IsFinished() override;
 
  private:
+    bool reverse = true;
 };

@@ -16,7 +16,7 @@ void IntakeBall::Execute() {
 void IntakeBall::End(bool interrupted) {
     RobotContainer::intake->Stop();
 }
-\
+
 bool IntakeBall::IsFinished() {
     return false;
 }

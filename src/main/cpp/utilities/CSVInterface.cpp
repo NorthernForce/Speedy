@@ -4,7 +4,6 @@
 
 CSVInterface::CSVInterface(const std::string& filename)
  : filename(filename) {
-    isInitialized = false;
     fileRead.open(filename.c_str(), std::ios::in);
     fileRead.seekg(0);
     std::getline(fileRead, actualColumns);
@@ -14,17 +13,12 @@ CSVInterface::CSVInterface(const std::string& filename)
     if (actualColumns != expectedColumns) {
         WriteLine(expectedColumns);
     }
-    isInitialized = true;
     endOfFile = false;
 }
 
 CSVInterface::~CSVInterface() {
     fileWrite.close();
     fileRead.close();
-}
-
-bool CSVInterface::IsInitialized() {
-    return isInitialized;
 }
 
 // ID, device, (encoder) position, timestamp, motor speed
@@ -37,6 +31,7 @@ bool CSVInterface::WriteLine(std::string line) {
     return fileWrite.good();
 }
 
+// ID, device, (encoder) position, timestamp, motor speed
 std::vector<std::string> CSVInterface::ReadLine() {
     if (fileWrite.is_open() && !fileRead.is_open()) {
         fileWrite.close();
@@ -53,7 +48,12 @@ std::vector<std::string> CSVInterface::ReadLine() {
     // printf("%s\n", line.c_str());
 
     std::vector<std::string> listOfStrings = StringTokenizer(line, ",");
+    lastReadTime = units::millisecond_t(std::stod(listOfStrings[3]));
     return listOfStrings;
+}
+
+units::millisecond_t CSVInterface::GetLastTime() {
+    return lastReadTime;
 }
 
 bool CSVInterface::IsAtEndOfFile() {

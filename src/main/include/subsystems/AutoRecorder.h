@@ -36,7 +36,7 @@ class AutoRecorder : public frc2::SubsystemBase {
     //Data read during Playback Mode is stored here
     // Note: these values will change frequently
     struct PlaybackData {
-        int id;
+        int id = -1;
         std::string device;
         double pos;
         units::millisecond_t time;
@@ -47,14 +47,16 @@ class AutoRecorder : public frc2::SubsystemBase {
     void MapDevicesWithIDs();
     void RecordPeriodic();
     void ProcessReadDataChunk();
+    void AutoAdjustPlaybackSpeed();
+    bool IsPlaybackTooSlow(units::millisecond_t time);
+    bool IsPlaybackTooFast(units::millisecond_t time);
     void ProcessPlaybackData(const PlaybackData& data);
     void PlaybackPeriodic();
-    bool IsPlaybackTooSlow(units::millisecond_t time);
-    void CorrectPlaybackTooSlow();
     std::shared_ptr<CSVInterface> csvInterface;
     bool isRecording;
     bool isPlayingBack;
     int playbackTooSlowCount;
+    int playbackTooFastCount;
     units::millisecond_t startTime;
     std::string sequenceName;
 
@@ -67,9 +69,5 @@ class AutoRecorder : public frc2::SubsystemBase {
     std::map<int, int> recordedTalonIDs = {};
     std::map<int, int> recordedSparkIDs = {};
     std::map<int, int> recordedSolenoidIDs = {};
-
-    // Both used for playback to verify it is running at the correct speed
-    units::millisecond_t recordTime;
-
-    
+    PlaybackData prevData;
 };

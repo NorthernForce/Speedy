@@ -13,4 +13,10 @@ class RecordedTalonFX : public WPI_TalonFX {
     std::string GetDeviceType();
 
     static const std::string deviceType;
+ private:
+    int cycleCount = 0;
+    int overshootingCount = 0;
+    int undershootingCount = 0;
+    double prevEncoder = 0;
+    double prevTargetEncoder = 0;
 };
