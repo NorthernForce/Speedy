@@ -27,8 +27,10 @@ namespace Constants {
         topOptical = 1
     };
 
-    const uint8_t climber = 4;
-    const uint8_t arm = 9;
+    namespace PneumaticIDs {
+        const uint8_t climber = 4;
+        const uint8_t arm = 9;
+    }
 
     const uint8_t driverController_id = 0;
     const uint8_t manipulatorController_id = 1;

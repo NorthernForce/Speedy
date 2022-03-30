@@ -11,7 +11,7 @@ Intake::Intake() {
     ConfigureSpark(*intakeTopSpark);
     ConfigureSpark(*intakeBottomSpark);
 
-    arm = std::make_unique<frc::Solenoid>(Constants::PCMCanBusID, frc::PneumaticsModuleType::REVPH, Constants::arm);
+    arm = std::make_unique<frc::Solenoid>(Constants::PCMCanBusID, frc::PneumaticsModuleType::REVPH, Constants::PneumaticIDs::arm);
 }
 
 void Intake::Run(bool reverse) {
