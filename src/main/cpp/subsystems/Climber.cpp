@@ -69,44 +69,44 @@ void Climber::Stop(){
     rightMotor->Set(0);
 }
 
-bool Climber::TooTall() {
-    return (
-        (GetPivot() == PivotState::Up && GetOpticalSensor(Constants::DigitalIDs::middleOptical)) ||
-        (GetOpticalSensor(Constants::DigitalIDs::topOptical))
-    );
-}
+// bool Climber::TooTall() {
+//     return (
+//         (GetPivot() == PivotState::Up && GetOpticalSensor(Constants::DigitalIDs::middleOptical)) ||
+//         (GetOpticalSensor(Constants::DigitalIDs::topOptical))
+//     );
+// }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-void Climber::CheckHeight(){
-    if (TooTall()) {
-        LowerSlow();
-    }
-    else {
-        Stop();
-    }
-}
+// void Climber::CheckHeight(){
+//     if (TooTall()) {
+//         LowerSlow();
+//     }
+//     else {
+//         Stop();
+//     }
+// }
 
-bool Climber::GetOpticalSensor(Constants::DigitalIDs sensor) {
-    switch (sensor) {
-        case Constants::DigitalIDs::bottomOptical:
-            return bottom->Get();
-        case Constants::DigitalIDs::middleOptical:
-            return middle->Get();
-        case Constants::DigitalIDs::topOptical:
-            return top->Get();
-        default:
-            frc::SmartDashboard::PutBoolean("Optical Sensor Get Error", true);
-            return false;
-    }
-}
+// bool Climber::GetOpticalSensor(Constants::DigitalIDs sensor) {
+//     switch (sensor) {
+//         case Constants::DigitalIDs::bottomOptical:
+//             return bottom->Get();
+//         case Constants::DigitalIDs::middleOptical:
+//             return middle->Get();
+//         case Constants::DigitalIDs::topOptical:
+//             return top->Get();
+//         default:
+//             frc::SmartDashboard::PutBoolean("Optical Sensor Get Error", true);
+//             return false;
+//     }
+// }
 
-void Climber::PrintOpticalSensors() {
-    frc::SmartDashboard::PutBoolean("Bottom Optical:", bottom->Get());
-    frc::SmartDashboard::PutBoolean("Middle Optical:", middle->Get());
-    frc::SmartDashboard::PutBoolean("Top Optical:", top->Get());
-}
+// void Climber::PrintOpticalSensors() {
+//     frc::SmartDashboard::PutBoolean("Bottom Optical:", bottom->Get());
+//     frc::SmartDashboard::PutBoolean("Middle Optical:", middle->Get());
+//     frc::SmartDashboard::PutBoolean("Top Optical:", top->Get());
+// }
 
 // This method will be called once per scheduler run
 void Climber::Periodic() {
-    CheckHeight();
-    PrintOpticalSensors();
+    // CheckHeight();
+    // PrintOpticalSensors();
 }
