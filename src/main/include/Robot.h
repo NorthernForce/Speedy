@@ -6,6 +6,7 @@
 
 #include <frc/TimedRobot.h>
 #include <frc2/command/Command.h>
+#include <frc/smartdashboard/SendableChooser.h>
 
 #include "RobotContainer.h"
 
@@ -27,6 +28,7 @@ class Robot : public frc::TimedRobot {
  private:
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
+
   std::vector<double> leftSide;
 
   frc2::Command* m_autonomousCommand = nullptr;

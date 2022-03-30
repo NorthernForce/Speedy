@@ -63,75 +63,79 @@ void Robot::DisabledPeriodic() {}
  * This autonomous runs the autonomous command selected by your {@link
  * RobotContainer} class.
  */
+
 void Robot::AutonomousInit() {
+
+    frc2::Command* m_autonomousCommand = m_container.GetAutonomousCommand();
+
+    m_autonomousCommand->Schedule();
+
     RobotContainer::imu->ZeroRotation();
     //RobotContainer::climber->PivotDown();
-    autoCommandScheduler.reset(new AutoCommandScheduler({
+    // autoCommandScheduler.reset(new AutoCommandScheduler({
 
-    //1 Ball
-    //new DriveToDistanceIntake(.2, -40, true),
+    // //1 Ball
+    // //new DriveToDistanceIntake(.2, -40, true),
     
-    //2 BALL
+    // //2 BALL
+    // // new ResetEncoders(),
+    // // new DriveToDistanceIntake(.2, -10, true),
+    // // new ResetEncoders(),
+    // // new AutoTurnToAngle(-170, false),
+    // // new ResetEncoders(),
+    // // new MoveArm(false),
+    // // new AutoTurnToAngle(-15, false),
+    // // new ResetEncoders(),
+    // // new DriveToDistanceIntake(-.4, 28, false),
+    // // new ResetEncoders(),
+    // // new AutoTurnToAngle(-180, false),
+    // // new ResetEncoders(),
+    // // new MoveArm(true),
+    // // new ResetEncoders(),
+    // // new DriveToDistance(-.4, 40),
+    // // new ResetEncoders(),
+    // // new AutoTurnToAngle(-5, false),
+    // // new ResetEncoders(),
+    // // new DriveToDistanceIntake(-.4, 1.5, true),
+
+
+    // //3 BALL
     // new ResetEncoders(),
-    // new DriveToDistanceIntake(.2, -10, true),
-    // new ResetEncoders(),
-    // new AutoTurnToAngle(-170, false),
-    // new ResetEncoders(),
+    // new DriveToDistanceIntake(.2, -20, true),
     // new MoveArm(false),
-    // new AutoTurnToAngle(-15, false),
     // new ResetEncoders(),
-    // new DriveToDistanceIntake(-.4, 28, false),
+    // new AutoTurnToAngle(-112, false),
     // new ResetEncoders(),
-    // new AutoTurnToAngle(-180, false),
+    // new DriveToDistanceIntake(-.4, 41, false),
+    // new ResetEncoders(),
+    // new AutoTurnToAngle(-135, false),
+    // new ResetEncoders(),
+    // new DriveToDistanceIntake(-.4, 27, false),
+    // new ResetEncoders(),
+    // new AutoTurnToAngle(-36, false),
+    // new ResetEncoders(),
+    // new DriveToDistanceIntake(-.4, 37, false),
+    // new ResetEncoders(),
+    // new DriveToDistance(.2, -15),
+    // new ResetEncoders(),
+    // new AutoTurnToAngle(-93, false),
     // new ResetEncoders(),
     // new MoveArm(true),
     // new ResetEncoders(),
-    // new DriveToDistance(-.4, 40),
+    // new DriveToDistance(-.4, 22),
+    // new ResetEncoders(),
+    // new AutoTurnToAngle(-6, false),
+    // new ResetEncoders(),
+    // new DriveToDistance(-.4, 13),
     // new ResetEncoders(),
     // new AutoTurnToAngle(-5, false),
     // new ResetEncoders(),
-    // new DriveToDistanceIntake(-.4, 1.5, true),
+    // new DriveToDistanceIntake(-.4, 5, true),
 
-
-    //3 BALL
-    new ResetEncoders(),
-    new DriveToDistanceIntake(.2, -20, true),
-    new MoveArm(false),
-    new ResetEncoders(),
-    new AutoTurnToAngle(-112, false),
-    new ResetEncoders(),
-    new DriveToDistanceIntake(-.4, 41, false),
-    new ResetEncoders(),
-    new AutoTurnToAngle(-135, false),
-    new ResetEncoders(),
-    new DriveToDistanceIntake(-.4, 27, false),
-    new ResetEncoders(),
-    new AutoTurnToAngle(-36, false),
-    new ResetEncoders(),
-    new DriveToDistanceIntake(-.4, 37, false),
-    new ResetEncoders(),
-    new DriveToDistance(.2, -15),
-    new ResetEncoders(),
-    new AutoTurnToAngle(-93, false),
-    new ResetEncoders(),
-    new MoveArm(true),
-    new ResetEncoders(),
-    new DriveToDistance(-.4, 22),
-    new ResetEncoders(),
-    new AutoTurnToAngle(-6, false),
-    new ResetEncoders(),
-    new DriveToDistance(-.4, 13),
-    new ResetEncoders(),
-    new AutoTurnToAngle(-5, false),
-    new ResetEncoders(),
-    new DriveToDistanceIntake(-.4, 5, true),
-
-    }));
+    // }));
 }
 
-void Robot::AutonomousPeriodic() {
-    autoCommandScheduler->RunSequential();
-}
+void Robot::AutonomousPeriodic() {}
 
 void Robot::TeleopInit() {
     RobotContainer::intake->ArmUp();

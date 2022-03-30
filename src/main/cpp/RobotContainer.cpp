@@ -4,6 +4,10 @@
 
 #include "RobotContainer.h"
 #include "commands/DriveWithJoystick.h"
+#include "commands/autonomous/OneBall.h"
+#include "commands/autonomous/TwoBalls.h"
+#include "commands/autonomous/ThreeBall.h"
+#include "commands/autonomous/DoNothing.h"
 
 std::shared_ptr<OI> RobotContainer::oi;
 std::shared_ptr<Drivetrain> RobotContainer::drivetrain;
@@ -22,6 +26,12 @@ RobotContainer::RobotContainer() {
     InitSubsystems();
     oi->MapControllerButtons();
     InitDefaultCommands();
+
+    autonomousChooser.SetDefaultOption("1) One Ball", new OneBall());
+    autonomousChooser.AddOption("2) Two Balls", new TwoBalls());
+    autonomousChooser.AddOption("3) 3 Balls", new ThreeBall());
+    autonomousChooser.AddOption("4) Do Nothing", new DoNothing());
+    frc::SmartDashboard::PutData("Autonomous Modes", &autonomousChooser);
 }
 
 void RobotContainer::InitSubsystems() {
@@ -39,4 +49,9 @@ void RobotContainer::InitSubsystems() {
 
 void RobotContainer::InitDefaultCommands() {
     drivetrain->SetDefaultCommand(DriveWithJoystick());
+}
+
+frc2::Command* RobotContainer::GetAutonomousCommand() {
+  // Runs the chosen command in autonomous
+  return autonomousChooser.GetSelected();
 }

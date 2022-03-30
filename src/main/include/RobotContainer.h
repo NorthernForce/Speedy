@@ -7,6 +7,7 @@
 #include <frc2/command/Command.h>
 #include "OI.h"
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <frc/smartdashboard/SendableChooser.h>
 #include "Constants.h"
 
 #include "subsystems/Drivetrain.h"
@@ -43,8 +44,12 @@ class RobotContainer {
   static std::shared_ptr<Ultrasonic> ultrasonic;
   static std::shared_ptr<TXTInterface> txtInterface;
 
+  frc2::Command* GetAutonomousCommand();
+
  private:
   // The robot's subsystems and commands are defined here...
   void InitSubsystems();
   void InitDefaultCommands();
+
+  frc::SendableChooser<frc2::Command*> autonomousChooser;
 };
