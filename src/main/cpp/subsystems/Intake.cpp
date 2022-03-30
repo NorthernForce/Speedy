@@ -15,15 +15,15 @@ Intake::Intake() {
 }
 
 void Intake::Run(bool reverse) {
-    intakeTopSpark->Set(reverse ? -0.9 : 0.9);
+    intakeTopSpark->Set(reverse ? 0.9 : -0.9);
     intakeBottomSpark->Set(reverse ? -1.0 : 1.0);
 }
 
 void Intake::UltraShoot() {
     ultraDist = RobotContainer::ultrasonic->getDistance();
     if (ultraDist < 20) {
-        intakeTopSpark->Set(0.7);
-        intakeBottomSpark->Set(-0.9);
+        intakeTopSpark->Set(-0.7);
+        intakeBottomSpark->Set(0.9);
     }
     else {
         Run();
