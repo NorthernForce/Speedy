@@ -18,7 +18,7 @@ void OneBall::Initialize() {
     autoCommandScheduler.reset(new AutoCommandScheduler({
 
     //1 Ball
-    new DriveToDistanceIntake(.2, -40, true),
+    new DriveToDistanceIntake(.2, -41.5, true),
 
     }));
 }
