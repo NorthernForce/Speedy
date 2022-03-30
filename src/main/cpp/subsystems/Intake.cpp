@@ -14,9 +14,9 @@ Intake::Intake() {
     arm = std::make_unique<frc::Solenoid>(Constants::PCMCanBusID, frc::PneumaticsModuleType::REVPH, Constants::PneumaticIDs::arm);
 }
 
-void Intake::Run(bool reverse) {
-    intakeTopSpark->Set(reverse ? 0.9 : -0.9);
-    intakeBottomSpark->Set(reverse ? -1.0 : 1.0);
+void Intake::Run(IntakeDirection direction) {
+    intakeTopSpark->Set(bool(direction) ? 0.9 : -0.9);
+    intakeBottomSpark->Set(bool(direction) ? -1.0 : 1.0);
 }
 
 void Intake::UltraShoot() {
@@ -26,7 +26,7 @@ void Intake::UltraShoot() {
         intakeBottomSpark->Set(0.9);
     }
     else {
-        Run();
+        Run(IntakeDirection::outtake);
     }
 }
 
@@ -48,7 +48,7 @@ void Intake::ConfigureSpark(rev::CANSparkMax& spark) {
     spark.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 }
 
-ArmState Intake::GetPivot() {
+Intake::ArmState Intake::GetPivot() {
     return armPosition;
 }
 

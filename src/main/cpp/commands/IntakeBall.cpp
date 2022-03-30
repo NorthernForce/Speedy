@@ -10,7 +10,7 @@ IntakeBall::IntakeBall() {
 }
 
 void IntakeBall::Execute() {
-    RobotContainer::intake->Run(reverse);
+    RobotContainer::intake->Run(Intake::IntakeDirection::intake);
 }
 
 void IntakeBall::End(bool interrupted) {

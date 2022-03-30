@@ -10,7 +10,7 @@ PushOutBall::PushOutBall() {
 }
 
 void PushOutBall::Execute() {
-    RobotContainer::intake->Run();
+    RobotContainer::intake->Run(Intake::IntakeDirection::outtake);
 }
 
 void PushOutBall::End(bool interrupted) {

@@ -7,9 +7,9 @@
 
 // Called when the command is initially scheduled.
 void ToggleArm::Initialize() {
-    if(RobotContainer::intake->GetPivot() == ArmState::Up) {
+    if(RobotContainer::intake->GetPivot() == Intake::ArmState::Up) {
         RobotContainer::intake->ArmDown();
-    } else if (RobotContainer::intake->GetPivot() == ArmState::Down) {
+    } else if (RobotContainer::intake->GetPivot() == Intake::ArmState::Down) {
         RobotContainer::intake->ArmUp();
     } else {
         printf("Pivot not in range \n");

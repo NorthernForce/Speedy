@@ -9,16 +9,19 @@
 #include <frc/Solenoid.h>
 #include <memory>
 
-enum class ArmState{
-    Down,
-    Up
-};
-
 class Intake : public frc2::SubsystemBase {
  public:
+  enum class ArmState {
+    Down,
+    Up
+  };
+  enum class IntakeDirection {
+    outtake,
+    intake
+  };
   Intake();
   void ConfigureSpark(rev::CANSparkMax& spark);
-  void Run(bool reverse=false);
+  void Run(IntakeDirection direction);
   void UltraShoot();
   void Stop();
   void SetSpeed(double speed);
