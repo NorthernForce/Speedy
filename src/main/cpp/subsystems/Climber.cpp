@@ -78,11 +78,12 @@ bool Climber::TooTall() {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 void Climber::CheckHeight(){
     if (TooTall()) {
-        LowerSlow();
+        //LowerSlow();
+        Stop();   
     }
-    else {
-        Stop();
-    }
+    // else {
+    //     //Stop();
+    // }
 }
 
 bool Climber::GetOpticalSensor(Constants::DigitalIDs sensor) {

@@ -10,6 +10,8 @@
 #include "commands/PivotToggle.h"
 #include "commands/PushOutBallUltraSonic.h"
 #include "commands/ResetEncoders.h"
+#include "commands/NoSensorClimbLower.h"
+#include "commands/NoSensorClimbRaise.h"
 #include "commands/autonomous/MoveToCoordinate.h"
 #include "commands/autonomous/SetCoordinates.h"
 #include "commands/autonomous/SetTheta.h"
@@ -36,9 +38,9 @@ void OI::MapControllerButtons() {
     SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new IntakeBall);
     //SimpleButton(driverController, Xbox::B_button).WhileHeld(new SetCoordinates(CPlane::Point(0_in, 0_in)));
     //SimpleButton(driverController, Xbox::B_button).WhileHeld(new SetTheta(0_deg));
-    SimpleButton(driverController, Xbox::X_button).WhenPressed(new MoveToCoordinate(CPlane::Point(24_in, 0_in)), 0.4);
+    //SimpleButton(driverController, Xbox::X_button).WhenPressed(new MoveToCoordinate(CPlane::Point(24_in, 0_in)), 0.4);
     SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
-    SimpleButton(driverController, Xbox::B_button).WhenPressed(new MoveArm(false));
+    //SimpleButton(driverController, Xbox::B_button).WhenPressed(new MoveArm(false));
     SimpleButton(driverController, Xbox::Y_button).WhenPressed(new ResetEncoders());
 
 
@@ -47,11 +49,13 @@ void OI::MapControllerButtons() {
 
   SimpleButton(manipulatorController, Xbox::X_button).WhileHeld(new LowerClimber);
   SimpleButton(manipulatorController, Xbox::Y_button).WhileHeld(new RaiseClimber);
+  SimpleButton(manipulatorController, Xbox::B_button).WhileHeld(new NoSensorClimbRaise);
+  SimpleButton(manipulatorController, Xbox::A_button).WhileHeld(new NoSensorClimbLower);
 
   // SimpleButton(manipulatorController, Xbox::X_button).WhenPressed(new ToggleArm);
-  SimpleButton(manipulatorController, Xbox::A_button).WhenPressed(new PivotToggle);
   SimpleButton(manipulatorController, Xbox::lt_bumper).WhenPressed(new MoveArm(false));
   SimpleButton(manipulatorController, Xbox::rt_bumper).WhenPressed(new MoveArm(true));
+  SimplePOV(manipulatorController, XboxPOV::up).WhenPressed(new PivotToggle);
 }
 
 std::pair<double, double> OI::GetDriveControls()
