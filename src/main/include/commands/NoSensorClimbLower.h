@@ -7,8 +7,6 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
-#include "utilities/AutoCommandScheduler.h"
-
 /**
  * An example command.
  *
@@ -16,19 +14,14 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class TwoBalls
-    : public frc2::CommandHelper<frc2::CommandBase, TwoBalls> {
+class NoSensorClimbLower
+    : public frc2::CommandHelper<frc2::CommandBase, NoSensorClimbLower> {
  public:
-  TwoBalls();
-
-  void Initialize() override;
+  NoSensorClimbLower();
 
   void Execute() override;
 
+  void End(bool interrupted) override;
+
   bool IsFinished() override;
-
-  private:
-
-  std::unique_ptr<AutoCommandScheduler> autoCommandScheduler;
-
 };

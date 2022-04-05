@@ -24,7 +24,7 @@ void ThreeBall::Initialize() {
     new ResetEncoders(),
     new AutoTurnToAngle(-112, false),
     new ResetEncoders(),
-    new DriveToDistanceIntake(-.4, 41, false),
+    new DriveToDistanceIntake(-.4, 41, false), //first ball
     new ResetEncoders(),
     new AutoTurnToAngle(-135, false),
     new ResetEncoders(),
@@ -32,11 +32,11 @@ void ThreeBall::Initialize() {
     new ResetEncoders(),
     new AutoTurnToAngle(-36, false),
     new ResetEncoders(),
-    new DriveToDistanceIntake(-.4, 37, false),
+    new DriveToDistanceIntake(-.4, 37, false), //second ball
     new ResetEncoders(),
     new DriveToDistance(.2, -15),
     new ResetEncoders(),
-    new AutoTurnToAngle(-93, false),
+    new AutoTurnToAngle(-89, false),
     new ResetEncoders(),
     new MoveArm(true),
     new ResetEncoders(),
@@ -48,7 +48,7 @@ void ThreeBall::Initialize() {
     new ResetEncoders(),
     new AutoTurnToAngle(-5, false),
     new ResetEncoders(),
-    new DriveToDistanceIntake(-.4, 5, true),
+    new DriveToDistanceIntake(-.4, 5, true), //scores both
 
     }));}
 
@@ -56,9 +56,6 @@ void ThreeBall::Initialize() {
 void ThreeBall::Execute() {
     autoCommandScheduler->RunSequential();
 }
-
-// Called once the command ends or is interrupted.
-void ThreeBall::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool ThreeBall::IsFinished() {

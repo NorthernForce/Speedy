@@ -76,14 +76,15 @@ void Climber::Stop(){
 //     );
 // }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
-// void Climber::CheckHeight(){
-//     if (TooTall()) {
-//         LowerSlow();
-//     }
-//     else {
-//         Stop();
-//     }
-// }
+void Climber::CheckHeight(){
+    if (TooTall()) {
+        //LowerSlow();
+        Stop();   
+    }
+    // else {
+    //     //Stop();
+    // }
+}
 
 // bool Climber::GetOpticalSensor(Constants::DigitalIDs sensor) {
 //     switch (sensor) {

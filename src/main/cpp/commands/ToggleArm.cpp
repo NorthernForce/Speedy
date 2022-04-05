@@ -12,7 +12,7 @@ void ToggleArm::Initialize() {
     } else if (RobotContainer::intake->GetPivot() == Intake::ArmState::Down) {
         RobotContainer::intake->ArmUp();
     } else {
-        printf("Pivot not in range \n");
+        //printf("Pivot not in range \n");
     }
 }
 

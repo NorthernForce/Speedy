@@ -25,7 +25,7 @@ void TwoBalls::Initialize() {autoCommandScheduler.reset(new AutoCommandScheduler
     new MoveArm(false),
     new AutoTurnToAngle(-22, false),
     new ResetEncoders(),
-    new DriveToDistanceIntake(-.5, 34, false),
+    new DriveToDistanceIntake(-.5, 34, false), //picks up ball
     new ResetEncoders(),
     new AutoTurnToAngle(-180, false),
     new ResetEncoders(),
@@ -35,7 +35,24 @@ void TwoBalls::Initialize() {autoCommandScheduler.reset(new AutoCommandScheduler
     new ResetEncoders(),
     new AutoTurnToAngle(-21, false),
     new ResetEncoders(),
-    new DriveToDistanceIntake(-.4, 8, true),
+    new DriveToDistanceIntake(-.4, 8, true), // scores
+
+    //Theoretical
+    // new ResetEncoders(),
+    // new DriveToDistance(.5, -47),
+    // new ResetEncoders(),
+    // new AutoTurnToAngle(-21, false),
+    // new ResetEncoders(),
+    // new DriveToDistance(-.5, 40),
+    // new AutoTurnToAngle(-170, false),
+    // new ResetEncoders(),
+    // new AutoTurnToAngle(-30, false),
+    // new ResetEncoders(),
+    // new DriveToDistance(-.5, 60),
+    // new ResetEncoders(),
+    // new DriveToDistance(.5, -60),
+    // new ResetEncoders(),
+    // new DriveToDistance(-.5, 60),
 
     }));}
 
@@ -43,9 +60,6 @@ void TwoBalls::Initialize() {autoCommandScheduler.reset(new AutoCommandScheduler
 void TwoBalls::Execute() {
     autoCommandScheduler->RunSequential();
 }
-
-// Called once the command ends or is interrupted.
-void TwoBalls::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool TwoBalls::IsFinished() {
