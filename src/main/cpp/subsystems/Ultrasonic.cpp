@@ -32,7 +32,7 @@ Ultrasonic::~Ultrasonic()
 void Ultrasonic::Periodic() 
 {
    m_dist = calcDistance();
-   frc::SmartDashboard::PutNumber("Ultrasonic: ", m_dist);
+//    frc::SmartDashboard::PutNumber("Ultrasonic: ", m_dist);
 }
 
 //Retuns the last Distance seen in Inches from m_dist

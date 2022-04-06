@@ -33,20 +33,16 @@ void OI::InitControllers()
 }
 
 void OI::MapControllerButtons() {
-    //driver
-    SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new PushOutBallUltraSonic);
-    SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new IntakeBall);
-    //SimpleButton(driverController, Xbox::B_button).WhileHeld(new SetCoordinates(CPlane::Point(0_in, 0_in)));
-    //SimpleButton(driverController, Xbox::B_button).WhileHeld(new SetTheta(0_deg));
-    //SimpleButton(driverController, Xbox::X_button).WhenPressed(new MoveToCoordinate(CPlane::Point(24_in, 0_in)), 0.4);
-    SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
-    //SimpleButton(driverController, Xbox::B_button).WhenPressed(new MoveArm(false));
-    SimpleButton(driverController, Xbox::Y_button).WhenPressed(new ResetEncoders());
+  //driver
+  SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new PushOutBallUltraSonic);
+  SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new IntakeBall);
+  SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
+  //SimpleButton(driverController, Xbox::B_button).WhenPressed(new MoveArm(false));
+  SimpleButton(driverController, Xbox::Y_button).WhenPressed(new ResetEncoders());
 
 
 
   // manipulator
-
   SimpleButton(manipulatorController, Xbox::X_button).WhileHeld(new LowerClimber);
   SimpleButton(manipulatorController, Xbox::Y_button).WhileHeld(new RaiseClimber);
   SimpleButton(manipulatorController, Xbox::B_button).WhileHeld(new NoSensorClimbRaise);

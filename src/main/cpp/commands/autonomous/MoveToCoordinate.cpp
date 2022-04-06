@@ -41,13 +41,13 @@ void MoveToCoordinate::Initialize() {
   // frc::SmartDashboard::PutNumber("turnI:", 0);
   // frc::SmartDashboard::PutNumber("turnD:", 0);
 
-  driveP = frc::SmartDashboard::GetNumber("driveP:", driveP);
-  driveI = frc::SmartDashboard::GetNumber("driveI:", driveI);
-  driveD = frc::SmartDashboard::GetNumber("driveD:", driveD);
+  // driveP = frc::SmartDashboard::GetNumber("driveP:", driveP);
+  // driveI = frc::SmartDashboard::GetNumber("driveI:", driveI);
+  // driveD = frc::SmartDashboard::GetNumber("driveD:", driveD);
 
-  driveP = frc::SmartDashboard::GetNumber("turnP:", turnP);
-  driveI = frc::SmartDashboard::GetNumber("turnI:", turnI);
-  driveD = frc::SmartDashboard::GetNumber("turnD:", turnD);
+  // driveP = frc::SmartDashboard::GetNumber("turnP:", turnP);
+  // driveI = frc::SmartDashboard::GetNumber("turnI:", turnI);
+  // driveD = frc::SmartDashboard::GetNumber("turnD:", turnD);
 }
 
 double MoveToCoordinate::Limit(double value, double limit) {

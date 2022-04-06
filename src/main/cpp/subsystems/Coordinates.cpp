@@ -51,8 +51,8 @@ void Coordinates::UpdateLocation() {
 void Coordinates::Periodic() { 
     // UpdateLocation();
     
-    frc::SmartDashboard::PutNumber("X Position:", location.x.value());
-    frc::SmartDashboard::PutNumber("Y Position:", location.y.value());
-    frc::SmartDashboard::PutNumber("Get Inches: ", RobotContainer::drivetrain->GetInchesTravelled().first.value());
-    frc::SmartDashboard::PutNumber("Theta: ", Theta().value());
+    // frc::SmartDashboard::PutNumber("X Position:", location.x.value());
+    // frc::SmartDashboard::PutNumber("Y Position:", location.y.value());
+    // frc::SmartDashboard::PutNumber("Get Inches: ", RobotContainer::drivetrain->GetInchesTravelled().first.value());
+    // frc::SmartDashboard::PutNumber("Theta: ", Theta().value());
 }

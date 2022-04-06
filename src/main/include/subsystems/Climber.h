@@ -22,6 +22,13 @@ enum class HookState {
     Up
 };
 
+enum class ClimberHeight {
+    Bottom,
+    Low,
+    High,
+    Over
+};
+
 class Climber : public frc2::SubsystemBase {
  public:
   Climber();
@@ -34,9 +41,10 @@ class Climber : public frc2::SubsystemBase {
   void Lower();
   void LowerSlow();
   void Stop();
-  bool TooTall();
-  void CheckHeight();
   bool GetOpticalSensor(Constants::DigitalIDs sensor);
+  ClimberHeight GetClimberHeight();
+  bool OverHeight();
+  void AutoHeightCheck();
   void PrintOpticalSensors();
   void Periodic() override;
 
@@ -49,5 +57,7 @@ class Climber : public frc2::SubsystemBase {
   std::unique_ptr<frc::DigitalInput> bottom;
   std::unique_ptr<frc::DigitalInput> middle;
   std::unique_ptr<frc::DigitalInput> top; 
+
+  bool requireHeightCheck=false;
 
 };

@@ -20,7 +20,8 @@ Climber::Climber() {
     ConfigureController(*rightMotor);
 
     pivotPosition = PivotState::Up;
-    frc::SmartDashboard::PutBoolean("Optical Sensor Get Error", false);
+    frc::SmartDashboard::PutBoolean("Got Optical Sensors", true);
+    frc::SmartDashboard::PutBoolean("Climber Auto Height: ", true);
 }
 
 void Climber::ConfigureController(WPI_TalonFX& controller) {
@@ -34,6 +35,7 @@ void Climber::ConfigureController(WPI_TalonFX& controller) {
 void Climber::PivotUp() {
     climber->Set(false);
     pivotPosition = PivotState::Up;
+    requireHeightCheck = true;
 }
 
 void Climber::PivotDown() {
@@ -69,23 +71,6 @@ void Climber::Stop(){
     rightMotor->Set(0);
 }
 
-bool Climber::TooTall() {
-    return (
-        (GetPivot() == PivotState::Up && GetOpticalSensor(Constants::DigitalIDs::middleOptical)) ||
-        (GetOpticalSensor(Constants::DigitalIDs::topOptical))
-    );
-}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-void Climber::CheckHeight(){
-    if (TooTall()) {
-        //LowerSlow();
-        Stop();   
-    }
-    // else {
-    //     //Stop();
-    // }
-}
-
 bool Climber::GetOpticalSensor(Constants::DigitalIDs sensor) {
     switch (sensor) {
         case Constants::DigitalIDs::bottomOptical:
@@ -95,8 +80,40 @@ bool Climber::GetOpticalSensor(Constants::DigitalIDs sensor) {
         case Constants::DigitalIDs::topOptical:
             return top->Get();
         default:
-            frc::SmartDashboard::PutBoolean("Optical Sensor Get Error", true);
+            frc::SmartDashboard::PutBoolean("Got Optical Sensors", false);
             return false;
+    }
+}
+
+ClimberHeight Climber::GetClimberHeight() {
+    if (!bottom->Get()) {
+        return ClimberHeight::Bottom;
+    }
+    else if (!middle->Get()) {
+        return ClimberHeight::Low;
+    }
+    else if (!top->Get()) {
+        return ClimberHeight::High;
+    }
+    else {
+        return ClimberHeight::Over;
+    }
+}
+
+bool Climber::OverHeight() {
+    return (
+        (GetPivot() == PivotState::Up && GetClimberHeight() == ClimberHeight::High) ||
+        (GetClimberHeight() == ClimberHeight::Over)
+    );
+}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+void Climber::AutoHeightCheck(){
+    if (requireHeightCheck && OverHeight()) {
+        LowerSlow();
+    }
+    else if (requireHeightCheck) {
+        Stop();
+        requireHeightCheck=false;
     }
 }
 
@@ -108,6 +125,8 @@ void Climber::PrintOpticalSensors() {
 
 // This method will be called once per scheduler run
 void Climber::Periodic() {
-    CheckHeight();
-    PrintOpticalSensors();
+    if (frc::SmartDashboard::GetBoolean("Climber Auto Height: ", true)) {
+        AutoHeightCheck();
+    }
+    frc::SmartDashboard::PutNumber("Climber Height: ", int(GetClimberHeight()));
 }
