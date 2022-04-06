@@ -15,10 +15,11 @@ void TraverseBarGrab::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void TraverseBarGrab::Execute() {
-  if (RobotContainer::imu->GetPitchAngle() < armDown) {
+  bool swingMax = (abs(RobotContainer::imu->GetPitchSpeed()) < 2);
+  if (RobotContainer::imu->GetPitchAngle() < armDown && swingMax) {
     RobotContainer::climber->PivotDown();
   }
-  else if (RobotContainer::imu->GetPitchAngle() > tryGrab) {
+  else if (RobotContainer::imu->GetPitchAngle() > tryGrab && swingMax) {
     RobotContainer::climber->PivotUp();
     finished = true;
   }

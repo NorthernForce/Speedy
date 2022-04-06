@@ -15,6 +15,7 @@
 AutoTraverse::AutoTraverse() {
   // Use addRequirements() here to declare subsystem dependencies.
   scheduler.reset(new AutoCommandScheduler({
+    new LowerClimber(),
     new ResetSpool(),
     new RaiseClimberPartial(),
     new PivotToggle(),
