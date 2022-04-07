@@ -18,7 +18,6 @@ class CSVInterface {
     std::string RemoveWhiteSpace(std::string str);
 
  private:
-    bool endOfFile;
     std::string filename;
     std::ifstream fileRead;
     std::ofstream fileWrite;

@@ -32,24 +32,21 @@ void RecordedTalonFX::LogData() {
 void RecordedTalonFX::PlaybackSet(double speed, double targetEncoder) {
     double currentEncoder = GetSensorCollection().GetIntegratedSensorPosition();
     int direction = GetInverted() ? -1 : 1;
-    double error = targetEncoder - currentEncoder;
 
     double runError = currentEncoder - prevEncoder;
     double targError = targetEncoder - prevTargetEncoder;
 
+    double cycleError = runError - targError;
+
     // If the direction of travel is the same direction as the error
     // in the encoders, then proceed with the direction of travel
-    if (speed * direction * error > 0) {
+    if (speed * direction * cycleError > 0) {
         // If undershooting, drive faster
-        if ((direction * targetEncoder) > (direction * currentEncoder)) {
+        if ((direction * targError) > (direction * runError)) {
             frc::SmartDashboard::PutNumber("undershooting count", undershootingCount);
             undershootingCount++;
-            double targetSpeed = speed + speed * error / (Constants::cpr * 25);
-            // targetSpeed = speed * 1.3;
-            if (abs(targetSpeed) <= 1)
-                WPI_TalonFX::Set(targetSpeed);
-            else
-                WPI_TalonFX::Set(speed);
+            double targetSpeed = speed + speed * cycleError / (Constants::cpr * 20);
+            WPI_TalonFX::Set(targetSpeed);
         }
         else
             WPI_TalonFX::Set(speed);
@@ -57,8 +54,7 @@ void RecordedTalonFX::PlaybackSet(double speed, double targetEncoder) {
     else {
         // We overshot going forwards/backwards so we're going to slow down
         // an alternative would be to stop
-        double targetSpeed = speed - speed * error / (Constants::cpr * 25);
-        //targetSpeed = speed * 0.7;
+        double targetSpeed = speed - speed * cycleError / (Constants::cpr * 30);
         WPI_TalonFX::Set(targetSpeed);
         frc::SmartDashboard::PutNumber("overshooting count", overshootingCount);
         overshootingCount++;

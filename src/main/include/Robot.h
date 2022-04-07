@@ -8,6 +8,8 @@
 #include <frc2/command/Command.h>
 
 #include "RobotContainer.h"
+#include "frc2/command/Command.h"
+#include <memory>
 
 #include "utilities/AutoCommandScheduler.h"
 
@@ -24,13 +26,12 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
 
  private:
-  // Have it null by default so that if testing teleop it
-  // doesn't have undefined behavior and potentially crash.
-  frc2::Command* m_autonomousCommand = nullptr;
-
   std::unique_ptr<AutoCommandScheduler> autoCommandScheduler;
 
   RobotContainer m_container;
   bool wannaRecord = false;
   bool wannaPlayback = false;
+
+  std::unique_ptr<frc2::Command> autoRecord;
+  std::unique_ptr<frc2::Command> autoPlayback;
 };

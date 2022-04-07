@@ -24,6 +24,7 @@ class AutoRecorder : public frc2::SubsystemBase {
     void AddTalon(RecordedTalonFX* device);
     void AddSpark(RecordedSpark* device);
     void AddSolenoid(RecordedSolenoid* device);
+    void RecordPeriodic();
     units::millisecond_t GetCurrentTime();
     units::millisecond_t GetStartTime();
     std::vector<size_t> GetNumberOfRecordedDevices();
@@ -31,6 +32,8 @@ class AutoRecorder : public frc2::SubsystemBase {
     void StartPlayback();
     void StopPlayback();
     bool GetIsPlayingBack();
+    void PlaybackPeriodic();
+    bool IsPlaybackFinished();
 
  private:
     //Data read during Playback Mode is stored here
@@ -45,13 +48,11 @@ class AutoRecorder : public frc2::SubsystemBase {
 
     PlaybackData UpdatePlaybackData();
     void MapDevicesWithIDs();
-    void RecordPeriodic();
     void ProcessReadDataChunk();
     void AutoAdjustPlaybackSpeed();
     bool IsPlaybackTooSlow(units::millisecond_t time);
     bool IsPlaybackTooFast(units::millisecond_t time);
     void ProcessPlaybackData(const PlaybackData& data);
-    void PlaybackPeriodic();
     std::shared_ptr<CSVInterface> csvInterface;
     bool isRecording;
     bool isPlayingBack;

@@ -17,6 +17,9 @@
 #include "commands/ArmDown.h"
 #include "commands/ArmUp.h"
 
+#include "commands/AutoPlayback.h"
+#include "commands/AutoRecord.h"
+
 #include <frc/Timer.h>
 
 void Robot::RobotInit() {
@@ -24,6 +27,8 @@ void Robot::RobotInit() {
     //RobotContainer::intake->SetArmState(ArmState::Down);
     RobotContainer::drivetrain->SetEncoderPositions(0, 0);
     RobotContainer::intake->ArmUp();
+    autoPlayback = std::make_unique<AutoPlayback>();
+    autoRecord = std::make_unique<AutoRecord>();
 }
 
 /**
@@ -51,8 +56,8 @@ void Robot::DisabledInit() {
     wannaPlayback = false;
     frc::SmartDashboard::PutBoolean("Recording Mode: ", wannaRecord);
     frc::SmartDashboard::PutBoolean("Playback Mode: ", wannaPlayback);
-    RobotContainer::autoRecorder->StopRecording();
-    RobotContainer::autoRecorder->StopPlayback();
+    autoRecord->Cancel();
+    autoPlayback->Cancel();
 }
 
 void Robot::DisabledPeriodic() {}
@@ -88,10 +93,10 @@ void Robot::TeleopInit() {
     RobotContainer::intake->ArmUp();
     wannaRecord = frc::SmartDashboard::GetBoolean("Recording Mode: ", false);
     if (wannaRecord)
-        RobotContainer::autoRecorder->StartRecording();
+        autoRecord->Schedule();
     wannaPlayback = frc::SmartDashboard::GetBoolean("Playback Mode: ", false);
     if (wannaPlayback)
-        RobotContainer::autoRecorder->StartPlayback();
+        autoPlayback->Schedule();
 }
 
 /**

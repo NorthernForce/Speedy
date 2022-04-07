@@ -13,7 +13,6 @@ CSVInterface::CSVInterface(const std::string& filename)
     if (actualColumns != expectedColumns) {
         WriteLine(expectedColumns);
     }
-    endOfFile = false;
 }
 
 CSVInterface::~CSVInterface() {
@@ -44,11 +43,10 @@ std::vector<std::string> CSVInterface::ReadLine() {
     }
     std::string line;
     std::getline(fileRead, line);
-    frc::SmartDashboard::PutString("autoautoauto", line);
-    // printf("%s\n", line.c_str());
 
     std::vector<std::string> listOfStrings = StringTokenizer(line, ",");
-    lastReadTime = units::millisecond_t(std::stod(listOfStrings[3]));
+    if (!IsAtEndOfFile())
+        lastReadTime = units::millisecond_t(std::stod(listOfStrings[3]));
     return listOfStrings;
 }
 
@@ -57,7 +55,7 @@ units::millisecond_t CSVInterface::GetLastTime() {
 }
 
 bool CSVInterface::IsAtEndOfFile() {
-    return endOfFile;
+    return fileRead.eof() && !fileRead.fail();
 }
 
 std::vector<std::string> CSVInterface::StringTokenizer(std::string stringOfstrings, std::string delim) {

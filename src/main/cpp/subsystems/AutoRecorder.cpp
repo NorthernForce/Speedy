@@ -77,8 +77,8 @@ void AutoRecorder::Write(const std::vector<std::string>& data) {
 }
 
 void AutoRecorder::Periodic() {
-    RecordPeriodic();
-    PlaybackPeriodic();
+    // RecordPeriodic();
+    // PlaybackPeriodic();
 }
 
 void AutoRecorder::StartPlayback() {
@@ -146,7 +146,7 @@ void AutoRecorder::ProcessReadDataChunk() {
 void AutoRecorder::AutoAdjustPlaybackSpeed() {
     units::millisecond_t time = csvInterface->GetLastTime();
     if (IsPlaybackTooFast(time) && time != -1_ms) {
-        //skip reading, but consider writing previous values to make motors happy
+        //skip reading, but write previous values to make motors happy
         ProcessPlaybackData(prevData);
         playbackTooFastCount++;
     }
@@ -167,12 +167,12 @@ void AutoRecorder::AutoAdjustPlaybackSpeed() {
 
 bool AutoRecorder::IsPlaybackTooSlow(units::millisecond_t time) {
     auto playbackTime = GetCurrentTime() - startTime;
-    return (playbackTime > time + 20.05_ms); //consider adding a couple miliseconds to time for slight margin of error
+    return (playbackTime > time + 20.1_ms); //consider adding a couple miliseconds to time for slight margin of error
 }
 
 bool AutoRecorder::IsPlaybackTooFast(units::millisecond_t time) {
     auto playbackTime = GetCurrentTime() - startTime;
-    return (playbackTime < time + 19.95_ms); //consider subtracting a couple miliseconds from time for slight margin of error
+    return (playbackTime < time + 19.9_ms); //consider subtracting a couple miliseconds from time for slight margin of error
 }
 
 AutoRecorder::PlaybackData AutoRecorder::UpdatePlaybackData() {
@@ -204,18 +204,14 @@ void AutoRecorder::ProcessPlaybackData(const PlaybackData& data) {
         //printf("solenoid index: %i\n", solenoidIdx);
         recordedSolenoids[solenoidIdx]->Set(bool(data.pos));
     }
-    // std::cout << "recorded device:" << PlaybackData::device << '\n';
-    // std::cout << "recorded id:" << PlaybackData::id << '\n';
-    // std::cout << "recorded position:" << PlaybackData::pos << '\n';
-    // frc::SmartDashboard::PutString("recorded device:", PlaybackData::device);
-    // frc::SmartDashboard::PutNumber("recorded id:", PlaybackData::id);
-    // frc::SmartDashboard::PutNumber("recorded position:", PlaybackData::pos);
-
-
 }
 
 void AutoRecorder::PlaybackPeriodic() {
     if (isPlayingBack) {
         ProcessReadDataChunk();
     }
+}
+
+bool AutoRecorder::IsPlaybackFinished() {
+    return csvInterface->IsAtEndOfFile();
 }
