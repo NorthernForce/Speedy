@@ -19,6 +19,8 @@ namespace Constants {
 
         const uint8_t rightClimber = 7;
         const uint8_t leftClimber = 8;
+
+        const uint8_t highShooter = 12; //UNKNOWN
     }
 
     enum DigitalIDs {
@@ -37,6 +39,9 @@ namespace Constants {
     const uint8_t PCMCanBusID = 15;
 
     const double attaError = .01; //atta = AutoTurnToAngle
+
+    const double targetRPM = 60; //UNKNOWN
+    const double shooterError = 5; //UNKNOWN
 
     const double degreesToRadians = M_PI/180.0;
     const double XResetMultiplier = 0.996194698092;
