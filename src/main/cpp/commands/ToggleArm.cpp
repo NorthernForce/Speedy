@@ -18,5 +18,5 @@ void ToggleArm::Initialize() {
 
 // Returns true when the command should end.
 bool ToggleArm::IsFinished() {
-  return false;
+  return true;
 }
