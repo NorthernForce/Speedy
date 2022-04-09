@@ -18,11 +18,24 @@ DriveToDistanceIntake::DriveToDistanceIntake(double speed, double distance, bool
 
 // Called repeatedly when this Command is scheduled to run
 void DriveToDistanceIntake::Execute() {
-    //printf("I'm STARTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTIIIIIIIIIIIIIING \n");
-    RobotContainer::drivetrain->DriveUsingSpeeds(desiredSpeed, desiredSpeed);
+    auto error = std::abs((RobotContainer::drivetrain->GetEncoderRotations().first-desiredDistance)/desiredDistance);
+
+    if(desiredDistance > 0) {
+        RobotContainer::drivetrain->DriveUsingSpeeds(-GetDriveMultiplier(error), -GetDriveMultiplier(error));
+        //RobotContainer::drivetrain->DriveUsingSpeeds(-.3, -.3); 
+        isFinished = RobotContainer::drivetrain->GetEncoderRotations().first > desiredDistance;
+    }   
+    else if (desiredDistance < 0) {
+        RobotContainer::drivetrain->DriveUsingSpeeds(GetDriveMultiplier(error), GetDriveMultiplier(error)); 
+        //RobotContainer::drivetrain->DriveUsingSpeeds(.3, .3); 
+        isFinished = RobotContainer::drivetrain->GetEncoderRotations().first < desiredDistance;
+    }
     RobotContainer::intake->Run(desiredReverse ? Intake::IntakeDirection::intake : Intake::IntakeDirection::outtake);
-    isFinished = std::abs(desiredDistance) < std::abs(RobotContainer::drivetrain->GetEncoderRotations().first);
     }    
+
+double DriveToDistanceIntake::GetDriveMultiplier(double error) {
+    return -1 * pow(-.7 * error + .35, 2) + .52;
+    }
 
 // Called once the command ends or is interrupted.
 void DriveToDistanceIntake::End(bool interrupted) {
@@ -33,7 +46,5 @@ void DriveToDistanceIntake::End(bool interrupted) {
 // Returns true when the command should end.
 bool DriveToDistanceIntake::IsFinished() {
   return isFinished;
-
-  //RobotContainer::drivetrain->GetAvgEncoderRotations(RobotContainer::drivetrain->GetEncoderRotations())
 }
 

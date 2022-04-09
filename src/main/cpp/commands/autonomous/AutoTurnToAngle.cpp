@@ -19,7 +19,7 @@ void AutoTurnToAngle::Initialize() {}
 // Called repeatedly when this Command is scheduled to run
 void AutoTurnToAngle::Execute() {
     auto currentAngle = RobotContainer::imu->GetRotation();
-    auto error = (currentAngle-desiredAngle)/100;
+    auto error = std::abs((currentAngle-desiredAngle)/100);
 
     if (desiredSide && currentAngle < desiredAngle) {
         RobotContainer::drivetrain->Drive(0, -GetDriveMultiplier(error));
@@ -36,8 +36,8 @@ void AutoTurnToAngle::Execute() {
 
 double AutoTurnToAngle::GetDriveMultiplier(double error) {
     double driveMultiplier;
-    if (error < 0 && error < 1)
-        driveMultiplier = (1.2 * pow(1.5, -error)) - .83;
+    if (error < 0 && error > -1)
+        driveMultiplier = (1.2 * pow(1.5, error)) - .83;
     else if (error > 0 && error < 1)
         driveMultiplier = (1.2 * pow(1.5, error)) - .83;
     else 

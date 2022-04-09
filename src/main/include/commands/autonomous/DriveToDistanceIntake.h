@@ -25,6 +25,8 @@ class DriveToDistanceIntake
 
   bool IsFinished() override;
 
+  double GetDriveMultiplier(double);
+
   double desiredDistance;
   double desiredSpeed;
   bool desiredReverse;
