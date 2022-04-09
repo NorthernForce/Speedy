@@ -32,6 +32,8 @@ class ShootHigh
 
   private:
   double startTime;
-  //double startPosition;
-  //rev::SparkMaxRelativeEncoder spark5Encoder;
+  double startPosition;
+  int i;
+  bool warmUp;
+  double desiredRPM;
 };

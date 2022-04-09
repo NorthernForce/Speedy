@@ -31,9 +31,16 @@ void Intake::Run(IntakeDirection direction) {
     intakeTopSpark->Set(bool(direction) ? -.5 : .5);
 }
 
+void Intake::ShootHighRPM(double rpm) {
+    // highMotor->Set(.8);
+    double velocity = (rpm * Constants::cpr) / 600;
+
+    highMotor->Set(ctre::phoenix::motorcontrol::ControlMode::Velocity, velocity);
+    //printf("%f \n", highMotor->GetSensorCollection().GetIntegratedSensorVelocity());
+}
+
 void Intake::ShootHigh() {
     highMotor->Set(.8);
-    //printf("%f \n", highMotor->GetSensorCollection().GetIntegratedSensorVelocity());
 }
 
 void Intake::ReverseHigh() {
@@ -54,6 +61,10 @@ void Intake::UltraShoot() {
 void Intake::Stop() {
     intakeTopSpark->Set(0);
     intakeBottomSpark->Set(0);
+    //highMotor->Set(0);
+}
+
+void Intake::StopHigh() {
     highMotor->Set(0);
 }
 

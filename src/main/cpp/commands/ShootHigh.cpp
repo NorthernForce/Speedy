@@ -5,6 +5,7 @@
 #include "commands/ShootHigh.h"
 #include "subsystems/Intake.h"
 #include "RobotContainer.h"
+#include "frc/smartdashboard/SmartDashboard.h"
 
 ShootHigh::ShootHigh() {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -12,31 +13,33 @@ ShootHigh::ShootHigh() {
 }
 
 void ShootHigh::Initialize() {
-    startTime = RobotContainer::fmsComms->GetMatchTime().value();
-    // spark5Encoder = RobotContainer::intake->SparkEncoderPosition();
-    // startPosition = spark5Encoder.GetPosition();
+    desiredRPM = frc::SmartDashboard::GetNumber("Shooter RPM", 1500);
+    i = 0;
+    warmUp = false;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ShootHigh::Execute() {
 
-    // if((startPosition + 2) <= spark5Encoder.GetPosition()) {
-    //      RobotContainer::intake->Run(Intake::IntakeDirection::outtake);
-    //  }
+    if (i < 20) {
+        RobotContainer::intake->intakeBottomSpark->Set(-.1);
+        i++;
+    } else {
+    RobotContainer::intake->ShootHighRPM(desiredRPM);
+    }
 
-     if((startTime + 1.9) <= RobotContainer::fmsComms->GetMatchTime()) {
-         RobotContainer::intake->Run(Intake::IntakeDirection::outtake);
-     }
-
-    RobotContainer::intake->ShootHigh();
     printf("%f \n", RobotContainer::intake->GetCurrentRPM());
-    if(RobotContainer::intake->GetCurrentRPM() >= 14000)
+    if(RobotContainer::intake->GetError() < Constants::shooterError)
         RobotContainer::intake->Run(Intake::IntakeDirection::intake);
+    // else {
+    //     RobotContainer::intake->Stop();
+    // }
 }
 
 // Called once the command ends or is interrupted.
 void ShootHigh::End(bool interrupted) {
     RobotContainer::intake->Stop();
+    RobotContainer::intake->StopHigh();
 }
 
 // Returns true when the command should end.

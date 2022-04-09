@@ -20,6 +20,7 @@ void PushOutBallUltraSonic::Execute() {
 // Called once the command ends or is interrupted.
 void PushOutBallUltraSonic::End(bool interrupted) {
   RobotContainer::intake->Stop();
+  RobotContainer::intake->StopHigh();
 }
 
 // Returns true when the command should end.

@@ -41,7 +41,7 @@ namespace Constants {
     const double attaError = .01; //atta = AutoTurnToAngle
 
     const double targetRPM = 15000; 
-    const double shooterError = 7000;
+    const double shooterError = 300;
 
     const double degreesToRadians = M_PI/180.0;
     const double XResetMultiplier = 0.996194698092;
