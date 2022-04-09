@@ -7,21 +7,21 @@
 #include "RobotContainer.h"
 
 MoveArm::MoveArm(bool up) {
-  // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements(RobotContainer::intake.get());
+    // Use addRequirements() here to declare subsystem dependencies.
+    AddRequirements(RobotContainer::intake.get());
     desiredUp = up;
 }
 
 // Called when the command is initially scheduled.
 void MoveArm::Initialize() {
-    if(desiredUp) {
-    RobotContainer::intake->ArmUp();
+    if (desiredUp) {
+        RobotContainer::intake->ArmUp();
     } else if (!desiredUp) {
-    RobotContainer::intake->ArmDown();
+        RobotContainer::intake->ArmDown();
     }
 }
 
 // Returns true when the command should end.
 bool MoveArm::IsFinished() {
-  return true;
+    return true;
 }

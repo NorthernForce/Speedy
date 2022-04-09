@@ -42,7 +42,7 @@ void OI::MapControllerButtons() {
     SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
     //SimpleButton(driverController, Xbox::B_button).WhenPressed(new MoveArm(false));
     SimpleButton(driverController, Xbox::Y_button).WhenPressed(new ResetEncoders());
-
+    SimpleAxis(driverController, XboxAxis::rt_trigger).WhenPressed(new ToggleArm);
 
 
   // manipulator
