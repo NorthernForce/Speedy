@@ -19,6 +19,23 @@ Intake::Intake() {
 }
 
 void Intake::ConfigureController() {  
+    int kTimeoutMs = 30;
+    highMotor->ConfigFactoryDefault();
+    /* first choose the sensor */
+    highMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, kTimeoutMs);
+    highMotor->SetSensorPhase(true);
+
+    /* set the peak and nominal outputs */
+    highMotor->ConfigNominalOutputForward(0, kTimeoutMs);
+    highMotor->ConfigNominalOutputReverse(0, kTimeoutMs);
+    highMotor->ConfigPeakOutputForward(1, kTimeoutMs);
+    highMotor->ConfigPeakOutputReverse(-1, kTimeoutMs);
+    /* set closed loop gains in slot0 */
+    highMotor->Config_kF(0, 0.1097, kTimeoutMs);
+    highMotor->Config_kP(0, 1, kTimeoutMs);
+    highMotor->Config_kI(0, 0.0, kTimeoutMs);
+    highMotor->Config_kD(0, 0.0, kTimeoutMs);
+
     highMotor->ConfigSupplyCurrentLimit(ctre::phoenix::motorcontrol::SupplyCurrentLimitConfiguration(true, currentLimit, (currentLimit-5), 30));
     highMotor->ConfigStatorCurrentLimit(ctre::phoenix::motorcontrol::StatorCurrentLimitConfiguration(true, secondaryCurrentLimit, (secondaryCurrentLimit-5), 30));
     highMotor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
