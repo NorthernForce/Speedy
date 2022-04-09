@@ -8,6 +8,7 @@
 #include "commands/LowerClimber.h"
 #include "commands/RaiseClimber.h"
 #include "commands/PivotToggle.h"
+#include "commands/ShootHigh.h"
 #include "commands/PushOutBallUltraSonic.h"
 #include "commands/ResetEncoders.h"
 #include "commands/NoSensorClimbLower.h"
@@ -34,16 +35,16 @@ void OI::InitControllers()
 
 void OI::MapControllerButtons() {
     //driver
-    SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new PushOutBallUltraSonic);
-    SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new IntakeBall);
+    SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new IntakeBall);
+    SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBallUltraSonic);
+    SimpleAxis(driverController, XboxAxis::lt_trigger).WhileHeld(new ShootHigh);
     //SimpleButton(driverController, Xbox::B_button).WhileHeld(new SetCoordinates(CPlane::Point(0_in, 0_in)));
     //SimpleButton(driverController, Xbox::B_button).WhileHeld(new SetTheta(0_deg));
     //SimpleButton(driverController, Xbox::X_button).WhenPressed(new MoveToCoordinate(CPlane::Point(24_in, 0_in)), 0.4);
     SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
     //SimpleButton(driverController, Xbox::B_button).WhenPressed(new MoveArm(false));
     SimpleButton(driverController, Xbox::Y_button).WhenPressed(new ResetEncoders());
-
-
+    SimpleAxis(driverController, XboxAxis::rt_trigger).WhenPressed(new ToggleArm);
 
   // manipulator
 

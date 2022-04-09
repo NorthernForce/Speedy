@@ -14,6 +14,7 @@ void PushOutBallUltraSonic::Initialize() {}
 // Called repeatedly when this Command is scheduled to run
 void PushOutBallUltraSonic::Execute() {
   RobotContainer::intake->UltraShoot();
+  RobotContainer::intake->ReverseHigh();
 }
 
 // Called once the command ends or is interrupted.

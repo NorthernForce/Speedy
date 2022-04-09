@@ -27,19 +27,24 @@ void Intake::ConfigureController(WPI_TalonFX& controller) {
 }
 
 void Intake::Run(IntakeDirection direction) {
-    intakeTopSpark->Set(bool(direction) ? 0.9 : -0.9);
-    intakeBottomSpark->Set(bool(direction) ? -1.0 : 1.0);
+    intakeBottomSpark->Set(bool(direction) ? 0.9 : -0.9);
+    intakeTopSpark->Set(bool(direction) ? -.5 : .5);
 }
 
 void Intake::ShootHigh() {
     highMotor->Set(.8);
+    //printf("%f \n", highMotor->GetSensorCollection().GetIntegratedSensorVelocity());
+}
+
+void Intake::ReverseHigh() {
+    highMotor->Set(-.3);
 }
 
 void Intake::UltraShoot() {
     ultraDist = RobotContainer::ultrasonic->getDistance();
     if (ultraDist < 20) {
-        intakeTopSpark->Set(-0.7);
-        intakeBottomSpark->Set(0.9);
+        intakeTopSpark->Set(0.7);
+        intakeBottomSpark->Set(-0.9);
     }
     else {
         Run(IntakeDirection::outtake);
@@ -57,6 +62,11 @@ void Intake::SetSpeed(double speed) {
     intakeBottomSpark->Set(speed);
 }
 
+rev::SparkMaxRelativeEncoder Intake::SparkEncoderPosition() {
+    //return spark.GetEncoder().GetPosition();
+    return intakeTopSpark->GetEncoder();
+}
+
 void Intake::ConfigureSpark(rev::CANSparkMax& spark) {
     // const uint16_t currentLimit = 60;
     // const uint16_t limitThreshold = 90;
@@ -66,9 +76,9 @@ void Intake::ConfigureSpark(rev::CANSparkMax& spark) {
 }
 
 int Intake::GetCurrentRPM() {
-    double velocity = -highMotor->GetSensorCollection().GetIntegratedSensorVelocity();
-    int rpm = (velocity * 600) / 2048;
-    return rpm;
+    //double velocity = -highMotor->GetSensorCollection().GetIntegratedSensorVelocity();
+    //int rpm = (velocity * 600) / 2048;
+    return highMotor->GetSensorCollection().GetIntegratedSensorVelocity();
 }
 
 int Intake::GetError() {

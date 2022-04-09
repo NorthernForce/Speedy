@@ -37,6 +37,10 @@ double FMSComms::DisplayMatchTime() {
     return frc::SmartDashboard::PutNumber("Match Time", frc::Timer::GetMatchTime().value());
 }
 
+units::seconds FMSComms::GetMatchTime() {
+    frc::Timer::GetMatchTime().value();
+}
+
 /*
 ...............................................................       ..............................
 ..................................................             ............      ...................

@@ -10,6 +10,7 @@ IntakeBall::IntakeBall() {
 }
 
 void IntakeBall::Execute() {
+    RobotContainer::intake->ReverseHigh();
     RobotContainer::intake->Run(Intake::IntakeDirection::intake);
 }
 

@@ -23,9 +23,11 @@ class Intake : public frc2::SubsystemBase {
   };
   Intake();
   void ConfigureSpark(rev::CANSparkMax& spark);
+  rev::SparkMaxRelativeEncoder SparkEncoderPosition();
   void ConfigureController(WPI_TalonFX& controller);
   void Run(IntakeDirection direction);
   void ShootHigh();
+  void ReverseHigh();
   void UltraShoot();
   void Stop();
   void SetSpeed(double speed);
@@ -40,8 +42,10 @@ class Intake : public frc2::SubsystemBase {
 
   ArmState armPosition;
 
- private:
   std::unique_ptr<rev::CANSparkMax> intakeTopSpark;
+
+ private:
+  //std::unique_ptr<rev::CANSparkMax> intakeTopSpark;
   std::unique_ptr<rev::CANSparkMax> intakeBottomSpark;
   std::unique_ptr<WPI_TalonFX> highMotor;
   std::unique_ptr<frc::Solenoid> arm;

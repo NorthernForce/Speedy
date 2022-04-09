@@ -11,10 +11,26 @@ ShootHigh::ShootHigh() {
   AddRequirements(RobotContainer::intake.get());
 }
 
+void ShootHigh::Initialize() {
+    startTime = RobotContainer::fmsComms->GetMatchTime().value();
+    // spark5Encoder = RobotContainer::intake->SparkEncoderPosition();
+    // startPosition = spark5Encoder.GetPosition();
+}
+
 // Called repeatedly when this Command is scheduled to run
 void ShootHigh::Execute() {
+
+    // if((startPosition + 2) <= spark5Encoder.GetPosition()) {
+    //      RobotContainer::intake->Run(Intake::IntakeDirection::outtake);
+    //  }
+
+     if((startTime + 1.9) <= RobotContainer::fmsComms->GetMatchTime()) {
+         RobotContainer::intake->Run(Intake::IntakeDirection::outtake);
+     }
+
     RobotContainer::intake->ShootHigh();
-    if(RobotContainer::intake->GetError() <= Constants::shooterError)
+    printf("%f \n", RobotContainer::intake->GetCurrentRPM());
+    if(RobotContainer::intake->GetCurrentRPM() >= 14000)
         RobotContainer::intake->Run(Intake::IntakeDirection::intake);
 }
 
