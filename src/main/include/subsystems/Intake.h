@@ -24,7 +24,7 @@ class Intake : public frc2::SubsystemBase {
   Intake();
   void ConfigureSpark(rev::CANSparkMax& spark);
   rev::SparkMaxRelativeEncoder SparkEncoderPosition();
-  void ConfigureController(WPI_TalonFX& controller);
+  void ConfigureController();
   void Run(IntakeDirection direction);
   void ShootHighRPM(double rpm);
   void ShootHigh();
@@ -54,4 +54,6 @@ class Intake : public frc2::SubsystemBase {
   std::unique_ptr<frc::Solenoid> arm;
 
   double ultraDist;
+  const int currentLimit = 60;
+  const int secondaryCurrentLimit = 80;
 };

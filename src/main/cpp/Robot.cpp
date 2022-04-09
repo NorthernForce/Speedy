@@ -21,7 +21,7 @@
 
 void Robot::RobotInit() {
     //RobotContainer::climber->SetPivot(PivotState::Up);
-    //RobotContainer::intake->SetArmState(ArmState::Down);
+    RobotContainer::intake->SetArmState(Intake::ArmState::Down);
     RobotContainer::drivetrain->SetEncoderPositions(0, 0);
     RobotContainer::intake->ArmUp();
     //frc::CameraServer::StartAutomaticCapture();

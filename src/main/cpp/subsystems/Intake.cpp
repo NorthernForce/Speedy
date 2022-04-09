@@ -13,17 +13,17 @@ Intake::Intake() {
 
     ConfigureSpark(*intakeTopSpark);
     ConfigureSpark(*intakeBottomSpark);
-    ConfigureController(*highMotor);
+    ConfigureController();
 
     arm = std::make_unique<frc::Solenoid>(Constants::PCMCanBusID, frc::PneumaticsModuleType::REVPH, Constants::PneumaticIDs::arm);
 }
 
-void Intake::ConfigureController(WPI_TalonFX& controller) {
-    const int currentLimit = 60;
-    const int limitThreshold = 90;
-    const int triggerThreshTimeInSec = 1;
-    controller.ConfigSupplyCurrentLimit(SupplyCurrentLimitConfiguration(true, currentLimit, limitThreshold, triggerThreshTimeInSec));
-    controller.SetNeutralMode(ctre::phoenix::motorcontrol::Brake);
+void Intake::ConfigureController() {  
+    highMotor->ConfigSupplyCurrentLimit(ctre::phoenix::motorcontrol::SupplyCurrentLimitConfiguration(true, currentLimit, (currentLimit-5), 30));
+    highMotor->ConfigStatorCurrentLimit(ctre::phoenix::motorcontrol::StatorCurrentLimitConfiguration(true, secondaryCurrentLimit, (secondaryCurrentLimit-5), 30));
+    highMotor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
+    highMotor->ConfigOpenloopRamp(0);
+    highMotor->ConfigClosedloopRamp(0);
 }
 
 void Intake::Run(IntakeDirection direction) {
@@ -32,11 +32,8 @@ void Intake::Run(IntakeDirection direction) {
 }
 
 void Intake::ShootHighRPM(double rpm) {
-    // highMotor->Set(.8);
     double velocity = (rpm * Constants::cpr) / 600;
-
     highMotor->Set(ctre::phoenix::motorcontrol::ControlMode::Velocity, velocity);
-    //printf("%f \n", highMotor->GetSensorCollection().GetIntegratedSensorVelocity());
 }
 
 void Intake::ShootHigh() {

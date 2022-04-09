@@ -28,7 +28,7 @@ void ShootHigh::Execute() {
     RobotContainer::intake->ShootHighRPM(desiredRPM);
     }
 
-    printf("%f \n", RobotContainer::intake->GetCurrentRPM());
+    printf("%i \n", RobotContainer::intake->GetCurrentRPM());
     if(RobotContainer::intake->GetError() < Constants::shooterError)
         RobotContainer::intake->Run(Intake::IntakeDirection::intake);
     // else {
