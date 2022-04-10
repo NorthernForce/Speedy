@@ -64,8 +64,8 @@ void Intake::ReverseHigh() {
 void Intake::UltraShoot() {
     ultraDist = RobotContainer::ultrasonic->getDistance();
     if (ultraDist < 20) {
-        intakeTopSpark->Set(0.7);
-        intakeBottomSpark->Set(-0.9);
+        intakeTopSpark->Set(0.4);
+        intakeBottomSpark->Set(-0.6);
     }
     else {
         Run(IntakeDirection::outtake);
