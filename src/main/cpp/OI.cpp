@@ -25,6 +25,9 @@ OI::OI()
 {
   frc::SmartDashboard::PutNumber("Drive Speed:", 1.0);
   InitControllers();
+  frc::SmartDashboard::PutNumber("Shooter RPM", 700);
+  frc::SmartDashboard::PutNumber("Push forward duration", 10);
+  frc::SmartDashboard::PutNumber("Intake Shoot Speed", .9);
 }
 
 void OI::InitControllers()

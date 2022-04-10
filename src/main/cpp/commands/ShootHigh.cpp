@@ -13,7 +13,9 @@ ShootHigh::ShootHigh() {
 }
 
 void ShootHigh::Initialize() {
-    desiredRPM = frc::SmartDashboard::GetNumber("Shooter RPM", 1500);
+    desiredRPM = frc::SmartDashboard::GetNumber("Shooter RPM", 700);
+    desiredOutakeTime = frc::SmartDashboard::GetNumber("Push forward duration", 10);
+    desiredIntakeShootSpeed = frc::SmartDashboard::GetNumber("Intake Shoot Speed", .9);
     i = 0;
     warmUp = false;
 }
@@ -21,19 +23,20 @@ void ShootHigh::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void ShootHigh::Execute() {
 
-    if (i < 20) {
-        RobotContainer::intake->intakeBottomSpark->Set(-.1);
+    printf("%f \n", desiredRPM);
+
+    if (i < desiredOutakeTime) {
+        RobotContainer::intake->intakeBottomSpark->Set(-.17);
+        RobotContainer::intake->intakeTopSpark->Set(.17);
         i++;
     } else {
     RobotContainer::intake->ShootHighRPM(desiredRPM);
     }
 
-    printf("%i \n", RobotContainer::intake->GetCurrentRPM());
-    if(RobotContainer::intake->GetError() < Constants::shooterError)
-        RobotContainer::intake->Run(Intake::IntakeDirection::intake);
-    // else {
-    //     RobotContainer::intake->Stop();
-    // }
+    if((desiredRPM - RobotContainer::intake->GetCurrentRPM()) < Constants::shooterError) {
+        RobotContainer::intake->intakeTopSpark->Set(-desiredIntakeShootSpeed);
+        RobotContainer::intake->intakeBottomSpark->Set(desiredIntakeShootSpeed * .18);
+    }
 }
 
 // Called once the command ends or is interrupted.

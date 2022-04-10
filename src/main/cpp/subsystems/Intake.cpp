@@ -49,8 +49,8 @@ void Intake::Run(IntakeDirection direction) {
 }
 
 void Intake::ShootHighRPM(double rpm) {
-    double velocity = (rpm * Constants::cpr) / 600;
-    highMotor->Set(ctre::phoenix::motorcontrol::ControlMode::Velocity, velocity);
+    //double velocity = (rpm * Constants::cpr) / 600;
+    highMotor->Set(ctre::phoenix::motorcontrol::ControlMode::Velocity, rpm);
 }
 
 void Intake::ShootHigh() {
@@ -106,9 +106,9 @@ int Intake::GetCurrentRPM() {
     return highMotor->GetSensorCollection().GetIntegratedSensorVelocity();
 }
 
-int Intake::GetError() {
-    return Constants::targetRPM - GetCurrentRPM();
-}
+// int Intake::GetError() {
+//     return desiredRPM - GetCurrentRPM();
+// }
 
 Intake::ArmState Intake::GetPivot() {
     return armPosition;

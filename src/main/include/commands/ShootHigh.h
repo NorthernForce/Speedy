@@ -36,4 +36,6 @@ class ShootHigh
   int i;
   bool warmUp;
   double desiredRPM;
+  double desiredOutakeTime;
+  double desiredIntakeShootSpeed;
 };

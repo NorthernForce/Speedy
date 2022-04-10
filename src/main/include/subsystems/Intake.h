@@ -34,7 +34,7 @@ class Intake : public frc2::SubsystemBase {
   void StopHigh();
   void SetSpeed(double speed);
   int GetCurrentRPM();
-  int GetError();
+  //int GetError();
 
   ArmState GetPivot();
   void SetArmState(ArmState state);
