@@ -11,6 +11,7 @@ PushOutBall::PushOutBall() {
 
 void PushOutBall::Execute() {
     RobotContainer::intake->Run(Intake::IntakeDirection::outtake);
+    RobotContainer::intake->ShootHigh();
 }
 
 void PushOutBall::End(bool interrupted) {

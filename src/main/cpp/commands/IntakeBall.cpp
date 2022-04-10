@@ -10,11 +10,13 @@ IntakeBall::IntakeBall() {
 }
 
 void IntakeBall::Execute() {
+    RobotContainer::intake->ReverseHigh();
     RobotContainer::intake->Run(Intake::IntakeDirection::intake);
 }
 
 void IntakeBall::End(bool interrupted) {
     RobotContainer::intake->Stop();
+    RobotContainer::intake->StopHigh();
 }
 
 bool IntakeBall::IsFinished() {

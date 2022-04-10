@@ -9,10 +9,9 @@
 void PivotToggle::Initialize() {
     if(RobotContainer::climber->GetPivot() == PivotState::Up) {
         RobotContainer::climber->PivotDown();
-    } else if (RobotContainer::climber->GetPivot() == PivotState::Down) {
+    } 
+    else if (RobotContainer::climber->GetPivot() == PivotState::Down) {
         RobotContainer::climber->PivotUp();
-    } else {
-        printf("Pivot not in range\n");
     }
 }
 
