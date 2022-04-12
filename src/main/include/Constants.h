@@ -21,11 +21,11 @@ namespace Constants {
         const uint8_t leftClimber = 8;
     }
 
-    namespace DigitalIDs {
-        const uint8_t bottomOptical = 0;
-        const uint8_t middleOptical = 2 ;
-        const uint8_t topOptical = 1;
-    }
+    enum DigitalIDs {
+        bottomOptical = 0,
+        middleOptical = 2,
+        topOptical = 1
+    };
 
     const uint8_t climber = 4;
     const uint8_t arm = 9;
@@ -34,18 +34,18 @@ namespace Constants {
     const uint8_t manipulatorController_id = 1;
     const uint8_t PCMCanBusID = 15;
 
-    const double degreesToRadians = M_PI/180;
+    const double attaError = .01; //atta = AutoTurnToAngle
+
+    const double degreesToRadians = M_PI/180.0;
     const double XResetMultiplier = 0.996194698092;
 
-    const double gearRatio = (9/62) * (30/18);
-                          // (9/62) * (18/30)
+    const double gearRatio = (62.0/9.0) * (30.0/18.0);
     const int cpr = 2048;
 
-    const units::unit_t<units::length::inch> wheelCircum = 6_in;
+    const units::unit_t<units::length::inch> wheelDiameter = 6_in;
+    const units::unit_t<units::length::inch> wheelCircum = wheelDiameter * M_PI;
 
-    // const double encoderToInch = 2 * gearRatio * wheelCircum.value();
-    const double encoderToInch = 1.10988 * 0.24 * wheelCircum.value();
-
+    const double encoderPerInch = cpr * gearRatio / wheelCircum.value();
 
     //Analog Port for the Ultrasonic Sensor
     static constexpr int kUltrasonicPort = 0;

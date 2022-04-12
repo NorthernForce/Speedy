@@ -12,6 +12,7 @@
 #include <memory>
 
 #include "utilities/AutoCommandScheduler.h"
+#include "commands/autonomous/AutoTurnToAngle.h"
 
 class Robot : public frc::TimedRobot {
  public:
@@ -26,7 +27,14 @@ class Robot : public frc::TimedRobot {
   void TestPeriodic() override;
 
  private:
+  // Have it null by default so that if testing teleop it
+  // doesn't have undefined behavior and potentially crash.
+  std::vector<double> leftSide;
+
+  frc2::Command* m_autonomousCommand = nullptr;
+
   std::unique_ptr<AutoCommandScheduler> autoCommandScheduler;
+  std::unique_ptr<AutoTurnToAngle> autoTurnToAngle;
 
   RobotContainer m_container;
   bool wannaRecord = false;

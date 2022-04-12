@@ -19,6 +19,7 @@ class Intake : public frc2::SubsystemBase {
   Intake();
   void ConfigureSpark(RecordedSpark& spark);
   void Run(bool reverse=false);
+  void UltraShoot();
   void Stop();
   void SetSpeed(double speed);
 
@@ -33,5 +34,7 @@ class Intake : public frc2::SubsystemBase {
  private:
   std::unique_ptr<RecordedSpark> intakeTopSpark;
   std::unique_ptr<RecordedSpark> intakeBottomSpark;
-  std::unique_ptr<RecordedSolenoid> arm;
+  std::unique_ptr<frc::Solenoid> arm;
+
+  double ultraDist;
 };

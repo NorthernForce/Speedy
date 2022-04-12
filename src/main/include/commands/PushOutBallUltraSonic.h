@@ -6,6 +6,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "RobotContainer.h"
 
 /**
  * An example command.
@@ -14,10 +15,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class ShootTwoBalls
-    : public frc2::CommandHelper<frc2::CommandBase, ShootTwoBalls> {
+class PushOutBallUltraSonic
+    : public frc2::CommandHelper<frc2::CommandBase, PushOutBallUltraSonic> {
  public:
-  ShootTwoBalls();
+  PushOutBallUltraSonic();
 
   void Initialize() override;
 
@@ -26,12 +27,4 @@ class ShootTwoBalls
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
-private:
-
-bool stepOne = false;
-bool stepTwo = false;
-bool stepThree = false;
-bool stepFour = false;
-bool stepFive = false;
 };

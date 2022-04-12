@@ -14,10 +14,12 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class DriveToDistance
-    : public frc2::CommandHelper<frc2::CommandBase, DriveToDistance> {
+class AutoTurnToAngle
+    : public frc2::CommandHelper<frc2::CommandBase, AutoTurnToAngle> {
  public:
-  DriveToDistance(double speed , double distance);
+  AutoTurnToAngle(double targetAngle, bool side);
+
+  void Initialize() override;
 
   void Execute() override;
 
@@ -25,10 +27,12 @@ class DriveToDistance
 
   bool IsFinished() override;
 
- private:
-  double desiredDistance;
-  double desiredSpeed;
-  bool isFinished;
+  double GetDriveMultiplier(double error);
 
+  private:
+
+  bool desiredSide; // side=true is turn right
+  double desiredAngle;
+  bool isDone = false;
 
 };

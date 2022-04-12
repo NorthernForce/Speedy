@@ -24,10 +24,16 @@ class Drivetrain : public frc2::SubsystemBase {
   double GetAvgEncoderRotations(std::pair<double, double>);
   void SetEncoderPositions(double lt, double rt);
   void PrintEncoderValues();
+  void RecordMotorPos();
+  void WriteLeftMotorPos(std::string fileName);
+  void WriteRightMotorPos(std::string fileName);
   double GetLeftRPM();
   double GetRightRPM();
   bool IsTipping();
   void Periodic() override;
+
+  std::vector<double> leftMotorPos;
+  std::vector<double> rightMotorPos;
 
   static std::shared_ptr<RecordedTalonFX> leftPrimary;
   static std::shared_ptr<RecordedTalonFX> rightPrimary;
@@ -37,5 +43,6 @@ class Drivetrain : public frc2::SubsystemBase {
   std::shared_ptr<WPI_TalonFX> leftFollower;
   std::shared_ptr<WPI_TalonFX> rightFollower;
   const int rampRate = 0.2;
-  units::degree_t tipAngle = 15_deg;
+  units::degree_t armUpTipAngle = 12_deg;
+  units::degree_t armDownTipAngle = 15_deg;
 };

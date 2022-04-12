@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #include "subsystems/Climber.h"
-#include "Constants.h"
 #include "RobotContainer.h"
 
 
@@ -21,6 +20,7 @@ Climber::Climber() {
     ConfigureController(*rightMotor);
 
     pivotPosition = PivotState::Up;
+    frc::SmartDashboard::PutBoolean("Optical Sensor Get Error", false);
 }
 
 void Climber::ConfigureController(WPI_TalonFX& controller) {
@@ -34,7 +34,6 @@ void Climber::ConfigureController(WPI_TalonFX& controller) {
 void Climber::PivotUp() {
     climber->Set(false);
     pivotPosition = PivotState::Up;
-    heightCheckNeeded = true;
 }
 
 void Climber::PivotDown() {
@@ -78,26 +77,15 @@ bool Climber::TooTall() {
 }
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 void Climber::CheckHeight(){
-    if (heightCheckNeeded) {
-        if (TooTall()) {
-            LowerSlow();
-        }
-        else {
-            Stop();
-            heightCheckNeeded = false;
-        }
+    if (TooTall()) {
+        LowerSlow();
+    }
+    else {
+        Stop();
     }
 }
 
-HookState Climber::GetHookState() {
-    return hookPosition;
-}
-
-void Climber::SetHookState(HookState state) {
-    hookPosition = state;
-}
-
-bool Climber::GetOpticalSensor(int sensor) {
+bool Climber::GetOpticalSensor(Constants::DigitalIDs sensor) {
     switch (sensor) {
         case Constants::DigitalIDs::bottomOptical:
             return bottom->Get();
@@ -106,6 +94,7 @@ bool Climber::GetOpticalSensor(int sensor) {
         case Constants::DigitalIDs::topOptical:
             return top->Get();
         default:
+            frc::SmartDashboard::PutBoolean("Optical Sensor Get Error", true);
             return false;
     }
 }

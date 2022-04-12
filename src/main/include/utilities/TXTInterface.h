@@ -3,13 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 
 #pragma once
+#include <vector>
+#include <string>
 
-#include <frc2/command/CommandBase.h>
-#include <frc2/command/CommandHelper.h>
-
-class ArmDown
-    : public frc2::CommandHelper<frc2::CommandBase, ArmDown> {
+class TXTInterface {
  public:
-  void Initialize() override;
-  bool IsFinished() override;
+  TXTInterface();
+  void WriteTextFile(std::vector<double>, std::string);
+  std::vector<double> ReadTextFile(std::string fileName);
+  private:
 };

@@ -30,7 +30,7 @@ Drivetrain::Drivetrain() {
 
 }
 
-void Drivetrain::SetFollowers() {
+    void Drivetrain::SetFollowers() {
     leftFollower->Follow(*leftPrimary);
     rightFollower->Follow(*rightPrimary);
 }
@@ -69,7 +69,7 @@ void Drivetrain::DriveUsingSpeeds(double leftSpeed, double rightSpeed) {
 }
 
 bool Drivetrain::DriveToDistance(double desiredDistance, double speed) {
-    if(desiredDistance < GetAvgEncoderRotations(GetEncoderRotations()) * Constants::encoderToInch) {
+    if(desiredDistance < GetAvgEncoderRotations(GetEncoderRotations()) * Constants::encoderPerInch) {
         leftPrimary->Set(speed);
         rightPrimary->Set(speed);
         return false;
@@ -88,8 +88,8 @@ std::pair<double, double> Drivetrain::GetEncoderRotations() {
 
 std::pair<units::inch_t, units::inch_t> Drivetrain::GetInchesTravelled() {
     std::pair<double, double> rotations = GetEncoderRotations();
-    units::inch_t leftInches = units::inch_t(rotations.first * Constants::encoderToInch);
-    units::inch_t rightInches = units::inch_t(rotations.second * Constants::encoderToInch);
+    units::inch_t leftInches = units::inch_t(rotations.first * Constants::encoderPerInch);
+    units::inch_t rightInches = units::inch_t(rotations.second * Constants::encoderPerInch);
     return std::make_pair(leftInches, rightInches);
 }
 
@@ -104,9 +104,22 @@ void Drivetrain::SetEncoderPositions(double lt, double rt) {
 }
 
 void Drivetrain::PrintEncoderValues() {
-  printf("Left Encoder : %lf\n", leftPrimary->GetSelectedSensorPosition());
-  printf("Right Encoder: %lf\n", rightPrimary->GetSelectedSensorPosition());
-  printf("Avg Encoder: %lf\n", GetAvgEncoderRotations(GetEncoderRotations()));
+//   printf("Left Encoder : %lf\n", leftPrimary->GetSelectedSensorPosition());
+//   printf("Right Encoder: %lf\n", rightPrimary->GetSelectedSensorPosition());
+    printf("Avg Encoder: %lf\n", GetAvgEncoderRotations(GetEncoderRotations()));
+}
+
+void Drivetrain::RecordMotorPos(){
+    leftMotorPos.push_back(GetEncoderRotations().first);
+    rightMotorPos.push_back(GetEncoderRotations().second);
+}
+
+void Drivetrain::WriteLeftMotorPos(std::string fileName) {
+    RobotContainer::txtInterface->WriteTextFile(leftMotorPos, fileName);
+}
+
+void Drivetrain::WriteRightMotorPos(std::string fileName) {
+    RobotContainer::txtInterface->WriteTextFile(rightMotorPos, fileName);
 }
 
 double Drivetrain::GetLeftRPM() {
@@ -118,11 +131,16 @@ double Drivetrain::GetRightRPM() {
 }
 
 bool Drivetrain::IsTipping() {
-    return RobotContainer::imu->GetRollAngle() > abs(tipAngle.value());
+    // frc::SmartDashboard::PutNumber("left encoder", GetEncoderRotations().first);
+    if (RobotContainer::intake->armPosition == ArmState::Up) {
+        return RobotContainer::imu->GetRollAngle() > std::abs(armUpTipAngle.value());
+    }
+    else {
+        return RobotContainer::imu->GetRollAngle() > std::abs(armDownTipAngle.value());
+    }
 }
  
 void Drivetrain::Periodic() {
-    frc::SmartDashboard::PutNumber("left encoder", GetEncoderRotations().first);
     frc::SmartDashboard::PutNumber("right encoder", GetEncoderRotations().second);
 
     if (IsTipping()) {

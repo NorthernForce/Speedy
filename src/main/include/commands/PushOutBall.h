@@ -19,7 +19,6 @@ class PushOutBall
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
+  
  private:
-    bool reverse = true;
 };
