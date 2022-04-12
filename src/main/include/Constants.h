@@ -19,8 +19,6 @@ namespace Constants {
 
         const uint8_t rightClimber = 7;
         const uint8_t leftClimber = 8;
-
-        const uint8_t highShooter = 9;
     }
 
     enum DigitalIDs {

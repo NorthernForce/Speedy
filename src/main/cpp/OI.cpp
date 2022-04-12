@@ -8,7 +8,6 @@
 #include "commands/LowerClimber.h"
 #include "commands/RaiseClimber.h"
 #include "commands/PivotToggle.h"
-#include "commands/ShootHigh.h"
 #include "commands/PushOutBallUltraSonic.h"
 #include "commands/ResetEncoders.h"
 #include "commands/NoSensorClimbLower.h"
@@ -38,7 +37,6 @@ void OI::InitControllers()
 
 void OI::MapControllerButtons() {
     //driver
-    SimpleAxis(driverController, XboxAxis::lt_trigger).WhileHeld(new ShootHigh);
     SimpleAxis(driverController, XboxAxis::rt_trigger).WhenPressed(new ToggleArm);
     SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new IntakeBall);
     SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new PushOutBallUltraSonic);

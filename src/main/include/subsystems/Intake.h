@@ -26,12 +26,8 @@ class Intake : public frc2::SubsystemBase {
   rev::SparkMaxRelativeEncoder SparkEncoderPosition();
   void ConfigureController();
   void Run(IntakeDirection direction);
-  void ShootHighRPM(double rpm);
-  void ShootHigh();
-  void ReverseHigh();
   void UltraShoot();
   void Stop();
-  void StopHigh();
   void SetSpeed(double speed);
   int GetCurrentRPM();
   //int GetError();
