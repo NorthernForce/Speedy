@@ -10,11 +10,14 @@ AutoPlayback::AutoPlayback() {
 }
 
 void AutoPlayback::Initialize() {
+    printf("initialize\n");
     RobotContainer::drivetrain->SetEncoderPositions(0, 0);
     RobotContainer::autoRecorder->StartPlayback();
+    printf("finish init\n");
 }
 
 void AutoPlayback::Execute() {
+    printf("execute\n");
     RobotContainer::autoRecorder->PlaybackPeriodic();
 }
 
