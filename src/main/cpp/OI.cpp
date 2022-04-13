@@ -38,8 +38,8 @@ void OI::InitControllers()
 void OI::MapControllerButtons() {
     //driver
     SimpleAxis(driverController, XboxAxis::rt_trigger).WhenPressed(new ToggleArm);
-    SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new IntakeBall);
-    SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new PushOutBallUltraSonic);
+    SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new PushOutBallUltraSonic);
+    SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new IntakeBall);
     SimpleButton(manipulatorController, Xbox::B_button).WhileHeld(new RaiseClimber);
     SimpleButton(manipulatorController, Xbox::A_button).WhileHeld(new LowerClimber);
     SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);

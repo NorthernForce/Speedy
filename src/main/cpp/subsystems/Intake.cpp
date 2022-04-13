@@ -20,10 +20,6 @@ void Intake::Run(IntakeDirection direction) {
     intakeTopSpark->Set(bool(direction) ? -.5 : .5);
 }
 
-
-
-
-
 void Intake::UltraShoot() {
     ultraDist = RobotContainer::ultrasonic->getDistance();
     if (ultraDist < 20) {
