@@ -12,7 +12,6 @@
 #include "subsystems/Climber.h"
 #include "commands/autonomous/DriveToDistance.h"
 #include "commands/autonomous/DriveToDistanceIntake.h"
-#include "commands/TurnToAngle.h"
 #include "commands/MoveArm.h"
 #include "commands/ResetEncoders.h"
 #include "commands/autonomous/AutoTurnToAngle.h"
@@ -24,8 +23,7 @@ void Robot::RobotInit() {
     RobotContainer::intake->SetArmState(Intake::ArmState::Down);
     RobotContainer::drivetrain->SetEncoderPositions(0, 0);
     RobotContainer::intake->ArmUp();
-    //frc::CameraServer::StartAutomaticCapture();
-    //leftSide = RobotContainer::TXTInterface->ReadTextFile("LeftTest");
+    frc::CameraServer::StartAutomaticCapture();
 }
 
 /**
@@ -39,11 +37,10 @@ void Robot::RobotInit() {
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
   RobotContainer::fmsComms->DisplayMatchTime();
-  RobotContainer::drivetrain->PrintEncoderValues();
+  //RobotContainer::drivetrain->PrintEncoderValues();
   //printf("Rotation: %lf\n", RobotContainer::imu->GetRotation());
-  //frc::SmartDashboard::PutNumber("distance: ", RobotContainer::ultrasonic->getDistance());
-  //frc::SmartDashboard::PutString("Drive Speed", RobotContainer::fmsComms->GetAllianceString(RobotContainer::fmsComms->GetAlliance()));
-  //printf("Please work %f: \n", leftSide[4]);
+  frc::SmartDashboard::PutNumber("distance: ", RobotContainer::ultrasonic->getDistance());
+  frc::SmartDashboard::PutString("Drive Speed", RobotContainer::fmsComms->GetAllianceString(RobotContainer::fmsComms->GetAlliance()));
   
   }
 /**
@@ -53,8 +50,6 @@ void Robot::RobotPeriodic() {
  */
 void Robot::DisabledInit() {
     RobotContainer::intake->ArmUp();
-    //RobotContainer::drivetrain->WriteLeftMotorPos("LeftTest");
-    //RobotContainer::drivetrain->WriteRightMotorPos("RightTest");
 }
 
 void Robot::DisabledPeriodic() {}

@@ -4,6 +4,7 @@
 
 #include "commands/RaiseClimber.h"
 #include "RobotContainer.h"
+#include "subsystems/Climber.h"
 
 RaiseClimber::RaiseClimber() {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -12,7 +13,12 @@ RaiseClimber::RaiseClimber() {
 
 // Called repeatedly when this Command is scheduled to run
 void RaiseClimber::Execute() {
-    RobotContainer::climber->Raise();
+//  if(!RobotContainer::climber->GetOpticalSensor(Constants::DigitalIDs::middleOptical) && (RobotContainer::intake->GetPivot() == Intake::ArmState::Up)) {
+//     RobotContainer::climber->Raise();
+// } else if (RobotContainer::climber->GetOpticalSensor(Constants::DigitalIDs::middleOptical) && (RobotContainer::intake->GetPivot() == Intake::ArmState::Up)) {
+//     RobotContainer::climber->Stop();
+// }
+RobotContainer::climber->Raise();
 }
 
 void RaiseClimber::End(bool interrupted) {
@@ -21,5 +27,5 @@ void RaiseClimber::End(bool interrupted) {
 
 // Returns true when the command should end.
 bool RaiseClimber::IsFinished() {
-  return false;
+  return RobotContainer::climber->TooTall();
 }

@@ -31,11 +31,11 @@ void TwoBalls::Initialize() {autoCommandScheduler.reset(new AutoCommandScheduler
     new ResetEncoders(),
     new MoveArm(true),
     new ResetEncoders(),
-    new DriveToDistance(-.5, 47),
+    new DriveToDistance(-.5, 51.5),
     new ResetEncoders(),
     new AutoTurnToAngle(-21, false),
     new ResetEncoders(),
-    new DriveToDistanceIntake(-.4, 8, true), // scores
+    new DriveToDistanceIntake(-.4, 6, true), // scores
 
     //Theoretical
     // new ResetEncoders(),

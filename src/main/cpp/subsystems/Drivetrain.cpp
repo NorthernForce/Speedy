@@ -103,9 +103,9 @@ void Drivetrain::SetEncoderPositions(double lt, double rt) {
 }
 
 void Drivetrain::PrintEncoderValues() {
-//   printf("Left Encoder : %lf\n", leftPrimary->GetSelectedSensorPosition());
-//   printf("Right Encoder: %lf\n", rightPrimary->GetSelectedSensorPosition());
-//   printf("Avg Encoder: %lf\n", GetAvgEncoderRotations(GetEncoderRotations()));
+  printf("Left Encoder : %lf\n", leftPrimary->GetSelectedSensorPosition());
+  printf("Right Encoder: %lf\n", rightPrimary->GetSelectedSensorPosition());
+  printf("Avg Encoder: %lf\n", GetAvgEncoderRotations(GetEncoderRotations()));
 }
 
 void Drivetrain::RecordMotorPos(){

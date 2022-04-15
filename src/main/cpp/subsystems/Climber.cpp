@@ -64,6 +64,11 @@ void Climber::LowerSlow() {
     rightMotor->Set(-0.1);
 }
 
+void Climber::RaiseSlow() {
+    leftMotor->Set(-0.7);
+    rightMotor->Set(0.7);
+}
+
 void Climber::Stop(){
     leftMotor->Set(0);
     rightMotor->Set(0);
@@ -78,12 +83,8 @@ bool Climber::TooTall() {
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
 void Climber::CheckHeight(){
     if (TooTall()) {
-        //LowerSlow();
-        Stop();   
-    }
-    // else {
-    //     //Stop();
-    // }
+        Stop();
+    }  
 }
 
 bool Climber::GetOpticalSensor(Constants::DigitalIDs sensor) {
@@ -100,14 +101,14 @@ bool Climber::GetOpticalSensor(Constants::DigitalIDs sensor) {
     }
 }
 
-// void Climber::PrintOpticalSensors() {
-//     frc::SmartDashboard::PutBoolean("Bottom Optical:", bottom->Get());
-//     frc::SmartDashboard::PutBoolean("Middle Optical:", middle->Get());
-//     frc::SmartDashboard::PutBoolean("Top Optical:", top->Get());
-// }
+void Climber::PrintOpticalSensors() {
+    frc::SmartDashboard::PutBoolean("Bottom Optical:", bottom->Get());
+    frc::SmartDashboard::PutBoolean("Middle Optical:", middle->Get());
+    frc::SmartDashboard::PutBoolean("Top Optical:", top->Get());
+}
 
 // This method will be called once per scheduler run
 void Climber::Periodic() {
-    // CheckHeight();
-    // PrintOpticalSensors();
+    //CheckHeight();
+    PrintOpticalSensors();
 }

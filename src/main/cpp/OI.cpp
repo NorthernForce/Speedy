@@ -24,9 +24,6 @@ OI::OI()
 {
   frc::SmartDashboard::PutNumber("Drive Speed:", 1.0);
   InitControllers();
-  frc::SmartDashboard::PutNumber("Shooter RPM", 700);
-  frc::SmartDashboard::PutNumber("Push forward duration", 10);
-  frc::SmartDashboard::PutNumber("Intake Shoot Speed", .9);
 }
 
 void OI::InitControllers()
@@ -37,18 +34,10 @@ void OI::InitControllers()
 
 void OI::MapControllerButtons() {
     //driver
-    SimpleAxis(driverController, XboxAxis::rt_trigger).WhenPressed(new ToggleArm);
     SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new IntakeBall);
     SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new PushOutBallUltraSonic);
-    SimpleButton(manipulatorController, Xbox::B_button).WhileHeld(new RaiseClimber);
-    SimpleButton(manipulatorController, Xbox::A_button).WhileHeld(new LowerClimber);
     SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
-    //SimpleButton(driverController, Xbox::Y_button).WhenPressed(new ResetEncoders());
-    //SimpleButton(driverController, Xbox::B_button).WhileHeld(new SetCoordinates(CPlane::Point(0_in, 0_in)));
-    //SimpleButton(driverController, Xbox::B_button).WhileHeld(new SetTheta(0_deg));
-    //SimpleButton(driverController, Xbox::X_button).WhenPressed(new MoveToCoordinate(CPlane::Point(24_in, 0_in)), 0.4);
-    //SimpleButton(driverController, Xbox::B_button).WhenPressed(new MoveArm(false));
-
+    SimplePOV(driverController, XboxPOV::down).WhenPressed(new ToggleArm);
   // manipulator
 
   SimpleButton(manipulatorController, Xbox::X_button).WhileHeld(new LowerClimber);

@@ -33,6 +33,7 @@ class Climber : public frc2::SubsystemBase {
   void Raise();
   void Lower();
   void LowerSlow();
+  void RaiseSlow();
   void Stop();
   bool TooTall();
   void CheckHeight();

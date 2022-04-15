@@ -16,19 +16,15 @@ Intake::Intake() {
 }
 
 void Intake::Run(IntakeDirection direction) {
-    intakeBottomSpark->Set(bool(direction) ? 0.9 : -0.9);
-    intakeTopSpark->Set(bool(direction) ? -.5 : .5);
+    intakeBottomSpark->Set(bool(direction) ? -1 : 1);
+    intakeTopSpark->Set(bool(direction) ? .8 : -.8);
 }
-
-
-
-
 
 void Intake::UltraShoot() {
     ultraDist = RobotContainer::ultrasonic->getDistance();
     if (ultraDist < 20) {
-        intakeTopSpark->Set(0.4);
-        intakeBottomSpark->Set(-0.6);
+        intakeTopSpark->Set(-0.6);
+        intakeBottomSpark->Set(0.8);
     }
     else {
         Run(IntakeDirection::outtake);

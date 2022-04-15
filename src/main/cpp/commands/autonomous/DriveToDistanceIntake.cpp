@@ -30,7 +30,7 @@ void DriveToDistanceIntake::Execute() {
         //RobotContainer::drivetrain->DriveUsingSpeeds(.3, .3); 
         isFinished = RobotContainer::drivetrain->GetEncoderRotations().first < desiredDistance;
     }
-    RobotContainer::intake->Run(desiredReverse ? Intake::IntakeDirection::intake : Intake::IntakeDirection::outtake);
+    RobotContainer::intake->Run(desiredReverse ? Intake::IntakeDirection::outtake : Intake::IntakeDirection::intake);
     }    
 
 double DriveToDistanceIntake::GetDriveMultiplier(double error) {

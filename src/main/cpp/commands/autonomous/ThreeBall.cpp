@@ -30,7 +30,7 @@ void ThreeBall::Initialize() {
     new ResetEncoders(),
     new DriveToDistanceIntake(-.4, 27, false),
     new ResetEncoders(),
-    new AutoTurnToAngle(-36, false),
+    new AutoTurnToAngle(-39, false),
     new ResetEncoders(),
     new DriveToDistanceIntake(-.4, 37, false), //second ball
     new ResetEncoders(),
