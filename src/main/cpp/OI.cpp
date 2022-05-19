@@ -15,6 +15,7 @@
 #include "commands/autonomous/MoveToCoordinate.h"
 #include "commands/autonomous/SetCoordinates.h"
 #include "commands/autonomous/SetTheta.h"
+#include "commands/autonomous/AutoTraverse.h"
 #include <frc/smartdashboard/SmartDashboard.h>
 
 std::shared_ptr<frc::XboxController> OI::driverController;
@@ -36,6 +37,7 @@ void OI::MapControllerButtons() {
     //driver
     SimpleButton(driverController, Xbox::rt_bumper).WhileHeld(new IntakeBall);
     SimpleButton(driverController, Xbox::lt_bumper).WhileHeld(new PushOutBallUltraSonic);
+    SimpleButton(driverController, Xbox::A_button).WhileHeld(new AutoTraverse);
     SimplePOV(driverController, XboxPOV::up).WhenPressed(new PivotToggle);
     SimplePOV(driverController, XboxPOV::down).WhenPressed(new ToggleArm);
   // manipulator

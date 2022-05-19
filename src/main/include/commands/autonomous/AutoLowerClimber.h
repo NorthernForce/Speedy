@@ -14,10 +14,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class AutoTraverse
-    : public frc2::CommandHelper<frc2::CommandBase, AutoTraverse> {
+class AutoLowerClimber
+    : public frc2::CommandHelper<frc2::CommandBase, AutoLowerClimber> {
  public:
-  AutoTraverse();
+  AutoLowerClimber();
 
   void Initialize() override;
 
@@ -29,6 +29,7 @@ class AutoTraverse
 
   private:
 
-  std::unique_ptr<AutoCommandScheduler> autoCommandScheduler;
+  bool lowerSensor;
+  bool middleSensor;
 
 };

@@ -60,8 +60,8 @@ void Climber::Lower() {
 }
 
 void Climber::LowerSlow() {
-    leftMotor->Set(0.1);
-    rightMotor->Set(-0.1);
+    leftMotor->Set(0.75);
+    rightMotor->Set(-0.75);
 }
 
 void Climber::RaiseSlow() {
