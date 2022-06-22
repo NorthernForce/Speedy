@@ -9,56 +9,15 @@ Intake::Intake() {
     intakeTopSpark = std::make_unique<rev::CANSparkMax>(Constants::MotorIDs::intakeTop, rev::CANSparkMax::MotorType::kBrushless);
     intakeBottomSpark = std::make_unique<rev::CANSparkMax>(Constants::MotorIDs::intakeBottom, rev::CANSparkMax::MotorType::kBrushless);
 
-    highMotor = std::make_unique<WPI_TalonFX>(Constants::MotorIDs::highShooter);
-
     ConfigureSpark(*intakeTopSpark);
     ConfigureSpark(*intakeBottomSpark);
-    ConfigureController();
 
     arm = std::make_unique<frc::Solenoid>(Constants::PCMCanBusID, frc::PneumaticsModuleType::REVPH, Constants::PneumaticIDs::arm);
-}
-
-void Intake::ConfigureController() {  
-    int kTimeoutMs = 30;
-    highMotor->ConfigFactoryDefault();
-    /* first choose the sensor */
-    highMotor->ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0, kTimeoutMs);
-    highMotor->SetSensorPhase(true);
-
-    /* set the peak and nominal outputs */
-    highMotor->ConfigNominalOutputForward(0, kTimeoutMs);
-    highMotor->ConfigNominalOutputReverse(0, kTimeoutMs);
-    highMotor->ConfigPeakOutputForward(1, kTimeoutMs);
-    highMotor->ConfigPeakOutputReverse(-1, kTimeoutMs);
-    /* set closed loop gains in slot0 */
-    highMotor->Config_kF(0, 0.1097, kTimeoutMs);
-    highMotor->Config_kP(0, 1, kTimeoutMs);
-    highMotor->Config_kI(0, 0.0, kTimeoutMs);
-    highMotor->Config_kD(0, 0.0, kTimeoutMs);
-
-    highMotor->ConfigSupplyCurrentLimit(ctre::phoenix::motorcontrol::SupplyCurrentLimitConfiguration(true, currentLimit, (currentLimit-5), 30));
-    highMotor->ConfigStatorCurrentLimit(ctre::phoenix::motorcontrol::StatorCurrentLimitConfiguration(true, secondaryCurrentLimit, (secondaryCurrentLimit-5), 30));
-    highMotor->SetNeutralMode(ctre::phoenix::motorcontrol::NeutralMode::Brake);
-    highMotor->ConfigOpenloopRamp(0);
-    highMotor->ConfigClosedloopRamp(0);
 }
 
 void Intake::Run(IntakeDirection direction) {
     intakeBottomSpark->Set(bool(direction) ? 0.9 : -0.9);
     intakeTopSpark->Set(bool(direction) ? -.5 : .5);
-}
-
-void Intake::ShootHighRPM(double rpm) {
-    //double velocity = (rpm * Constants::cpr) / 600;
-    highMotor->Set(ctre::phoenix::motorcontrol::ControlMode::Velocity, rpm);
-}
-
-void Intake::ShootHigh() {
-    highMotor->Set(.8);
-}
-
-void Intake::ReverseHigh() {
-    highMotor->Set(-.3);
 }
 
 void Intake::UltraShoot() {
@@ -75,11 +34,6 @@ void Intake::UltraShoot() {
 void Intake::Stop() {
     intakeTopSpark->Set(0);
     intakeBottomSpark->Set(0);
-    //highMotor->Set(0);
-}
-
-void Intake::StopHigh() {
-    highMotor->Set(0);
 }
 
 void Intake::SetSpeed(double speed) {
@@ -98,12 +52,6 @@ void Intake::ConfigureSpark(rev::CANSparkMax& spark) {
     // intakeTopSpark->SetSmartCurrentLimit(currentLimit);
     // intakeTopSpark->SetSecondaryCurrentLimit(limitThreshold);
     spark.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-}
-
-int Intake::GetCurrentRPM() {
-    //double velocity = -highMotor->GetSensorCollection().GetIntegratedSensorVelocity();
-    //int rpm = (velocity * 600) / 2048;
-    return highMotor->GetSensorCollection().GetIntegratedSensorVelocity();
 }
 
 // int Intake::GetError() {
